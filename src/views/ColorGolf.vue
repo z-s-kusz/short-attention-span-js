@@ -1,10 +1,16 @@
 <template>
   <div class="container">
     <div class="title">
-      <h1>Color Golf</h1><h1 v-if="showResults">Results...</h1>
+      <h1>Color Golf</h1>
     </div>
 
-    <div class="course" v-bind:class="courseClass" v-bind:style="courseStyle"></div>
+    <div class="course" v-bind:class="courseClass" v-bind:style="courseStyle">
+      <div class="course-inner" v-if="showResults">
+        <div class="course-message">{{ message }}</div>
+        <button class="course-button" v-on:click="reset(true)">continue</button>
+        <button class="course-button" v-on:click="reset(false)">mulligan</button>
+      </div>
+    </div>
 
     <form>
       <label>
@@ -30,6 +36,7 @@ export default {
       green: '',
       blue: '',
       showResults: false,
+      message: '',
       currentColor: {
         r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
       },
@@ -52,37 +59,14 @@ export default {
       };
     },
   },
+
   created() {
-    const colors = [
-      {
-        r: 255, g: 0, b: 0, css: '',
-      },
-      {
-        r: 0, g: 255, b: 0, css: '',
-      },
-      {
-        r: 0, g: 0, b: 255, css: '',
-      },
-      {
-        r: 200, g: 120, b: 50, css: '',
-      },
-      {
-        r: 40, g: 210, b: 100, css: '',
-      },
-    ];
-    colors.forEach((color) => {
-      color.css = this.setColorCSS(color);
-    });
-    this.currentColor = colors[this.getRandomInt(colors.length - 1)];
+    const color = this.getRandomColor();
+    color.css = this.setColorCSS(color);
+    this.currentColor = color;
   },
+
   methods: {
-    enterClick() {
-      if (this.red === '' || this.green === '' || this.blue === '') {
-        return;
-      }
-      this.buildUsersGuessCSS();
-      this.showResults = true;
-    },
     buildUsersGuessCSS() {
       const color = {
         r: this.red,
@@ -92,9 +76,47 @@ export default {
       };
       color.css = this.setColorCSS(color);
       this.usersGuess = color;
+      this.calculateShotScore();
+    },
+    calculateShotScore() {
+      let score = 0;
+      const target = this.currentColor;
+      const attempt = this.usersGuess;
+      score += Math.abs(target.r - attempt.r);
+      score += Math.abs(target.g - attempt.g);
+      score += Math.abs(target.b - attempt.b);
+      this.message = `Last shot dif: ${score}`;
+    },
+    enterClick() {
+      if (this.red === '' || this.green === '' || this.blue === '') {
+        return;
+      }
+      this.buildUsersGuessCSS();
+      this.showResults = true;
+    },
+    getRandomColor() {
+      const color = {
+        r: this.getRandomInt(255),
+        g: this.getRandomInt(255),
+        b: this.getRandomInt(255),
+        css: '',
+      };
+      color.css = this.setColorCSS(color);
+      return color;
     },
     getRandomInt(maxNum) { // return int from 0 through maxNum
-      return Math.floor(Math.random() * Math.floor(maxNum));
+      return Math.floor(Math.random() * Math.floor(maxNum + 1));
+    },
+    reset(resetCurrentColor) {
+      this.showResults = false;
+      this.usersGuess = {
+        r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
+      };
+      this.red = '';
+      this.green = '';
+      this.blue = '';
+      this.message = '';
+      if (resetCurrentColor) this.currentColor = this.getRandomColor();
     },
     setColorCSS(color) {
       return `rgb(${color.r}, ${color.g}, ${color.b})`;
@@ -108,13 +130,16 @@ export default {
   flex-direction: column;
   align-content: center;
   align-items: center;
-  background-color: dimgrey;
+  background-color: #333;
   min-height: 100%;
 }
 .course {
   border: 8px solid white;
   width: 70%;
   height: 300px;
+  display: flex;
+  align-content: center;
+  align-items: center;
 }
 form {
   display: flex;
@@ -130,8 +155,21 @@ button {
   padding: 12px 32px;
   font-weight: 600;
 }
-label {
+label, .course-message {
   color: white;
   font-weight: 600;
+}
+label {
+  margin: 4px;
+}
+.course-inner {
+  width:100%;
+}
+.course-message {
+  font-size: 48px;
+  color: black;
+  -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
 }
 </style>
