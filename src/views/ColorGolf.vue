@@ -4,11 +4,15 @@
       <h1>Color Golf</h1>
     </div>
 
+    <div class="info-panel">
+      <span>{{ playerName }}</span><span>Hole {{ holeNumber }}</span>
+    </div>
+
     <div class="course" v-bind:class="courseClass" v-bind:style="courseStyle">
       <div class="course-inner" v-if="showResults">
         <div class="course-message">{{ message }}</div>
-        <button class="course-button" v-on:click="reset(true)">continue</button>
-        <button class="course-button" v-on:click="reset(false)">mulligan</button>
+        <button v-if="showContinueButton"
+          class="course-button" v-on:click="next()">continue</button>
       </div>
     </div>
 
@@ -24,6 +28,14 @@
       </label>
       <button v-on:click.prevent="enterClick()">enter</button>
     </form>
+
+    <div>
+      <span v-for="(score, index) in scoreCard" v-bind:key="index">
+        <span v-if="index !== 0"> | </span>
+        <span>{{ score }}</span>
+      </span>
+    </div>
+
   </div>
 </template>
 
@@ -37,12 +49,19 @@ export default {
       blue: '',
       showResults: false,
       message: '',
+      showContinueButton: false,
       currentColor: {
         r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
       },
       usersGuess: {
         r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
       },
+      playerName: 'Player 1',
+      holeNumber: 1,
+      scoreCard: [],
+      shotCount: 0,
+      numberOfHoles: 9,
+      scoreThreshold: 60, // number player must match to complete the hole
     };
   },
   computed: {
@@ -64,6 +83,10 @@ export default {
     const color = this.getRandomColor();
     color.css = this.setColorCSS(color);
     this.currentColor = color;
+    for (let i = 0; i < this.numberOfHoles; i++) {
+      this.scoreCard.push(0);
+    }
+    console.log('scorecard', this.scoreCard.length);
   },
 
   methods: {
@@ -76,7 +99,6 @@ export default {
       };
       color.css = this.setColorCSS(color);
       this.usersGuess = color;
-      this.calculateShotScore();
     },
     calculateShotScore() {
       let score = 0;
@@ -85,13 +107,30 @@ export default {
       score += Math.abs(target.r - attempt.r);
       score += Math.abs(target.g - attempt.g);
       score += Math.abs(target.b - attempt.b);
-      this.message = `Last shot dif: ${score}`;
+      return score;
     },
     enterClick() {
       if (this.red === '' || this.green === '' || this.blue === '') {
         return;
       }
+      if (this.showContinueButton) { // doubles as continue button when continue is available
+        this.next();
+        return;
+      }
+      this.shotCount++;
       this.buildUsersGuessCSS();
+      const shotScore = this.calculateShotScore();
+
+      if (shotScore <= this.scoreThreshold) {
+        const dialog = shotScore === 0 ? 'Exact match!!!' : 'It\'s in the hole!';
+        this.message = `${dialog} | Diff: ${shotScore} | Shots Taken: ${this.shotCount}`;
+        this.showContinueButton = true;
+      } else if (this.shotCount >= 9) {
+        this.message = 'Shot limit reached.';
+        this.showContinueButton = true;
+      } else {
+        this.message = `Last shot diff: ${shotScore}`;
+      }
       this.showResults = true;
     },
     getRandomColor() {
@@ -107,8 +146,21 @@ export default {
     getRandomInt(maxNum) { // return int from 0 through maxNum
       return Math.floor(Math.random() * Math.floor(maxNum + 1));
     },
+    next() {
+      this.scoreCard[this.holeNumber - 1] = this.shotCount;
+      if (this.holeNumber >= this.numberOfHoles) {
+        const totalScore = this.scoreCard.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue;
+        }, 0);
+        this.message = `Thanks for playing color golf! Your total score today was ${totalScore}.`;
+      } else {
+        this.holeNumber++;
+        this.reset(true);
+      }
+    },
     reset(resetCurrentColor) {
       this.showResults = false;
+      this.showContinueButton = false;
       this.usersGuess = {
         r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
       };
@@ -116,6 +168,7 @@ export default {
       this.green = '';
       this.blue = '';
       this.message = '';
+      this.shotCount = 0;
       if (resetCurrentColor) this.currentColor = this.getRandomColor();
     },
     setColorCSS(color) {
@@ -125,6 +178,13 @@ export default {
 };
 </script>
 <style scoped>
+* {
+  font-weight: 600;
+  color: white;
+}
+input { /* make sure to reset color for forms */
+  color: black;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -132,6 +192,17 @@ export default {
   align-items: center;
   background-color: #333;
   min-height: 100%;
+}
+.info-panel {
+  display: flex;
+  align-content: space-between;
+  align-items: center;
+  width: 70%;
+}
+.info-panel span {
+  width: 50%;
+  align-self: center;
+  margin: 8px;
 }
 .course {
   border: 8px solid white;
@@ -151,13 +222,7 @@ form {
 button {
   border-radius: 8px;
   background-color: black;
-  color: white;
   padding: 12px 32px;
-  font-weight: 600;
-}
-label, .course-message {
-  color: white;
-  font-weight: 600;
 }
 label {
   margin: 4px;
