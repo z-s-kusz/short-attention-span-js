@@ -9,10 +9,12 @@
     </div>
 
     <div class="course" v-bind:class="courseClass" v-bind:style="courseStyle">
-      <div class="course-inner" v-if="showResults">
-        <div class="course-message">{{ message }}</div>
-        <button v-if="showContinueButton"
-          class="course-button" v-on:click="next()">continue</button>
+      <div class="course-inner">
+        <transition name="fade">
+          <div class="course-message" v-show="showResults">{{ message }}</div>
+        </transition>
+          <button v-show="showContinueButton"
+            class="course-button" v-on:click="next()">continue</button>
       </div>
     </div>
 
@@ -86,7 +88,6 @@ export default {
     for (let i = 0; i < this.numberOfHoles; i++) {
       this.scoreCard.push(0);
     }
-    console.log('scorecard', this.scoreCard.length);
   },
 
   methods: {
@@ -185,6 +186,14 @@ export default {
 input { /* make sure to reset color for forms */
   color: black;
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 .container {
   display: flex;
   flex-direction: column;
