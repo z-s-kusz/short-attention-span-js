@@ -3,7 +3,8 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/color-golf">Color Golf</router-link>
+      <router-link to="/color-golf">Color Golf</router-link> |
+      <router-link to="/menu">Start Menu(testing)</router-link>
     </div>
     <router-view/>
   </div>
@@ -30,5 +31,11 @@
 
 #nav a.router-link-exact-active {
   color: #9aecc7;
+}
+button:hover {
+  cursor: pointer;
+}
+body {
+  margin: 0;
 }
 </style>
