@@ -4,30 +4,34 @@
     <main>
       <div class="half">
         <form class="">
-          <label>Group Size
-            <select v-model="playerCount">
-              <option v-for="number in 4" v-bind:key="number">{{ number }}</option>
-            </select>
-          </label>
-          <div v-for="index in 4" v-bind:key="index" v-show="playerCount >= index">
-            <label>Player {{ index }} Name:&nbsp;
-              <input type="text" v-model="playerNames[index - 1]"/>
+          <div class="menu-group">
+            <label>Group Size
+              <select v-model="playerCount">
+                <option v-for="number in 4" v-bind:key="number">{{ number }}</option>
+              </select>
             </label>
+            <div v-for="index in 4" v-bind:key="index" v-show="playerCount >= index">
+              <label>Player {{ index }} Name:&nbsp;
+                <input type="text" v-model="playerNames[index - 1]"/>
+              </label>
+            </div>
           </div>
-          <div class="radio-group">
+          <div class="menu-group">
             <span>Game Mode: </span>
-            <label>Standard
-              <input type="radio" value="standard" v-model="gameMode"/>
-            </label>
-            <label>Closest to the Pin Challenge
-              <input type="radio" value="pinChallenge" v-model="gameMode"/>
-            </label>
+            <div class="radio-group">
+              <label>Standard
+                <input type="radio" value="standard" v-model="gameMode"/>
+              </label>
+              <label>Closest to the Pin Challenge
+                <input type="radio" value="pinChallenge" v-model="gameMode"/>
+              </label>
+            </div>
           </div>
         </form>
       </div>
 
-      <div class="half">
-        <form class="">
+      <div class="half vertical-space">
+        <form class="menu-group vertical-space-child">
           <label>Distance To Hole:&nbsp;
             <span v-show="disableHolesSelect">* Distance is always 0 for pin challenge</span>
             <select v-model="distance" v-bind:disabled="disableHolesSelect">
@@ -41,7 +45,7 @@
             </select>
           </label>
         </form>
-        <button id="start">start!</button>
+        <button id="start" class="vertical-space-child">start!</button>
       </div>
     </main>
   </div>
@@ -78,11 +82,6 @@ export default {
       }
     },
   },
-  // computed: {
-  //   showName() {
-  //     return `1:${this.playerNames[0]} | 3:${this.playerNames[2]}`;
-  //   },
-  // },
 };
 </script>
 
@@ -105,10 +104,31 @@ main {
 .half {
   flex: 1 1 100%;
 }
+.vertical-space {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}
+.vertical-space-child {
+  flex: 0 0 auto;
+}
 form {
   width: 100%;
 }
-
+.menu-group {
+  padding: 8px;
+  box-sizing: border-box;
+  margin: 12px;
+  border: 4px solid white;
+}
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.radio-group label {
+  max-width: 360px;
+}
 #start {
   height: 80px;
   width: 100%;
