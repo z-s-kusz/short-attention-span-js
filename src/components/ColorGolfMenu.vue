@@ -45,7 +45,7 @@
             </select>
           </label>
         </form>
-        <button id="start" class="vertical-space-child">start!</button>
+        <button id="start" class="vertical-space-child" v-on:click="startClick">start!</button>
       </div>
     </main>
   </div>
@@ -71,6 +71,18 @@ export default {
         'Player 1', 'Player 2', 'Player 3', 'Player 4',
       ],
     };
+  },
+  methods: {
+    startClick() {
+      const data = {
+        distance: this.distance,
+        gameMode: this.gameMode,
+        numberOfHoles: this.numberOfHoles,
+        playerCount: this.playerCount,
+        playerNames: this.playerNames,
+      };
+      this.$emit('start-click', data);
+    },
   },
   watch: {
     gameMode(value) { // using watch instead of computed to assign distance easier

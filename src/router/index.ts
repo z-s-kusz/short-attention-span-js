@@ -22,16 +22,9 @@ const routes = [
   },
   {
     path: '/color-golf',
-    name: 'ColorGolf',
+    name: 'ColorGolfVue',
     component: () => {
-      return import('../views/ColorGolf.vue');
-    },
-  },
-  {
-    path: '/menu',
-    name: 'ColorGolfMenu',
-    component: () => {
-      return import('../views/ColorGolfMenu.vue');
+      return import('../views/ColorGolfView.vue');
     },
   },
 ];

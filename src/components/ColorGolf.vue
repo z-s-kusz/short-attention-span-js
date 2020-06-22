@@ -44,6 +44,15 @@
 <script>
 export default {
   name: 'ColorGolf',
+
+  props: {
+    distance: Number,
+    gameMode: String,
+    numberOfHoles: Number,
+    playerCount: Number,
+    playerNames: Array,
+  },
+
   data() {
     return {
       red: '',
@@ -62,10 +71,10 @@ export default {
       holeNumber: 1,
       scoreCard: [],
       shotCount: 0,
-      numberOfHoles: 9,
       scoreThreshold: 60, // number player must match to complete the hole
     };
   },
+
   computed: {
     courseClass() {
       return {
@@ -176,6 +185,7 @@ export default {
       return `rgb(${color.r}, ${color.g}, ${color.b})`;
     },
   },
+
 };
 </script>
 <style scoped>
