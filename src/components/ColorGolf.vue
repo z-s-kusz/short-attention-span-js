@@ -46,7 +46,7 @@ export default {
   name: 'ColorGolf',
 
   props: {
-    distance: Number,
+    distance: Number, // number the player must beat to complete the hole
     gameMode: String,
     numberOfHoles: Number,
     playerCount: Number,
@@ -69,9 +69,7 @@ export default {
       },
       playerName: 'Player 1',
       holeNumber: 1,
-      scoreCard: [],
       shotCount: 0,
-      scoreThreshold: 60, // number player must match to complete the hole
     };
   },
 
@@ -88,15 +86,19 @@ export default {
         'background-color': this.currentColor.css,
       };
     },
+    scoreCard() {
+      const scoreCard = [];
+      for (let i = 0; i < this.numberOfHoles; i++) {
+        scoreCard.push(0);
+      }
+      return scoreCard;
+    },
   },
 
   created() {
     const color = this.getRandomColor();
     color.css = this.setColorCSS(color);
     this.currentColor = color;
-    for (let i = 0; i < this.numberOfHoles; i++) {
-      this.scoreCard.push(0);
-    }
   },
 
   methods: {
@@ -131,7 +133,7 @@ export default {
       this.buildUsersGuessCSS();
       const shotScore = this.calculateShotScore();
 
-      if (shotScore <= this.scoreThreshold) {
+      if (shotScore <= this.distance) {
         const dialog = shotScore === 0 ? 'Exact match!!!' : 'It\'s in the hole!';
         this.message = `${dialog} | Diff: ${shotScore} | Shots Taken: ${this.shotCount}`;
         this.showContinueButton = true;
@@ -193,7 +195,7 @@ export default {
   font-weight: 600;
   color: white;
 }
-input { /* make sure to reset color for forms */
+input {
   color: black;
 }
 

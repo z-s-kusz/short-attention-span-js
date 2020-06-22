@@ -38,7 +38,6 @@ export default {
       this.gameState = 'completed';
     },
     startClick(data) {
-      console.log('data in parent!!!', data);
       this.menuData = data;
       this.gameState = 'playing';
     },

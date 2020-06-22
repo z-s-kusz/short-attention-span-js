@@ -41,7 +41,7 @@
           <label># Holes to Play
             <select v-model="numberOfHoles">
               <option v-for="option in numberOfHolesOptions"
-                v-bind:key="option">{{ option }}</option>
+                v-bind:key="option" v-bind:value="option">{{ option }}</option>
             </select>
           </label>
         </form>
