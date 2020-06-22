@@ -35,7 +35,7 @@
           <label>Distance To Hole:&nbsp;
             <span v-show="disableHolesSelect">* Distance is always 0 for pin challenge</span>
             <select v-model="distance" v-bind:disabled="disableHolesSelect">
-              <option v-for="option in distanceOptions" v-bind:key="option">{{ option }}</option>
+              <option v-for="option in distanceOptions" v-bind:key="option" v-bind:value="option">{{ option }}</option>
             </select>
           </label>
           <label># Holes to Play
