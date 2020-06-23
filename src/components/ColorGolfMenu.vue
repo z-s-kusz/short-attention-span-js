@@ -7,7 +7,8 @@
           <div class="menu-group">
             <label>Group Size
               <select v-model="playerCount">
-                <option v-for="number in 4" v-bind:key="number">{{ number }}</option>
+                <option v-for="number in 4"
+                  v-bind:key="number" v-bind:value="number">{{ number }}</option>
               </select>
             </label>
             <div v-for="index in 4" v-bind:key="index" v-show="playerCount >= index">
@@ -35,7 +36,8 @@
           <label>Distance To Hole:&nbsp;
             <span v-show="disableHolesSelect">* Distance is always 0 for pin challenge</span>
             <select v-model="distance" v-bind:disabled="disableHolesSelect">
-              <option v-for="option in distanceOptions" v-bind:key="option" v-bind:value="option">{{ option }}</option>
+              <option v-for="option in distanceOptions"
+              v-bind:key="option" v-bind:value="option">{{ option }}</option>
             </select>
           </label>
           <label># Holes to Play
