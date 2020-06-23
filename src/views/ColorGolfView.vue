@@ -5,7 +5,6 @@
       <ColorGolf v-show="gameState === 'playing'"
         v-bind="menuData"/>
       <!-- TODO: add game complete state component with stats and reset/continue button -->
-      <h1 v-show="gameState === 'completed'">Thanks for playing! Refresh page to play again.</h1>
   </div>
 </template>
 

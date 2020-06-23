@@ -1,55 +1,51 @@
 <template>
   <div>
     <h1>Color Golf Settings</h1>
-    <main>
-      <div class="half">
-        <form class="">
-          <div class="menu-group">
-            <label>Group Size
-              <select v-model="playerCount">
-                <option v-for="number in 4"
-                  v-bind:key="number" v-bind:value="number">{{ number }}</option>
-              </select>
-            </label>
-            <div v-for="index in 4" v-bind:key="index" v-show="playerCount >= index">
-              <label>Player {{ index }} Name:&nbsp;
-                <input type="text" v-model="playerNames[index - 1]"/>
-              </label>
-            </div>
-          </div>
-          <div class="menu-group">
-            <span>Game Mode: </span>
-            <div class="radio-group">
-              <label>Standard
-                <input type="radio" value="standard" v-model="gameMode"/>
-              </label>
-              <label>Closest to the Pin Challenge
-                <input type="radio" value="pinChallenge" v-model="gameMode"/>
-              </label>
-            </div>
-          </div>
-        </form>
+    <form>
+      <div class="menu-group">
+        <label>Group Size:
+          <select v-model="playerCount">
+            <option v-for="number in 4"
+              v-bind:key="number" v-bind:value="number">{{ number }}</option>
+          </select>
+        </label>
+        <div v-for="index in 4" v-bind:key="index" v-show="playerCount >= index">
+          <label>Player {{ index }} Name:&nbsp;
+            <input type="text" v-model="playerNames[index - 1]"/>
+          </label>
+        </div>
       </div>
 
-      <div class="half">
-        <form class="menu-group">
-          <label>Distance To Hole:&nbsp;
-            <span v-show="disableHolesSelect">* Distance is always 0 for pin challenge</span>
-            <select v-model="distance" v-bind:disabled="disableHolesSelect">
-              <option v-for="option in distanceOptions"
-              v-bind:key="option" v-bind:value="option">{{ option }}</option>
-            </select>
+      <div class="menu-group">
+        <span>Game Mode:</span>
+        <div class="radio-group">
+          <label>Standard
+            <input type="radio" value="standard" v-model="gameMode"/>
           </label>
-          <label># Holes to Play
-            <select v-model="numberOfHoles">
-              <option v-for="option in numberOfHolesOptions"
-                v-bind:key="option" v-bind:value="option">{{ option }}</option>
-            </select>
+          <label>Closest to the Pin Challenge
+            <input type="radio" value="pinChallenge" v-model="gameMode"/>
           </label>
-        </form>
-        <button id="start" class="vertical-space-child" v-on:click="startClick">start!</button>
+        </div>
       </div>
-    </main>
+
+      <div class="menu-group">
+        <label>Distance To Hole:&nbsp;
+          <span v-show="disableHolesSelect">* Distance is always 0 for pin challenge</span>
+          <select v-model="distance" v-bind:disabled="disableHolesSelect">
+            <option v-for="option in distanceOptions"
+            v-bind:key="option" v-bind:value="option">{{ option }}</option>
+          </select>
+        </label>
+        <label># Holes to Play:
+          <select v-model="numberOfHoles">
+            <option v-for="option in numberOfHolesOptions"
+              v-bind:key="option" v-bind:value="option">{{ option }}</option>
+          </select>
+        </label>
+      </div>
+      <button id="start" class="vertical-space-child"
+        v-on:click.prevent="startClick">start!</button>
+    </form>
   </div>
 </template>
 
@@ -110,36 +106,37 @@ option, select, input {
 .white-text {
   color: white;
 }
-main {
-  background-color: #333;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-.half {
-  flex: 1 1 100%;
+label {
+  display: block;
 }
 form {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .menu-group {
   padding: 8px;
   box-sizing: border-box;
   margin: 12px;
   border: 4px solid white;
-}
-.radio-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 90%;
 }
 #start {
   height: 80px;
-  width: 100%;
+  width: 90%;
   margin: 12px;
   padding: 24px 36px;
   color: black;
   font-weight: 900;
   background-color: lawngreen;
+}
+@media only screen and (min-width: 900px) {
+  .menu-group {
+    width: 66%;
+  }
+  #start {
+    width: 44%;
+  }
 }
 </style>
