@@ -31,7 +31,7 @@
       <button v-on:click.prevent="enterClick()">enter</button>
     </form>
 
-    <div>
+    <div v-for="(scoreCard, j) in scoreCards" v-bind:key="j">
       <span v-for="(score, index) in scoreCard" v-bind:key="index">
         <span v-if="index !== 0"> | </span>
         <span>{{ score }}</span>
@@ -67,7 +67,7 @@ export default {
       usersGuess: {
         r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
       },
-      playerName: 'Player 1',
+      activePlayerIndex: 0,
       holeNumber: 1,
       shotCount: 0,
     };
@@ -86,12 +86,19 @@ export default {
         'background-color': this.currentColor.css,
       };
     },
-    scoreCard() {
+    playerName() {
+      return this.playerNames[this.activePlayerIndex];
+    },
+    scoreCards() {
       const scoreCard = [];
       for (let i = 0; i < this.numberOfHoles; i++) {
         scoreCard.push(0);
       }
-      return scoreCard;
+      const scoreCards = [];
+      for (let i = 0; i < this.playerCount; i++) {
+        scoreCards.push([...scoreCard]); // spread opporator creates unique arrays for each player
+      }
+      return scoreCards;
     },
   },
 
@@ -123,9 +130,9 @@ export default {
     },
     enterClick() {
       if (this.red === '' || this.green === '' || this.blue === '') {
-        return;
+        return; // TODO give user feedback
       }
-      if (this.showContinueButton) { // doubles as continue button when continue is available
+      if (this.showContinueButton) { // allows enter to double as continue button
         this.next();
         return;
       }
@@ -158,19 +165,27 @@ export default {
     getRandomInt(maxNum) { // return int from 0 through maxNum
       return Math.floor(Math.random() * Math.floor(maxNum + 1));
     },
+    goToNextPlayer() {
+      this.activePlayerIndex = this.activePlayerIndex + 1 === this.playerCount
+        ? 0
+        : this.activePlayerIndex + 1;
+    },
     next() {
-      this.scoreCard[this.holeNumber - 1] = this.shotCount;
-      if (this.holeNumber >= this.numberOfHoles) {
-        const totalScore = this.scoreCard.reduce((accumulator, currentValue) => {
+      const activeScoreCard = this.scoreCards[this.activePlayerIndex];
+      activeScoreCard[this.holeNumber - 1] = this.shotCount;
+      if (this.holeNumber >= this.numberOfHoles
+        && this.activePlayerIndex + 1 === this.playerCount) {
+        const totalScore = activeScoreCard.reduce((accumulator, currentValue) => {
           return accumulator + currentValue;
         }, 0);
         this.message = `Thanks for playing color golf! Your total score today was ${totalScore}.`;
       } else {
-        this.holeNumber++;
-        this.reset(true);
+        this.reset();
       }
     },
-    reset(resetCurrentColor) {
+    reset() {
+      if (this.activePlayerIndex + 1 === this.playerCount) this.holeNumber++;
+      if (this.playerCount > 1) this.goToNextPlayer();
       this.showResults = false;
       this.showContinueButton = false;
       this.usersGuess = {
@@ -181,7 +196,7 @@ export default {
       this.blue = '';
       this.message = '';
       this.shotCount = 0;
-      if (resetCurrentColor) this.currentColor = this.getRandomColor();
+      this.currentColor = this.getRandomColor();
     },
     setColorCSS(color) {
       return `rgb(${color.r}, ${color.g}, ${color.b})`;
@@ -190,6 +205,7 @@ export default {
 
 };
 </script>
+
 <style scoped>
 * {
   font-weight: 600;
