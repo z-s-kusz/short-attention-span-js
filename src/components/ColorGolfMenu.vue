@@ -31,8 +31,8 @@
         </form>
       </div>
 
-      <div class="half vertical-space">
-        <form class="menu-group vertical-space-child">
+      <div class="half">
+        <form class="menu-group">
           <label>Distance To Hole:&nbsp;
             <span v-show="disableHolesSelect">* Distance is always 0 for pin challenge</span>
             <select v-model="distance" v-bind:disabled="disableHolesSelect">
@@ -114,17 +114,10 @@ main {
   background-color: #333;
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 .half {
   flex: 1 1 100%;
-}
-.vertical-space {
-  display: flex;
-  flex-direction: column;
-  align-content: space-between;
-}
-.vertical-space-child {
-  flex: 0 0 auto;
 }
 form {
   width: 100%;
@@ -139,9 +132,6 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.radio-group label {
-  max-width: 360px;
 }
 #start {
   height: 80px;
