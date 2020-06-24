@@ -20,9 +20,9 @@ const routes = [
   },
   {
     path: '/color-golf',
-    name: 'ColorGolfVue',
+    name: 'ColorGolf',
     component: () => {
-      return import('../views/ColorGolfView.vue');
+      return import('../views/ColorGolfParent.vue');
     },
   },
 ];

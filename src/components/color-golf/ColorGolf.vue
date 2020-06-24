@@ -34,7 +34,7 @@
     <div v-for="(scoreCard, j) in scoreCards" v-bind:key="j">
       <span v-for="(score, index) in scoreCard" v-bind:key="index">
         <span v-if="index !== 0"> | </span>
-        <span>{{ score }}</span>
+        <span>{{ score.strokes }}</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@ export default {
         r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
       },
       usersGuess: {
-        r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
+        r: 0, g: 0, b: 0, css: 'rgb(0,0,0)', strokes: 0,
       },
       activePlayerIndex: 0,
       holeNumber: 1,
@@ -92,7 +92,12 @@ export default {
     scoreCards() {
       const scoreCard = [];
       for (let i = 0; i < this.numberOfHoles; i++) {
-        scoreCard.push(0);
+        scoreCard.push({
+          r: 0,
+          g: 0,
+          b: 0,
+          strokes: 0,
+        });
       }
       const scoreCards = [];
       for (let i = 0; i < this.playerCount; i++) {
@@ -152,6 +157,11 @@ export default {
       }
       this.showResults = true;
     },
+    gameOver() {
+      // TODO track what the winning numbers were for each hole, emit those too
+      this.$emit('game-completed', this.scoreCards);
+      this.reset(true);
+    },
     getRandomColor() {
       const color = {
         r: this.getRandomInt(255),
@@ -172,20 +182,27 @@ export default {
     },
     next() {
       const activeScoreCard = this.scoreCards[this.activePlayerIndex];
-      activeScoreCard[this.holeNumber - 1] = this.shotCount;
+      activeScoreCard[this.holeNumber - 1] = {
+        r: this.usersGuess.r,
+        g: this.usersGuess.g,
+        b: this.usersGuess.b,
+        strokes: this.shotCount,
+      };
       if (this.holeNumber >= this.numberOfHoles
         && this.activePlayerIndex + 1 === this.playerCount) {
-        const totalScore = activeScoreCard.reduce((accumulator, currentValue) => {
-          return accumulator + currentValue;
-        }, 0);
-        this.message = `Thanks for playing color golf! Your total score today was ${totalScore}.`;
+        this.gameOver();
       } else {
-        this.reset();
+        this.reset(false);
       }
     },
-    reset() {
-      if (this.activePlayerIndex + 1 === this.playerCount) this.holeNumber++;
-      if (this.playerCount > 1) this.goToNextPlayer();
+    reset(newGame) {
+      if (newGame) {
+        this.holeNumber = 1;
+        this.activePlayerIndex = 0;
+      } else {
+        if (this.activePlayerIndex + 1 === this.playerCount) this.holeNumber++;
+        if (this.playerCount > 1) this.goToNextPlayer();
+      }
       this.showResults = false;
       this.showContinueButton = false;
       this.usersGuess = {
@@ -255,11 +272,6 @@ form {
   align-content: center;
   align-items: center;
   padding: 8px;
-}
-button {
-  border-radius: 8px;
-  background-color: black;
-  padding: 12px 32px;
 }
 label {
   margin: 4px;

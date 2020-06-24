@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: 'StartMenu',
+  name: 'MenuSettings',
   data() {
     return {
       disableHolesSelect: false,
