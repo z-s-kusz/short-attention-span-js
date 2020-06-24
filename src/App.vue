@@ -39,4 +39,9 @@ button:hover {
 body {
   margin: 0;
 }
+button {
+  border-radius: 8px;
+  background-color: black;
+  padding: 12px 32px;
+}
 </style>
