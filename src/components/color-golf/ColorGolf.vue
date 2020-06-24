@@ -93,9 +93,12 @@ export default {
       const scoreCard = [];
       for (let i = 0; i < this.numberOfHoles; i++) {
         scoreCard.push({
-          r: 0,
-          g: 0,
-          b: 0,
+          redActual: 0,
+          greenActual: 0,
+          blueActual: 0,
+          redGuess: 0,
+          greenGuess: 0,
+          bluebGuess: 0,
           strokes: 0,
         });
       }
@@ -128,6 +131,7 @@ export default {
       let score = 0;
       const target = this.currentColor;
       const attempt = this.usersGuess;
+      // TODO is target.r value preventing simple math from working?
       score += Math.abs(target.r - attempt.r);
       score += Math.abs(target.g - attempt.g);
       score += Math.abs(target.b - attempt.b);
@@ -158,7 +162,6 @@ export default {
       this.showResults = true;
     },
     gameOver() {
-      // TODO track what the winning numbers were for each hole, emit those too
       this.$emit('game-completed', this.scoreCards);
       this.reset(true);
     },
@@ -183,9 +186,12 @@ export default {
     next() {
       const activeScoreCard = this.scoreCards[this.activePlayerIndex];
       activeScoreCard[this.holeNumber - 1] = {
-        r: this.usersGuess.r,
-        g: this.usersGuess.g,
-        b: this.usersGuess.b,
+        redActual: this.currentColor.r,
+        greenActual: this.currentColor.g,
+        blueActual: this.currentColor.b,
+        redGuess: this.usersGuess.r,
+        greenGuess: this.usersGuess.g,
+        blueGuess: this.usersGuess.b,
         strokes: this.shotCount,
       };
       if (this.holeNumber >= this.numberOfHoles

@@ -4,8 +4,9 @@
         v-on:start-click="startClick" />
       <color-golf v-show="gameState === 'playing'"
         v-bind="menuData" v-on:game-completed="gameCompleted" />
-      <game-over v-show="gameState === 'completed'"
-        v-bind:score-cards="scoreCards" v-on:go-to-menu="goToMenu" />
+      <game-over v-if="gameState === 'completed'"
+        v-bind:score-cards="scoreCards" v-bind:player-names="menuData.playerNames"
+        v-on:go-to-menu="goToMenu" />
   </div>
 </template>
 
