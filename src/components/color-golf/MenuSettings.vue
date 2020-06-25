@@ -58,12 +58,12 @@ export default {
       disableHolesSelect: false,
       distance: 60,
       distanceOptions: [
-        0, 10, 30, 60, 90, 180,
+        30, 60, 90, 180,
       ],
       gameMode: 'standard',
       numberOfHoles: 3,
       numberOfHolesOptions: [
-        1, 3, 6, 9, 18,
+        1, 3, 6, 9,
       ],
       playerCount: 1,
       playerNames: [
