@@ -19,15 +19,39 @@
     </div>
 
     <form>
-      <label>
-        R:<input placeholder="0 - 255" v-model="red" type="number" min="0" max="255"/>
-      </label>
-      <label>
-        G:<input placeholder="0 - 255" v-model="green" type="number" min="0" max="255" />
-      </label>
-      <label>
-        B:<input placeholder="0 - 255" v-model="blue" type="number" min="0" max="255" />
-      </label>
+      <div class="slider-container red">
+        <button v-on:click.prevent="adjustSlider('red', -10)">-10</button>
+        <button v-on:click.prevent="adjustSlider('red', -1)">-1</button>
+        <div class="slider-display">
+          <div>{{ red }}</div>
+          <input type="range" min="0" max="255"
+            v-model="red" class="slider">
+        </div>
+        <button v-on:click.prevent="adjustSlider('red', 1)">+1</button>
+        <button v-on:click.prevent="adjustSlider('red', 10)">+10</button>
+      </div>
+      <div class="slider-container green">
+        <button v-on:click.prevent="adjustSlider('green', -10)">-10</button>
+        <button v-on:click.prevent="adjustSlider('green', -1)">-1</button>
+        <div class="slider-display">
+          <div>{{ green }}</div>
+          <input type="range" min="0" max="255"
+            v-model="green" class="slider">
+        </div>
+        <button v-on:click.prevent="adjustSlider('green', 1)">+1</button>
+        <button v-on:click.prevent="adjustSlider('green', 10)">+10</button>
+      </div>
+      <div class="slider-container blue">
+        <button v-on:click.prevent="adjustSlider('blue', -10)">-10</button>
+        <button v-on:click.prevent="adjustSlider('blue', -1)">-1</button>
+        <div class="slider-display">
+          <div>{{ blue }}</div>
+          <input type="range" min="0" max="255"
+            v-model="blue" class="slider">
+        </div>
+        <button v-on:click.prevent="adjustSlider('blue', 1)">+1</button>
+        <button v-on:click.prevent="adjustSlider('blue', 10)">+10</button>
+      </div>
       <button v-on:click.prevent="enterClick()">enter</button>
     </form>
 
@@ -55,9 +79,9 @@ export default {
 
   data() {
     return {
-      red: '',
-      green: '',
-      blue: '',
+      red: 127,
+      green: 127,
+      blue: 127,
       showResults: false,
       message: '',
       showContinueButton: false,
@@ -117,6 +141,16 @@ export default {
   },
 
   methods: {
+    adjustSlider(color, amount) {
+      const colorValue = parseInt(this[color], 10); // slider changes value to a string!
+      if (colorValue + amount > 255) {
+        this[color] = 255;
+      } else if (colorValue + amount < 0) {
+        this[color] = 0;
+      } else {
+        this[color] = colorValue + amount;
+      }
+    },
     buildUsersGuessCSS() {
       const color = {
         r: this.red,
@@ -286,10 +320,66 @@ label {
   width:100%;
 }
 .course-message {
-  font-size: 48px;
+  font-size: 42px;
   color: black;
   -webkit-text-fill-color: white; /* Will override color (regardless of order) */
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: black;
+}
+button {
+  /* TODO investigate why I need to override a siblings stylsheet here??? */
+  min-width: 0;
+}
+.slider-container {
+  display: flex;
+}
+.slider-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+.slider:hover {
+  opacity: 1;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #000;
+  cursor: pointer;
+}
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #000;
+  cursor: pointer;
+}
+
+.red button, .red .slider-display div {
+  color: #f55;
+}
+.green button, .green .slider-display div {
+  color: #5f5;
+}
+.blue button, .blue .slider-display div {
+  color: #55f;
 }
 </style>
