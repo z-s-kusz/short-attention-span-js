@@ -22,8 +22,9 @@
           <label>Standard
             <input type="radio" value="standard" v-model="gameMode"/>
           </label>
-          <label>Closest to the Pin Challenge
-            <input type="radio" value="pinChallenge" v-model="gameMode"/>
+          <label>'Closest to the Pin' mode coming soon
+            <!-- TODO implement game mode -->
+            <!-- <input type="radio" value="pinChallenge" v-model="gameMode"/> -->
           </label>
         </div>
       </div>
