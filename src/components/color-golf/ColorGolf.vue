@@ -56,6 +56,7 @@
     </form>
 
     <div v-for="(scoreCard, j) in scoreCards" v-bind:key="j">
+      <span>{{ playerNames[j] }}: </span>
       <span v-for="(score, index) in scoreCard" v-bind:key="index">
         <span v-if="index !== 0"> | </span>
         <span>{{ score.strokes }}</span>
@@ -94,6 +95,8 @@ export default {
       activePlayerIndex: 0,
       holeNumber: 1,
       shotCount: 0,
+      recalculateScoreCards: false,
+      scoreCards: [],
     };
   },
 
@@ -112,25 +115,6 @@ export default {
     },
     playerName() {
       return this.playerNames[this.activePlayerIndex];
-    },
-    scoreCards() {
-      const scoreCard = [];
-      for (let i = 0; i < this.numberOfHoles; i++) {
-        scoreCard.push({
-          redActual: 0,
-          greenActual: 0,
-          blueActual: 0,
-          redGuess: 0,
-          greenGuess: 0,
-          bluebGuess: 0,
-          strokes: 0,
-        });
-      }
-      const scoreCards = [];
-      for (let i = 0; i < this.playerCount; i++) {
-        scoreCards.push([...scoreCard]); // spread opporator creates unique arrays for each player
-      }
-      return scoreCards;
     },
   },
 
@@ -172,9 +156,6 @@ export default {
       return score;
     },
     enterClick() {
-      if (this.red === '' || this.green === '' || this.blue === '') {
-        return; // TODO give user feedback
-      }
       if (this.showContinueButton) { // allows enter to double as continue button
         this.next();
         return;
@@ -258,8 +239,40 @@ export default {
     setColorCSS(color) {
       return `rgb(${color.r}, ${color.g}, ${color.b})`;
     },
+    // set scorecard not using computed becuase we need to manually reset it when the game ends
+    setScoreCards() {
+      const scoreCard = [];
+      for (let i = 0; i < this.numberOfHoles; i++) {
+        scoreCard.push({
+          redActual: 0,
+          greenActual: 0,
+          blueActual: 0,
+          redGuess: 0,
+          greenGuess: 0,
+          bluebGuess: 0,
+          strokes: 0,
+        });
+      }
+      const scoreCards = [];
+      for (let i = 0; i < this.playerCount; i++) {
+        scoreCards.push([...scoreCard]); // spread opporator creates unique arrays for each player
+      }
+      return this.scoreCards = scoreCards;
+    },
   },
 
+  watch: {
+    playerCount(newVal, previousVal) {
+      if (newVal !== previousVal) {
+        return this.setScoreCards();
+      }
+    },
+    numberOfHoles(newVal, previousVal) {
+      if (newVal !== previousValue) {
+        return this.setScoreCards();
+      }
+    },
+  },
 };
 </script>
 
