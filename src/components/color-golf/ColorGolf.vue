@@ -248,9 +248,9 @@ export default {
       this.usersGuess = {
         r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
       };
-      this.red = '';
-      this.green = '';
-      this.blue = '';
+      this.red = 127;
+      this.green = 127;
+      this.blue = 127;
       this.message = '';
       this.shotCount = 0;
       this.currentColor = this.getRandomColor();
@@ -291,11 +291,8 @@ input {
   display: flex;
   align-content: space-between;
   align-items: center;
-  width: 70%;
 }
 .info-panel span {
-  width: 50%;
-  align-self: center;
   margin: 8px;
 }
 .course {
