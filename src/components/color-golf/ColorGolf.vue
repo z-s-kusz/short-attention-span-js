@@ -318,10 +318,8 @@ label {
 }
 .course-message {
   font-size: 42px;
-  color: black;
-  -webkit-text-fill-color: white; /* Will override color (regardless of order) */
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: black;
+  color: white;
+  background-color: rgba(1, 1, 1, 0.4);
 }
 button {
   /* TODO investigate why I need to override a siblings stylsheet here??? */
@@ -378,5 +376,15 @@ button {
 }
 .blue button, .blue .slider-display div {
   color: #55f;
+}
+
+@media only screen and (max-width: 899px) {
+  button {
+    margin: 4px;
+    padding: 6px;
+  }
+  .course-message {
+    font-size: 26px;
+  }
 }
 </style>

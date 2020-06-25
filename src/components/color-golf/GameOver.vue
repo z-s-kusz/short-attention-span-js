@@ -1,17 +1,23 @@
 <template>
   <main>
-    <h3>Game stats for {{ playerNames[activeGraphIndex]}}:</h3>
+    <h3>Game Stats for {{ playerNames[activeGraphIndex] }}:</h3>
     <div class="carosel-container" v-if="useCarosel">
       <button @click="traverse()">Previous</button>
       <button @click="traverse('next')">Next</button>
     </div>
     <!-- TODO show background as actual color on hover, fill lines in color -->
-    <vue-apex-charts type="line" height="300" width="600"
-      :series="chartDataRed" :options="chartOptionsRed" />
-    <vue-apex-charts type="line"  height="300" width="600"
-      :series="chartDataGreen" :options="chartOptionsGreen" />
-    <vue-apex-charts type="line" height="300" width="600"
-      :series="chartDataBlue" :options="chartOptionsBlue" />
+    <div class="chart-container">
+      <vue-apex-charts type="line" height="300"
+        :series="chartDataRed" :options="chartOptionsRed" />
+    </div>
+    <div class="chart-container">
+      <vue-apex-charts type="line" height="300"
+        :series="chartDataGreen" :options="chartOptionsGreen" />
+    </div>
+    <div class="chart-container">
+      <vue-apex-charts type="line" height="300"
+        :series="chartDataBlue" :options="chartOptionsBlue" />
+    </div>
     <button v-on:click="goToMenu">Back to setup menu</button>
   </main>
 </template>
@@ -103,7 +109,7 @@ export default {
       return {
         chart: {
           height: 300,
-          width: 600, // TODO allow fit to mobile sizes
+          width: '100%',
           type: 'line',
           toolbar: {
             show: false,
@@ -127,15 +133,13 @@ export default {
         },
         yaxis: {
           title: {
-            text: `${color} Value`,
+            text: `${color} (0 - 255)`,
             style: {
               fontSize: 16,
               fill: color,
               color,
             },
           },
-          min: 0,
-          max: 255,
         },
       };
     },
@@ -176,5 +180,14 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.chart-container {
+  width: 100%;
+  max-width: 900px;
+}
+@media only screen and (max-width: 899px) {
+  .chart-container {
+    width: 90%;
+  }
 }
 </style>
