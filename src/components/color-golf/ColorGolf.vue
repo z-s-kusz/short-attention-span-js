@@ -220,6 +220,7 @@ export default {
       if (newGame) {
         this.holeNumber = 1;
         this.activePlayerIndex = 0;
+        this.setScoreCards();
       } else {
         if (this.activePlayerIndex + 1 === this.playerCount) this.holeNumber++;
         if (this.playerCount > 1) this.goToNextPlayer();
@@ -239,7 +240,8 @@ export default {
     setColorCSS(color) {
       return `rgb(${color.r}, ${color.g}, ${color.b})`;
     },
-    // set scorecard not using computed becuase we need to manually reset it when the game ends
+    // setScoreCards not using computed becuase we need to manually reset it when the game ends
+    // which isn't posible with vue's computed properties
     setScoreCards() {
       const scoreCard = [];
       for (let i = 0; i < this.numberOfHoles; i++) {
@@ -257,19 +259,19 @@ export default {
       for (let i = 0; i < this.playerCount; i++) {
         scoreCards.push([...scoreCard]); // spread opporator creates unique arrays for each player
       }
-      return this.scoreCards = scoreCards;
+      this.scoreCards = scoreCards;
     },
   },
 
   watch: {
     playerCount(newVal, previousVal) {
       if (newVal !== previousVal) {
-        return this.setScoreCards();
+        this.setScoreCards();
       }
     },
     numberOfHoles(newVal, previousVal) {
-      if (newVal !== previousValue) {
-        return this.setScoreCards();
+      if (newVal !== previousVal) {
+        this.setScoreCards();
       }
     },
   },
