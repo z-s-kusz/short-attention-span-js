@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
+      <router-link to="/">MGS1 Carousel Demo</router-link>
       <router-link to="/color-golf">Color Golf</router-link>
       <span @click="showModal = true">How to Play</span>
     </div>

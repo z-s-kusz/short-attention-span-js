@@ -1,13 +1,20 @@
 <template>
-  <div class="container">
-    <div v-for="(item, i) in items" :key="i"
-      class="item" :class="`class${i}`">
-      <div class="black-box-left"></div>
-      <div v-html="item.img" class="item-image"></div>
-      <div class="black-box-right"></div>
-      <span class="item-description">{{ item.description }}</span>
-      <span class="item-name">{{ item.name }}</span>
-      </div>
+  <div>
+    <div class="container">
+      <div v-for="(item, i) in items" :key="i"
+        class="item" :class="`class${i}`">
+        <div class="black-box-left"></div>
+        <div v-html="item.img" class="item-image"></div>
+        <div class="black-box-right"></div>
+        <span class="item-description">{{ item.description }}</span>
+        <span class="item-name">{{ item.name }}</span>
+        </div>
+    </div>
+    <h5 class="sorry-mobile">
+      Sorry mobile, this demo is modeled after
+      TV game content so it currently only works at desktop screen sizes (900px +).
+      Responsive styles coming soon!
+    </h5>
   </div>
 </template>
 
@@ -105,6 +112,7 @@ export default {
   background-image: url('https://www.marylandzoo.org/wp-content/uploads/2019/10/penguinslider2.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+  min-height: calc(100vh - 118px);
   position: initial;
   display: grid;
   grid-template-rows: repeat(5, 100px);
@@ -153,5 +161,18 @@ export default {
 
 .hide, .class4, .class5 {
   display: none;
+}
+
+
+.sorry-mobile {
+  display: none;
+}
+@media only screen and (max-width: 899px) {
+  .container {
+    display: none;
+  }
+  .sorry-mobile {
+    display: block;
+  }
 }
 </style>
