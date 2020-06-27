@@ -5,8 +5,8 @@
       <div class="black-box-left"></div>
       <div v-html="item.img" class="item-image"></div>
       <div class="black-box-right"></div>
-      <!-- <span>{{ item.description }}</span>
-      <span class="item-name">{{ item.name }}</span> -->
+      <span class="item-description">{{ item.description }}</span>
+      <span class="item-name">{{ item.name }}</span>
       </div>
   </div>
 </template>
@@ -21,7 +21,7 @@ const items = [
   { name: 'Notes', description: '4/4', img: '&#9835;' },
   { name: 'Snow', description: '', img: '&#10053;' },
   { name: 'Arrows', description: '3/10', img: '&#10163;' },
-  { name: 'Phone;', description: 'Call Me', img: '&phone;' },
+  { name: 'Phone', description: 'Call Me', img: '&phone;' },
 ];
 export default {
   name: 'MgsCarousel',
@@ -55,6 +55,7 @@ export default {
   justify-content: center;
   align-items: flex-end;
   background-color: rgba(255, 255, 255, 0.4);
+  position: relative;
 }
 .item-image {
   height: 100%;
@@ -66,12 +67,6 @@ export default {
   border-right: 6px solid black;
   font-size: 74px;
   color: purple;
-}
-.item-name {
-  font-size: 16px;
-  font-weight: 600;
-  color: rgba(25, 165, 170, 0.6);
-  background-color: rgba(1, 1, 1, 0.3);
 }
 .black-box-left {
   grid-row: 1 / 3;
@@ -87,8 +82,25 @@ export default {
   width: 100%;
   background-color: black;
 }
-
-
+.item-description {
+  position: absolute;
+  bottom: 20px;
+  box-sizing: border-box;
+  padding: 0 6px 0 18px;
+  font-size: 24px;
+  text-shadow: 2px 2px black;
+}
+.item-name {
+  position: absolute;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 6px;
+  text-align: right;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
 .container {
   background-image: url('https://www.marylandzoo.org/wp-content/uploads/2019/10/penguinslider2.jpg');
   background-size: cover;
@@ -98,6 +110,7 @@ export default {
   grid-template-rows: repeat(5, 100px);
   grid-template-columns: repeat(5, 160px);
   grid-gap: 20px 20px;
+  padding: 20px;
   /* Keep boxes in lower left */
   justify-content: left;
   align-content: end;
