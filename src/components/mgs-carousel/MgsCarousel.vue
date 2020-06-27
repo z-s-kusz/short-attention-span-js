@@ -65,8 +65,8 @@ export default {
   grid-column: 2 / 3;
   border-top: 2px solid black;
   border-right: 6px solid black;
-  font-size: 74px;
-  color: purple;
+  font-size: 54px;
+  color: rgba(128, 0, 128, 0.65);
 }
 .black-box-left {
   grid-row: 1 / 3;
@@ -95,7 +95,7 @@ export default {
   bottom: 0;
   box-sizing: border-box;
   width: 100%;
-  padding: 0 6px;
+  padding: 0 6px 0 18px;
   text-align: right;
   font-size: 16px;
   font-weight: 600;
@@ -115,11 +115,14 @@ export default {
   justify-content: left;
   align-content: end;
 }
+.class0 .item-image, .class0 .item-name, .class0 .item-description {
+  color: rgb(255, 68, 0);
+}
+
 
 .selected, .class0 {
   grid-row: 5 / 6;
   grid-column: 1 / 2;
-  color: orangered;
 }
 
 .previous1, .class6 {
