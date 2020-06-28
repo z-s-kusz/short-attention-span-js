@@ -17,5 +17,6 @@ module.exports = {
     'no-param-reassign': [2, { 'props': false }],
     'no-plusplus': 'off',
     'arrow-body-style': [2, 'always'],
+    'no-else-return': [0],
   },
 };
