@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div v-for="(item, i) in items" :key="i"
-        class="item" :class="`class${i}`">
+        class="item" :class="getItemClass(i)">
         <div class="black-box-left"></div>
         <div v-html="item.img" class="item-image"></div>
         <div class="black-box-right"></div>
@@ -10,7 +10,7 @@
         <span class="item-name">{{ item.name }}</span>
         </div>
     </div>
-    <h5 class="sorry-mobile">
+    <h5 class="show-sm-only">
       Sorry mobile, this demo is modeled after
       TV game content so it currently only works at desktop screen sizes (900px +).
       Responsive styles coming soon!
@@ -35,18 +35,94 @@ export default {
   data() {
     return {
       items,
-      previous3: items.length - 3,
-      previous2: items.length - 2,
-      previous1: items.length - 1,
+      previousItemIndicies: [8, 7, 6],
       selectedItemIndex: 0,
-      next1: 1, // todo dynamicly set these...
-      next2: 2,
-      next3: 3,
+      nextItemIndicies: [1, 2, 3],
     };
   },
+  computed: {
+    // how many items should appear on the top given this.items.length
+    // items only show up top when 3 or more are available
+    previousItemsCount() {
+      switch (this.items.length) {
+        case 0:
+        case 1:
+        case 2:
+          return 0;
+        case 3:
+        case 4:
+          return 1;
+        case 5:
+        case 6:
+          return 2;
+        default:
+          return 3;
+      }
+    },
+    // how many items should appear to the right given this.items.length
+    // items start to appear to the right first
+    nextItemsCount() {
+      switch (this.items.length) {
+        case 0:
+        case 1:
+          return 0;
+        case 2:
+        case 3:
+          return 1;
+        case 4:
+        case 5:
+          return 2;
+        default:
+          return 3;
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener('keypress', this.onKeyPress);
+  },
+  destroyed() {
+    window.removeEventListener('keypress', this.onKeyPress);
+  },
   methods: {
-    getPreviousItems(index) {
-      return index;
+    changeItemIndex(next, index) {
+      if (next) {
+        return index + 1 === this.items.length ? 0 : index + 1;
+      }
+      return index - 1 < 0 ? this.items.length - 1 : index - 1;
+    },
+    onKeyPress(event) {
+      const key = String.fromCharCode(event.keyCode);
+      if (key === 'd' || key === 's') {
+        this.selectedItemIndex = this.changeItemIndex(true, this.selectedItemIndex);
+        this.previousItemIndicies.forEach((previousItem, i) => {
+          this.previousItemIndicies[i] = this.changeItemIndex(true, previousItem);
+        });
+        this.nextItemIndicies.forEach((nextItem, i) => {
+          this.nextItemIndicies[i] = this.changeItemIndex(true, nextItem);
+        });
+      } else if (key === 'a' || key === 'w') {
+        this.selectedItemIndex = this.changeItemIndex(false, this.selectedItemIndex);
+        this.previousItemIndicies.forEach((previousItem, i) => {
+          this.previousItemIndicies[i] = this.changeItemIndex(false, previousItem);
+        });
+        this.nextItemIndicies.forEach((nextItem, i) => {
+          this.nextItemIndicies[i] = this.changeItemIndex(false, nextItem);
+        });
+      }
+    },
+    getItemClass(i) {
+      if (i === this.selectedItemIndex) {
+        return 'selected';
+      }
+      let classIndex;
+      if (this.previousItemIndicies.indexOf(i) !== -1) {
+        classIndex = this.previousItemIndicies.indexOf(i);
+        return `previous${classIndex}`;
+      } else if (this.nextItemIndicies.indexOf(i) !== -1) {
+        classIndex = this.nextItemIndicies.indexOf(i);
+        return `next${classIndex}`;
+      }
+      return 'hide';
     },
   },
 };
@@ -123,55 +199,52 @@ export default {
   justify-content: left;
   align-content: end;
 }
-.class0 .item-image, .class0 .item-name, .class0 .item-description {
+.selected .item-image, .selected .item-name, .selected .item-description {
   color: rgb(255, 68, 0);
 }
 
 
-.selected, .class0 {
+.selected {
   grid-row: 5 / 6;
   grid-column: 1 / 2;
 }
-
-.previous1, .class6 {
+.previous0 {
   grid-row: 4 / 5;
   grid-column: 1 / 2;
 }
-.previous2, .class7 {
+.previous1 {
   grid-row: 3 / 4;
   grid-column: 1 / 2;
 }
-.previous3, .class8 {
+.previous2 {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
 }
-
-.next1, .class1 {
+.next0 {
   grid-row: 5 / 6;
-  grid-auto-columns: 2 / 3;
+  grid-column: 2 / 3;
 }
-.next2, .class2 {
+.next1 {
   grid-row: 5 / 6;
-  grid-auto-columns: 3 / 4;
+  grid-column: 3 / 4;
 }
-.next3, .class3 {
+.next2 {
   grid-row: 5 / 6;
-  grid-auto-columns: 4 / 5;
+  grid-column: 4 / 5;
 }
-
-.hide, .class4, .class5 {
+.hide {
   display: none;
 }
 
 
-.sorry-mobile {
+.show-sm-only {
   display: none;
 }
 @media only screen and (max-width: 899px) {
   .container {
     display: none;
   }
-  .sorry-mobile {
+  .show-sm-only {
     display: block;
   }
 }
