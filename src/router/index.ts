@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    component: Home,
+    redirect: '/color-golf',
   },
   {
     path: '/about',
@@ -24,6 +23,13 @@ const routes = [
     name: 'ColorGolf',
     component: () => {
       return import('../views/ColorGolfParent.vue');
+    },
+  },
+  {
+    path: '/mgs-carousel',
+    name: 'MgsCarousel',
+    component: () => {
+      return import('../views/MgsCarouselParent.vue');
     },
   },
 ];

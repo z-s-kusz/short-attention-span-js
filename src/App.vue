@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">MGS1 Carousel Demo</router-link>
+      <router-link to="/mgs-carousel">MGS1 Carousel Demo</router-link>
       <router-link to="/color-golf">Color Golf</router-link>
-      <span @click="showModal = true">How to Play</span>
+      <span @click="showModal = true" v-show="route === '/color-golf'">How to Play</span>
     </div>
     <default-modal v-if="showModal" :body="modalBody" :header="modalHeader"
       v-on:close-modal="showModal = false" />
@@ -32,6 +32,11 @@ export default {
       showModal: false,
     };
   },
+  computed: {
+    route() {
+      return this.$route.fullPath;
+    },
+  },
 };
 </script>
 <style>
@@ -51,17 +56,19 @@ body {
   padding: 30px;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 
 #nav a {
   font-weight: bold;
   color: white;
+  padding: 0 20px;
 }
 
 #nav a.router-link-exact-active, #nav span {
   color: #9aecc7;
   cursor: pointer;
+  padding: 0 20px;
 }
 button:hover {
   cursor: pointer;

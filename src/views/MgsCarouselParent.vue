@@ -9,7 +9,7 @@
 import MgsCarousel from '@/components/mgs-carousel/MgsCarousel.vue';
 
 export default {
-  name: 'Home',
+  name: 'MgsCarouselParent',
   components: {
     MgsCarousel,
   },
