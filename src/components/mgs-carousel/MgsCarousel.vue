@@ -28,7 +28,7 @@ const items = [
   { name: 'Notes', description: '4/4', img: '&#9835;' },
   { name: 'Snow', description: '', img: '&#10053;' },
   { name: 'Arrows', description: '3/10', img: '&#10163;' },
-  { name: 'Phone', description: 'Call Me', img: '&phone;' },
+  { name: 'Phone', description: 'Telephone', img: '&phone;' },
 ];
 export default {
   name: 'MgsCarousel',
@@ -130,15 +130,16 @@ export default {
 
 <style scoped>
 .item {
-  height: 100%;
-  width: 100%;
+  height: 100px;
+  width: 160px;
   display: grid;
   grid-template-columns: 25% 75%;
   grid-template-rows: 78% 22%;
   justify-content: center;
   align-items: flex-end;
   background-color: rgba(255, 255, 255, 0.4);
-  position: relative;
+  position: absolute;
+  transition: all 150ms ease-in;
 }
 .item-image {
   height: 100%;
@@ -189,15 +190,7 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   min-height: calc(100vh - 118px);
-  position: initial;
-  display: grid;
-  grid-template-rows: repeat(5, 100px);
-  grid-template-columns: repeat(5, 160px);
-  grid-gap: 20px 20px;
-  padding: 20px;
-  /* Keep boxes in lower left */
-  justify-content: left;
-  align-content: end;
+  position: relative;
 }
 .selected .item-image, .selected .item-name, .selected .item-description {
   color: rgb(255, 68, 0);
@@ -205,32 +198,32 @@ export default {
 
 
 .selected {
-  grid-row: 5 / 6;
-  grid-column: 1 / 2;
+  bottom: 20px;
+  left: 20px;
 }
 .previous0 {
-  grid-row: 4 / 5;
-  grid-column: 1 / 2;
+  bottom: 140px; /* (20px gap * 2 + 100px height) */
+  left: 20px;
 }
 .previous1 {
-  grid-row: 3 / 4;
-  grid-column: 1 / 2;
+  bottom: 260px;
+  left: 20px;
 }
 .previous2 {
-  grid-row: 2 / 3;
-  grid-column: 1 / 2;
+  bottom: 380px;
+  left: 20px;
 }
 .next0 {
-  grid-row: 5 / 6;
-  grid-column: 2 / 3;
+  bottom: 20px;
+  left: 200px; /* (20px gap * 2 + 160px width) */
 }
 .next1 {
-  grid-row: 5 / 6;
-  grid-column: 3 / 4;
+  bottom: 20px;
+  left: 380px;
 }
 .next2 {
-  grid-row: 5 / 6;
-  grid-column: 4 / 5;
+  bottom: 20px;
+  left: 560px;
 }
 .hide {
   display: none;
