@@ -3,9 +3,7 @@
     <div class="container">
       <div v-for="(item, i) in items" :key="i"
         class="item" :class="getItemClass(i)">
-        <div class="black-box-left"></div>
         <div v-html="item.img" class="item-image"></div>
-        <div class="black-box-right"></div>
         <span class="item-description">{{ item.description }}</span>
         <span class="item-name">{{ item.name }}</span>
         </div>
@@ -132,9 +130,6 @@ export default {
 .item {
   height: 100px;
   width: 160px;
-  display: grid;
-  grid-template-columns: 25% 75%;
-  grid-template-rows: 78% 22%;
   justify-content: center;
   align-items: flex-end;
   background-color: rgba(255, 255, 255, 0.4);
@@ -148,42 +143,31 @@ export default {
   grid-row: 1 / 2;
   grid-column: 2 / 3;
   border-top: 2px solid black;
-  border-right: 6px solid black;
+  border-right: 8px solid black;
+  border-bottom: 22px solid black;
+  border-left: 40px solid black;
   font-size: 54px;
   color: rgba(128, 0, 128, 0.65);
-}
-.black-box-left {
-  grid-row: 1 / 3;
-  grid-column: 1 / 2;
-  height: 100%;
-  width: 100%;
-  background-color: black;
-}
-.black-box-right {
-  grid-row: 2 / 3;
-  grid-column: 2 / 3;
-  height: 100%;
-  width: 100%;
-  background-color: black;
 }
 .item-description {
   position: absolute;
   bottom: 20px;
+  left: 0;
   box-sizing: border-box;
-  padding: 0 6px 0 18px;
+  padding: 0 8px 0 18px;
   font-size: 24px;
   text-shadow: 2px 2px black;
 }
 .item-name {
   position: absolute;
   bottom: 0;
+  right: 0;
   box-sizing: border-box;
   width: 100%;
-  padding: 0 6px 0 18px;
+  padding: 0 8px 0 18px;
   text-align: right;
   font-size: 16px;
   font-weight: 600;
-  color: white;
 }
 .container {
   background-image: url('https://www.marylandzoo.org/wp-content/uploads/2019/10/penguinslider2.jpg');
