@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    redirect: 'color-golf',
+    redirect: '/color-golf',
   },
   {
     path: '/about',
@@ -23,6 +23,13 @@ const routes = [
     name: 'ColorGolf',
     component: () => {
       return import('../views/ColorGolfParent.vue');
+    },
+  },
+  {
+    path: '/mgs-carousel',
+    name: 'MgsCarousel',
+    component: () => {
+      return import('../views/MgsCarouselParent.vue');
     },
   },
 ];
