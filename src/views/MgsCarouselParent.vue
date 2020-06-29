@@ -9,13 +9,14 @@
       <p class="description">Screenshot from Metal Gear Solid 1.</p>
       <div class="flex-image">
         <div>
-          <p>I started this project to try to emulate one of the coolest item select screens I’ve
-            seen in software. The MGS1 item select is so interesting to me because it makes great
-            use of available screen real-estate in an unconventional way. The screenshot above
-            shows the item selector in action.</p>
-          <p>Many games center the item list or use a radial menu. The MGS1 interface keeps the
-            selected item exactly where it always is and revolves the list around it. This is
-            similar to the UI in some date and time selectors.</p>
+          <p>I created this demo to emulate one of the coolest item select screens I’ve
+            seen in software, the MGS1 item select. The screenshot above shows the item selector
+            in action.</p>
+          <p>Many games center item lists or use a radial menu, moving the select UI away from
+            the space the equiped item occupies. The MGS1 interface keeps the
+            selected item in one place and displays the list around it. This is
+            similar to user interfaces I've seen in some date and time selectors, like the one
+            pictured to the right.</p>
           <p>However, because the item display in MGS1 is in the left corner there is no room to
             show preceding items further left. So those items are rotated and placed above. I was
             thrown for a loop the first time I used it. I wasn’t sure where items were going as I
