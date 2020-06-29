@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>Carousel Demo: 'wasd' keys to page</h3>
     <div class="container">
       <div v-for="(item, i) in items" :key="i"
         class="item" :class="getItemClass(i)">
@@ -8,11 +9,10 @@
         <span class="item-name">{{ item.name }}</span>
         </div>
     </div>
-    <h5 class="show-sm-only">
+    <h1 class="show-sm-only">
       Sorry mobile, this demo is modeled after
-      TV game content so it currently only works at desktop screen sizes (900px +).
-      Responsive styles coming soon!
-    </h5>
+      TV game content so it only works at desktop screen sizes (900px +).
+    </h1>
   </div>
 </template>
 
@@ -147,7 +147,7 @@ export default {
   border-bottom: 22px solid black;
   border-left: 40px solid black;
   font-size: 54px;
-  color: rgba(128, 0, 128, 0.65);
+  color: rgba(0, 162, 255, 0.8);
 }
 .item-description {
   position: absolute;
@@ -176,8 +176,12 @@ export default {
   min-height: calc(100vh - 118px);
   position: relative;
 }
-.selected .item-image, .selected .item-name, .selected .item-description {
-  color: rgb(255, 68, 0);
+h3 {
+  text-align: start;
+  margin-bottom: 0;
+}
+.selected .item-image, h3 {
+  color: rgb(0, 136, 214);
 }
 
 
