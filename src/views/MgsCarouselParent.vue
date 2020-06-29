@@ -59,10 +59,10 @@
 
       <h3>Try It Out!</h3>
       <em>Keyboard input is required to use the carousel.</em>
-      <p>Use ‘wasd’ as arrow keys to move back and forth through the list. I find it easier to
-        stick with ‘a’ and ‘d’ (left and right) or ‘w’ and ‘s’ (up and down) instead of trying to
-        use all four at once. You can find the original game's item select instructions on page
-        32 of&nbsp;
+      <p>Hold 'i' to open the selector menu. Use ‘wasd’ as arrow keys to move back and forth
+        through the list. I find it easier to stick with ‘a’ and ‘d’ (left and right) or ‘w’
+        and ‘s’ (up and down) instead of trying to use all four at once. You can find the
+        original game's item select instructions on page 32 of&nbsp;
         <a href="https://www.gamesdatabase.org/Media/SYSTEM/Sony_Playstation/manual/Formated/Metal_Gear_Solid_-_1998_-_Konami.pdf"
           target="_blank">this pdf</a>.
       </p>

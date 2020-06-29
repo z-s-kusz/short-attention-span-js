@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Carousel Demo: 'wasd' keys to page</h3>
+    <h3>Carousel Demo: Hold 'i' to open menu, use 'wasd' keys to page</h3>
     <div class="container">
       <div v-for="(item, i) in items" :key="i"
         class="item" :class="getItemClass(i)">
@@ -25,17 +25,19 @@ const items = [
   { name: 'Pawns', description: '5/8', img: '&#9823;' },
   { name: 'Notes', description: '4/4', img: '&#9835;' },
   { name: 'Snow', description: '', img: '&#10053;' },
-  { name: 'Arrows', description: '3/10', img: '&#10163;' },
+  { name: 'No Item', description: '', img: '' },
   { name: 'Phone', description: 'Telephone', img: '&phone;' },
+  { name: 'Dice', description: '3/6', img: '&#9858;' },
 ];
 export default {
   name: 'MgsCarousel',
   data() {
     return {
       items,
-      previousItemIndicies: [8, 7, 6],
+      menuIsOpen: false,
+      previousItemIndicies: [9, 8, 7, 6],
       selectedItemIndex: 0,
-      nextItemIndicies: [1, 2, 3],
+      nextItemIndicies: [1, 2, 3, 4],
     };
   },
   computed: {
@@ -53,8 +55,10 @@ export default {
         case 5:
         case 6:
           return 2;
-        default:
+        case 7:
           return 3;
+        default:
+          return 4;
       }
     },
     // how many items should appear to the right given this.items.length
@@ -70,16 +74,23 @@ export default {
         case 4:
         case 5:
           return 2;
-        default:
+        case 6:
+        case 7:
           return 3;
+        default:
+          return 4;
       }
     },
   },
   mounted() {
     window.addEventListener('keypress', this.onKeyPress);
+    window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('keyup', this.onKeyUp);
   },
   destroyed() {
     window.removeEventListener('keypress', this.onKeyPress);
+    window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('keyup', this.onKeyUp);
   },
   methods: {
     changeItemIndex(next, index) {
@@ -89,6 +100,8 @@ export default {
       return index - 1 < 0 ? this.items.length - 1 : index - 1;
     },
     onKeyPress(event) {
+      if (!this.menuIsOpen) return;
+
       const key = String.fromCharCode(event.keyCode);
       if (key === 'd' || key === 's') {
         this.selectedItemIndex = this.changeItemIndex(true, this.selectedItemIndex);
@@ -108,10 +121,16 @@ export default {
         });
       }
     },
+    onKeyDown(event) {
+      if (event.keyCode === 73 && !this.menuIsOpen) this.menuIsOpen = true;
+    },
+    onKeyUp(event) {
+      if (event.keyCode === 73 && this.menuIsOpen) this.menuIsOpen = false;
+    },
     getItemClass(i) {
-      if (i === this.selectedItemIndex) {
-        return 'selected';
-      }
+      if (i === this.selectedItemIndex) return 'selected';
+      else if (!this.menuIsOpen) return 'hide';
+
       let classIndex;
       if (this.previousItemIndicies.indexOf(i) !== -1) {
         classIndex = this.previousItemIndicies.indexOf(i);
@@ -201,6 +220,10 @@ h3 {
   bottom: 380px;
   left: 20px;
 }
+.previous3 {
+  bottom: 500px;
+  left: 20px;
+}
 .next0 {
   bottom: 20px;
   left: 200px; /* (20px gap * 2 + 160px width) */
@@ -212,6 +235,10 @@ h3 {
 .next2 {
   bottom: 20px;
   left: 560px;
+}
+.next3 {
+  bottom: 20px;
+  left: 740px;
 }
 .hide {
   display: none;
