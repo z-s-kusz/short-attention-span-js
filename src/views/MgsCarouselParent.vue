@@ -11,7 +11,7 @@
         <div>
           <p>I created this demo to emulate one of the coolest item select screens I’ve
             seen in software, the MGS1 item select. The screenshot above shows the item selector
-            in action.</p>
+            in its active state.</p>
           <p>Many games center item lists or use a radial menu, moving the select UI away from
             the space the equiped item occupies. The MGS1 interface keeps the
             selected item in one place and displays the list around it. This is
