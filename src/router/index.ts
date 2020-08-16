@@ -32,6 +32,13 @@ const routes = [
       return import('../views/MgsCarouselParent.vue');
     },
   },
+  {
+    path: '/poetry',
+    name: 'Poetry',
+    component: () => {
+      return import('../views/PoetryParent.vue');
+    },
+  },
 ];
 
 const router = new VueRouter({
