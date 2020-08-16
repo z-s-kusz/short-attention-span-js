@@ -11,12 +11,12 @@
 <script>
 export default {
   name: 'Poem',
-    props: {
+  props: {
     title: String,
     author: String,
     lines: Array,
   },
-}
+};
 </script>
 
 <style>
