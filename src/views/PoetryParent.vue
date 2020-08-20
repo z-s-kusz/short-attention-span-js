@@ -47,7 +47,6 @@ export default {
     linkClick(linkObj) {
       const { item, path, mode } = linkObj;
       axios.get(baseUrl + path).then((dataObj) => {
-        console.log('data obj!!!', dataObj);
         if (mode === 'poems') {
           this.display = 'poem';
           this.poem = dataObj.data;

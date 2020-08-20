@@ -19,5 +19,6 @@ module.exports = {
     'arrow-body-style': [2, 'always'],
     'no-else-return': [0],
     'import/newline-after-import': [0],
+    'no-console': [2, { 'allow': ['warn', 'error'] }],
   },
 };
