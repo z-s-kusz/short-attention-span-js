@@ -1,44 +1,72 @@
 <template>
   <div class="main-container">
-    <h1>Poetry app page here!</h1>
-    <poem v-bind="poem"></poem>
+    <poem v-if="display === 'poem'" v-bind="poem"></poem>
+    <poem-listing v-if="display === 'list'"
+      v-on:link-click="linkClick" v-bind="poemListingData">
+    </poem-listing>
   </div>
 </template>
 
 <script>
 import Poem from '@/components/poetry/Poem.vue';
+import PoemListing from '@/components/poetry/PoemListing.vue';
 const axios = require('axios').default;
-const baseUrl = 'http://localhost:3000/poetry';
+const baseUrl = 'https://poetry-app-api.herokuapp.com/poetry';
+// const baseUrl = 'http://localhost:3000/poetry';
 
 export default {
   name: 'PoetryParent',
   components: {
     Poem,
+    PoemListing,
   },
   data() {
     return {
       sideNavOpen: false,
+      display: 'list', // list, poem
       poem: {
         author: '',
         title: '',
         lines: [],
       },
+      poemListingData: {
+        author: '',
+        items: [],
+        mode: 'authors',
+      },
     };
   },
   created() {
-    this.getPoem();
+    this.linkClick({
+      item: '',
+      path: '/authors',
+      mode: '',
+    });
   },
   methods: {
-    getPoem() {
-      const url = `${baseUrl}/title/Lines Written In Early Spring/author/William Wordsworth`;
-      axios.get(url).then((poemObj) => {
-        this.poem = poemObj.data;
+    linkClick(linkObj) {
+      const { item, path, mode } = linkObj;
+      axios.get(baseUrl + path).then((dataObj) => {
+        console.log('data obj!!!', dataObj);
+        if (mode === 'poems') {
+          this.display = 'poem';
+          this.poem = dataObj.data;
+        } else if (mode === 'authors') {
+          this.display = 'list';
+          this.poemListingData.items = dataObj.data.map((data) => {
+            return data.title;
+          });
+          this.poemListingData.author = item;
+          this.poemListingData.mode = 'poems';
+        } else { // show all authors call
+          this.display = 'list';
+          this.poemListingData.items = dataObj.data.authors;
+          this.poemListingData.author = '';
+          this.poemListingData.mode = 'authors';
+        }
       }).catch((err) => {
-        console.error('Err getting poem', err);
+        console.error(err);
       });
-    },
-    toggleSideNav() {
-      this.sideNavOpen = !this.sideNavOpen;
     },
   },
 };
