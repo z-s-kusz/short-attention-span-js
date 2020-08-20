@@ -8,7 +8,7 @@
     </div>
     <default-modal v-if="showModal" :body="modalBody" :header="modalHeader"
       v-on:close-modal="showModal = false" />
-    <router-view/>
+    <router-view :key="$route.path" />
   </div>
 </template>
 

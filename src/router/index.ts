@@ -34,9 +34,23 @@ const routes = [
   },
   {
     path: '/poetry',
-    name: 'Poetry',
+    name: 'AllAuthors',
     component: () => {
-      return import('../views/PoetryParent.vue');
+      return import('../views/PoemListing.vue');
+    },
+  },
+  {
+    path: '/poetry/author/:author',
+    name: 'PoemsByAuthor',
+    component: () => {
+      return import('../views/PoemListing.vue');
+    },
+  },
+  {
+    path: '/poetry/poem/:title/author/:author',
+    name: 'Poem',
+    component: () => {
+      return import('../views/Poem.vue');
     },
   },
 ];
