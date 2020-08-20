@@ -12,13 +12,12 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-param-reassign': [2, { 'props': false }],
     'no-plusplus': 'off',
     'arrow-body-style': [2, 'always'],
     'no-else-return': [0],
     'import/newline-after-import': [0],
-    'no-console': [2, { 'allow': ['warn', 'error'] }],
+    'no-console': [0],
   },
 };
