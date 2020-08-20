@@ -18,5 +18,6 @@ module.exports = {
     'no-plusplus': 'off',
     'arrow-body-style': [2, 'always'],
     'no-else-return': [0],
+    'import/newline-after-import': [0],
   },
 };

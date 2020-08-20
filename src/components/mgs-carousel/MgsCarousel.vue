@@ -203,7 +203,6 @@ h3 {
   color: rgb(0, 136, 214);
 }
 
-
 .selected {
   bottom: 20px;
   left: 20px;
@@ -243,7 +242,6 @@ h3 {
 .hide {
   display: none;
 }
-
 
 .show-sm-only {
   display: none;
