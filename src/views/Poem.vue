@@ -9,9 +9,8 @@
 </template>
 
 <script>
-const axios = require('axios').default;
-// const baseUrl = 'https://poetry-app-api.herokuapp.com/poetry';
-const baseUrl = 'http://localhost:3000/poetry';
+import axios from 'axios';
+import apiConfig from '@/services/poetry-api';
 
 export default {
   name: 'Poem',
@@ -29,7 +28,7 @@ export default {
   },
   methods: {
     getPoem() {
-      axios.get(`${baseUrl}/title/${this.title}/author/${this.author}`).then((res) => {
+      axios.get(`${apiConfig.baseUrl}/title/${this.title}/author/${this.author}`).then((res) => {
         console.log('res', res);
         this.lines = res.data[0].lines;
       }).catch((err) => {

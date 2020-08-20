@@ -8,9 +8,8 @@
 </template>
 
 <script>
-const axios = require('axios').default;
-// const baseUrl = 'https://poetry-app-api.herokuapp.com/poetry';
-const baseUrl = 'http://localhost:3000/poetry';
+import axios from 'axios';
+import apiConfig from '@/services/poetry-api';
 
 export default {
   name: 'PoemListing',
@@ -45,7 +44,7 @@ export default {
           };
         });
       } else {
-        axios.get(`${baseUrl}/authors`).then((res) => {
+        axios.get(`${apiConfig.baseUrl}/authors`).then((res) => {
           const storedAuthors = JSON.stringify(res.data.authors);
           localStorage.setItem('authors', storedAuthors);
 
@@ -61,8 +60,7 @@ export default {
       }
     },
     getPoemsByAuthor() {
-      axios.get(`${baseUrl}/author/${this.$route.params.author}`).then((res) => {
-        this.author = this.$route.params.author;
+      axios.get(`${apiConfig.baseUrl}/author/${this.author}`).then((res) => {
         this.items = res.data.map((item) => {
           return {
             value: item.title,
@@ -77,18 +75,18 @@ export default {
 };
 </script>
 
-<style scoped>
-.link:hover {
+<style>
+.poem-container .link:hover {
   cursor: pointer;
   box-shadow:0 0 18px rgb(252, 255, 92);
 }
-.link {
+.poem-container .link {
   color: white;
   display: block;
 }
 .poem-container {
   background: linear-gradient(145deg, rgba(2,0,36,1) 0%,
     rgb(35, 112, 2) 29%, rgb(0, 159, 190) 100%);
-  min-height: calc(100vh - 118px);
+  min-height: calc(100vh - 99px);
 }
 </style>
