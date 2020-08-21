@@ -1,4 +1,5 @@
 <template>
+<div class="flex-container">
   <div class="poem-container">
     <h1 class="secondary">{{ title }}</h1>
     <h6 class="secondary">by {{ author }}</h6>
@@ -6,6 +7,7 @@
       <p v-for="(line, i) in lines" :key="i">{{ line }}</p>
     </main>
   </div>
+</div>
 </template>
 
 <script>
