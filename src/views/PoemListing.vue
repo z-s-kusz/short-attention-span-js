@@ -1,12 +1,12 @@
 <template>
 <div class="flex-container">
-  <main class="poem-container">
-    <h1>{{ header }}</h1>
-    <router-link v-for="(item, i) in items" :key="i"
-      :to="item.link" class="link">{{item.value}}
-    </router-link>
-  </main>
-</div>
+    <main class="poem-container">
+      <h1>{{ header }}</h1>
+      <router-link v-for="(item, i) in items" :key="i"
+        :to="item.link" class="link">{{item.value}}
+      </router-link>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -104,5 +104,8 @@ export default {
   border-radius: 20px;
   border: 36px solid #eeeeee;
   width: 80%;
+  flex-direction: column;
+  align-content: center;
+  justify-content: start;
 }
 </style>

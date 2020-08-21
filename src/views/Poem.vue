@@ -40,7 +40,7 @@ export default {
   },
 };
 </script>
-
+<!-- TODO fix styles are broken on poems when loading directly to poem page -->
 <style>
 
 </style>
