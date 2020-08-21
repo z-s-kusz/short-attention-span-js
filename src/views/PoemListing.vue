@@ -78,6 +78,7 @@ export default {
 </script>
 
 <style>
+/*** styles intended to apply to poem page as well!!! ***/
 .flex-container {
   display: flex;
   flex-direction: row;
@@ -92,10 +93,15 @@ export default {
   color: white;
   display: block;
   padding: 4px 12px 4px 12px;
+  text-decoration: none;
+}
+.poem-container .link:first-of-type {
+  margin-top: 24px;
 }
 .poem-container h1 {
   padding: 36px 28px 24px 28px;
   margin: 0;
+  background-color: rgb(110, 52, 110);
 }
 .poem-container {
   background: linear-gradient(145deg, rgba(2,0,36,1) 0%,

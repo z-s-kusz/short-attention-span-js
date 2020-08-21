@@ -42,5 +42,5 @@ export default {
 </script>
 <!-- TODO fix styles are broken on poems when loading directly to poem page -->
 <style>
-
+/* Most styles applied from sibling PoemListing.vue */
 </style>

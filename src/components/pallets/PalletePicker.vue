@@ -30,6 +30,7 @@ export default {
   flex-wrap: wrap;
   align-content: space-between;
   justify-content: space-between;
+  margin: 4px 36px 24px 36px;
 }
 .pill {
   flex-basis: 1 0 50%;
