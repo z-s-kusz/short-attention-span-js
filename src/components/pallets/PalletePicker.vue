@@ -1,13 +1,13 @@
 <template>
   <div class="pill-box">
     <pallete-display v-for="pallete in palletes" :key="pallete.name"
-    v-bind="pallete" class="pill">
+      v-on:click.native="palleteClicked(pallete)" v-bind="pallete" class="pill">
     </pallete-display>
   </div>
 </template>
 
 <script>
-import palleteHelper from '@/services/pallete-helper';
+import PalleteHelper from '@/services/pallete-helper';
 import PalleteDisplay from '@/components/pallets/PalleteDisplay.vue';
 
 export default {
@@ -17,8 +17,14 @@ export default {
   },
   data() {
     return {
-      palletes: palleteHelper.palletes,
+      palletes: PalleteHelper.palletes,
     };
+  },
+  methods: {
+    palleteClicked(event) {
+      PalleteHelper.mutations.setColors(event.colors);
+      PalleteHelper.mutations.setName(event.name);
+    },
   },
 };
 </script>

@@ -1,4 +1,15 @@
+import Vue from 'vue';
+
 const palletes = [
+  {
+    colors: [
+      '#8566aa',
+      '#6983aa',
+      '#8ec6c5',
+      '#f4f4f4',
+    ],
+    name: 'Jazz Cup',
+  },
   {
     colors: [
       '#febf63',
@@ -55,15 +66,6 @@ const palletes = [
   },
   {
     colors: [
-      '#8566aa',
-      '#6983aa',
-      '#8ec6c5',
-      '#f4f4f4',
-    ],
-    name: 'Jazz Cup',
-  },
-  {
-    colors: [
       '#96d1c7',
       '#f5c3bc',
       '#e89da2',
@@ -73,6 +75,21 @@ const palletes = [
   },
 ];
 
+const store = Vue.observable({
+  colors: palletes[0].colors,
+  name: palletes[0].name,
+});
+const mutations = {
+  setColors(colors) {
+    store.colors = colors;
+  },
+  setName(name) {
+    store.name = name;
+  },
+};
+
 export default {
+  mutations,
   palletes,
+  store,
 };

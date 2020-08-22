@@ -1,9 +1,9 @@
 <template>
 <div class="flex-container">
-    <main class="poem-container">
-      <h1>{{ header }}</h1>
+    <main class="poem-container" :style="secondaryStyle">
+      <h1 :style="primaryStyle">{{ header }}</h1>
       <router-link v-for="(item, i) in items" :key="i"
-        :to="item.link" class="link">{{item.value}}
+        :to="item.link" class="link" :style="tertiaryStyle">{{item.value}}
       </router-link>
     </main>
   </div>
@@ -12,6 +12,7 @@
 <script>
 import axios from 'axios';
 import apiConfig from '@/services/poetry-api';
+import PalleteHelper from '@/services/pallete-helper';
 
 export default {
   name: 'PoemListing',
@@ -24,6 +25,24 @@ export default {
   computed: {
     header() {
       return this.$route.params.author ? `Poems by ${this.author}` : 'All Authors';
+    },
+    primaryStyle() {
+      return {
+        'background-color': PalleteHelper.store.colors[3],
+        color: PalleteHelper.store.colors[1],
+      };
+    },
+    secondaryStyle() {
+      return {
+        background: `linear-gradient(145deg, ${PalleteHelper.store.colors[2]} 0%,
+          ${PalleteHelper.store.colors[3]}) 100%`,
+        'border-color': PalleteHelper.store.colors[0],
+      };
+    },
+    tertiaryStyle() {
+      return {
+        color: PalleteHelper.store.colors[1],
+      };
     },
   },
   created() {
@@ -104,8 +123,6 @@ export default {
   background-color: rgb(110, 52, 110);
 }
 .poem-container {
-  background: linear-gradient(145deg, rgba(2,0,36,1) 0%,
-    rgb(35, 112, 2) 29%, rgb(0, 159, 190) 100%);
   min-height: calc(100vh - 99px);
   border-radius: 20px;
   border: 36px solid #eeeeee;
