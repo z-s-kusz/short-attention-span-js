@@ -1,16 +1,19 @@
 <template>
-  <div class="poem-container">
-    <h1 class="secondary">{{ title }}</h1>
-    <h6 class="secondary">by {{ author }}</h6>
-    <main class="tertiary">
-      <p v-for="(line, i) in lines" :key="i">{{ line }}</p>
+<div class="flex-container">
+  <div class="poem-container" :style="secondaryStyle">
+    <h1 :style="primaryStyle">{{ title }}</h1>
+    <h6>by {{ author }}</h6>
+    <main>
+      <p v-for="(line, i) in lines" :key="i" :style="tertiaryStyle">{{ line }}</p>
     </main>
   </div>
+</div>
 </template>
 
 <script>
 import axios from 'axios';
 import apiConfig from '@/services/poetry-api';
+import PalleteHelper from '@/services/pallete-helper';
 
 export default {
   name: 'Poem',
@@ -20,6 +23,26 @@ export default {
       title: '',
       lines: [],
     };
+  },
+  computed: {
+    primaryStyle() {
+      return {
+        'background-color': PalleteHelper.store.colors[3],
+        color: PalleteHelper.store.colors[1],
+      };
+    },
+    secondaryStyle() {
+      return {
+        background: `linear-gradient(145deg, ${PalleteHelper.store.colors[2]} 0%,
+          ${PalleteHelper.store.colors[3]}) 100%`,
+        'border-color': PalleteHelper.store.colors[0],
+      };
+    },
+    tertiaryStyle() {
+      return {
+        color: PalleteHelper.store.colors[1],
+      };
+    },
   },
   created() {
     this.author = this.$route.params.author;
@@ -38,7 +61,8 @@ export default {
   },
 };
 </script>
-
+<!-- TODO fix styles are broken on poems when loading directly to poem page
+Fix accesibility with poem fonts by adding black white text option-->
 <style>
-
+/* Most styles applied from sibling PoemListing.vue */
 </style>

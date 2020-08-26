@@ -4,7 +4,10 @@
       <router-link to="/mgs-carousel">MGS1 Carousel Demo</router-link>
       <router-link to="/poetry">Poetry</router-link>
       <router-link to="/color-golf">Color Golf</router-link>
-      <span @click="showModal = true" v-show="route === '/color-golf'">How to Play</span>
+      <span @click="showModal = true" v-show="showColorGolf">How to Play</span>
+    </div>
+    <div class="pallete-picker-menu" v-show="showPoetry">
+      <pallete-picker></pallete-picker>
     </div>
     <default-modal v-if="showModal" :body="modalBody" :header="modalHeader"
       v-on:close-modal="showModal = false" />
@@ -14,10 +17,12 @@
 
 <script>
 import DefaultModal from '@/components/DefaultModal.vue';
+import PalletePicker from '@/components/pallets/PalletePicker.vue';
 
 export default {
   components: {
     DefaultModal,
+    PalletePicker,
   },
   data() {
     return {
@@ -34,8 +39,11 @@ export default {
     };
   },
   computed: {
-    route() {
-      return this.$route.fullPath;
+    showColorGolf() {
+      return this.$route.fullPath.includes('/color-golf');
+    },
+    showPoetry() {
+      return this.$route.fullPath.includes('/poetry');
     },
   },
 };
@@ -81,5 +89,10 @@ button {
   border-radius: 8px;
   background-color: black;
   padding: 12px 32px;
+}
+.pallet-picker-menu {
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 </style>
