@@ -26,7 +26,7 @@ export default {
   margin: 6px 0 1px 0;
 }
 .container:hover {
-  font-weight: bold;
+  font-style: italic;
   cursor: pointer;
 }
 </style>

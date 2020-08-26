@@ -21,10 +21,10 @@ const palletes = [
   },
   {
     colors: [
-      '#59405c',
-      '#3c2c3e',
-      '#b52b65',
-      '#ed6663',
+      '#fc5185',
+      '#f5f5f5',
+      '#3fc1c9',
+      '#364f6b',
     ],
     name: 'Spilled Juice',
   },
@@ -33,7 +33,7 @@ const palletes = [
       '#c4fb6d',
       '#76ead7',
       '#393e46',
-      '#eeeeee',
+      '#364f6b',
     ],
     name: 'Starboard',
   },

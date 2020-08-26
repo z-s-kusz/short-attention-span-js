@@ -106,7 +106,7 @@ export default {
 }
 .poem-container .link:hover {
   cursor: pointer;
-  box-shadow:0 0 18px rgb(252, 255, 92);
+  font-weight: 800;
 }
 .poem-container .link {
   color: white;
