@@ -39,6 +39,6 @@ export default {
   margin: 4px 36px 24px 36px;
 }
 .pill {
-  flex-basis: 1 0 50%;
+  flex: 1 1 auto;
 }
 </style>

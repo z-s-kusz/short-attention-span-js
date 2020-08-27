@@ -1,15 +1,15 @@
 <template>
   <div>
-    <h1>Color Golf Settings</h1>
+    <h1>Color Golf</h1>
     <form>
       <div class="menu-group">
         <label>Group Size:
           <select v-model="playerCount">
             <option v-for="number in 4"
-              v-bind:key="number" v-bind:value="number">{{ number }}</option>
+              :key="number" :value="number">{{ number }}</option>
           </select>
         </label>
-        <div v-for="index in 4" v-bind:key="index" v-show="playerCount >= index">
+        <div v-for="index in 4" :key="index" v-show="playerCount >= index">
           <label>Player {{ index }} Name:&nbsp;
             <input type="text" v-model="playerNames[index - 1]"/>
           </label>
