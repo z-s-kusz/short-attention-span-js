@@ -49,18 +49,23 @@ export default {
 };
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+
 body {
   background-color: #333;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto Mono', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
   background-color: #333;
 }
-
+h1, h2, h3, h4, h5, h6 {
+  /* override chrome default weights */
+  font-weight: normal;
+}
 #nav {
   padding: 30px;
   display: flex;
@@ -69,7 +74,6 @@ body {
 }
 
 #nav a {
-  font-weight: bold;
   color: white;
   padding: 0 20px;
 }
@@ -89,6 +93,7 @@ button {
   border-radius: 8px;
   background-color: black;
   padding: 12px 32px;
+  font-family: 'Roboto Mono', monospace;
 }
 .pallet-picker-menu {
   display: flex;

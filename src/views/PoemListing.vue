@@ -138,7 +138,7 @@ export default {
 }
 .poem-container .link:hover {
   cursor: pointer;
-  font-weight: 800;
+  font-weight: 700;
 }
 .poem-container .link {
   color: white;

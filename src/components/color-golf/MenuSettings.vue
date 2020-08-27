@@ -16,18 +16,17 @@
         </div>
       </div>
 
-      <div class="menu-group">
+      <!-- TODO implement game mode -->
+      <!-- <div class="menu-group">
         <span>Game Mode:</span>
         <div class="radio-group">
           <label>Standard
             <input type="radio" value="standard" v-model="gameMode"/>
           </label>
           <label>'Closest to the Pin' mode coming soon
-            <!-- TODO implement game mode -->
-            <!-- <input type="radio" value="pinChallenge" v-model="gameMode"/> -->
           </label>
         </div>
-      </div>
+      </div> -->
 
       <div class="menu-group">
         <label>Distance To Hole:&nbsp;
@@ -45,7 +44,7 @@
         </label>
       </div>
       <button id="start" class="vertical-space-child"
-        v-on:click.prevent="startClick">start!</button>
+        v-on:click.prevent="startClick">&#10132; start!</button>
     </form>
   </div>
 </template>
@@ -99,16 +98,18 @@ export default {
 <style>
 * {
   color: white;
-  font-weight: 600;
 }
 option, select, input {
   color: black;
+  border-radius: 4px;
 }
 .white-text {
   color: white;
 }
 label {
   display: block;
+  padding: 12px;
+  padding-top: 0;
 }
 form {
   display: flex;
@@ -117,27 +118,29 @@ form {
   align-items: center;
 }
 .menu-group {
-  padding: 8px;
+  padding: 20px;
   box-sizing: border-box;
-  margin: 12px;
+  margin: 24px;
+  margin-top: 0;
   border: 4px solid white;
+  border-radius: 8px;
   width: 90%;
 }
 #start {
   height: 80px;
-  width: 90%;
+  width: 45%;
   margin: 12px;
   padding: 24px 36px;
   color: black;
-  font-weight: 900;
-  background-color: lawngreen;
+  font-weight: 700;
+  background-color: rgb(117, 211, 23);
 }
 @media only screen and (min-width: 900px) {
   .menu-group {
     width: 66%;
   }
   #start {
-    width: 44%;
+    width: 33%;
   }
 }
 </style>

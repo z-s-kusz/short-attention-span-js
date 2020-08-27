@@ -186,7 +186,6 @@ export default {
   padding: 0 8px 0 18px;
   text-align: right;
   font-size: 16px;
-  font-weight: 600;
 }
 .container {
   background-image: url('https://www.marylandzoo.org/wp-content/uploads/2019/10/penguinslider2.jpg');

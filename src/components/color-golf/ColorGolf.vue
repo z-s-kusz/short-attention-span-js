@@ -280,7 +280,6 @@ export default {
 
 <style scoped>
 * {
-  font-weight: 600;
   color: white;
 }
 input {
@@ -339,6 +338,9 @@ label {
 button {
   /* TODO investigate why I need to override a siblings stylsheet here??? */
   min-width: 0;
+}
+button:active {
+  background-color: #222;
 }
 .slider-container {
   display: flex;
