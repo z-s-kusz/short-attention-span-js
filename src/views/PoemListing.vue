@@ -1,12 +1,22 @@
 <template>
 <div class="flex-container">
-    <main class="poem-container" :style="secondaryStyle">
-      <h1 :style="primaryStyle">{{ header }}</h1>
-      <router-link v-for="(item, i) in items" :key="i"
-        :to="item.link" class="link" :style="tertiaryStyle">{{item.value}}
-      </router-link>
-    </main>
-  </div>
+  <main class="poem-container" :style="secondaryStyle">
+    <h1 :style="primaryStyle">{{ header }}</h1>
+
+    <router-link v-for="(item, i) in items" :key="i"
+      :to="item.link" class="link" :style="tertiaryStyle">{{item.value}}
+    </router-link>
+
+    <transition name="fade" appear>
+      <div v-show="loading" key="1">
+        <p>Loading...</p>
+        <p>Initial loading may take longer becuase the free
+          server from Heroku needs to be woken up first!
+        </p>
+      </div>
+    </transition>
+  </main>
+</div>
 </template>
 
 <script>
@@ -20,6 +30,7 @@ export default {
     return {
       author: '',
       items: [],
+      loading: false,
     };
   },
   computed: {
@@ -46,6 +57,8 @@ export default {
     },
   },
   created() {
+    if (!apiConfig.store.serverIsWoke) this.wakeServer();
+
     if (this.$route.params.author) {
       this.author = this.$route.params.author;
       this.getPoemsByAuthor();
@@ -65,7 +78,12 @@ export default {
           };
         });
       } else {
+        this.loading = true;
+
         axios.get(`${apiConfig.baseUrl}/authors`).then((res) => {
+          this.loading = false;
+          if (!apiConfig.store.serverIsWoke) apiConfig.store.setServerIsWoke(true);
+
           const storedAuthors = JSON.stringify(res.data.authors);
           localStorage.setItem('authors', storedAuthors);
 
@@ -76,18 +94,32 @@ export default {
             };
           });
         }).catch((err) => {
+          this.loading = false;
           console.error(err);
         });
       }
     },
     getPoemsByAuthor() {
+      this.loading = true;
+
       axios.get(`${apiConfig.baseUrl}/author/${this.author}`).then((res) => {
+        this.loading = false;
+        if (!apiConfig.store.serverIsWoke) apiConfig.store.setServerIsWoke(true);
+
         this.items = res.data.map((item) => {
           return {
             value: item.title,
             link: `/poetry/poem/${item.title}/author/${this.author}`,
           };
         });
+      }).catch((err) => {
+        this.loading = false;
+        console.error(err);
+      });
+    },
+    wakeServer() {
+      axios.get('https://poetry-app-api.herokuapp.com').then(() => {
+        if (!apiConfig.store.serverIsWoke) apiConfig.store.setServerIsWoke(true);
       }).catch((err) => {
         console.error(err);
       });
@@ -130,5 +162,13 @@ export default {
   flex-direction: column;
   align-content: center;
   justify-content: start;
+}
+
+.fade-enter-active {
+  transition: opacity 400ms;
+  transition-delay: 2s;
+}
+.fade-enter {
+  opacity: 0;
 }
 </style>
