@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Color Golf</h1>
+    <color-golf-title></color-golf-title>
     <form>
       <div class="menu-group">
         <label>Group Size:
@@ -50,8 +50,13 @@
 </template>
 
 <script>
+import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
+
 export default {
   name: 'MenuSettings',
+  components: {
+    ColorGolfTitle,
+  },
   data() {
     return {
       disableHolesSelect: false,

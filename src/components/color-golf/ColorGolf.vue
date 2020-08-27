@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="title">
-      <h1>Color Golf</h1>
-    </div>
+    <color-golf-title></color-golf-title>
 
     <div class="info-panel">
       <span>{{ playerName }}</span><span>Hole {{ holeNumber }}</span>
@@ -67,8 +65,12 @@
 </template>
 
 <script>
+import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
 export default {
   name: 'ColorGolf',
+  components: {
+    ColorGolfTitle,
+  },
 
   props: {
     distance: Number, // number the player must beat to complete the hole
