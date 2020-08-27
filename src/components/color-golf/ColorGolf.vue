@@ -52,7 +52,7 @@
         <button v-on:click.prevent="adjustSlider('blue', 1)">+1</button>
         <button v-on:click.prevent="adjustSlider('blue', 10)">+10</button>
       </div>
-      <button v-on:click.prevent="enterClick()">enter</button>
+      <button v-on:click.prevent="enterClick()">enter &#9971;</button>
     </form>
 
     <div v-for="(scoreCard, j) in scoreCards" v-bind:key="j">

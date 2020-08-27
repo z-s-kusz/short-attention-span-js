@@ -44,7 +44,7 @@
         </label>
       </div>
       <button id="start" class="vertical-space-child"
-        v-on:click.prevent="startClick">&#10132; start!</button>
+        v-on:click.prevent="startClick">&#8594; start &#8592;</button>
     </form>
   </div>
 </template>
