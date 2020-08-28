@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
+      <router-link to="/about">About</router-link>
       <router-link to="/mgs-carousel">MGS1 Carousel Demo</router-link>
       <router-link to="/poetry">Poetry</router-link>
       <router-link to="/color-golf">Color Golf</router-link>
