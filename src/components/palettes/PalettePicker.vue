@@ -37,6 +37,7 @@ export default {
   align-content: space-between;
   justify-content: space-between;
   margin: 4px 36px 24px 36px;
+  width: 100%;
 }
 .pill {
   flex: 1 1 auto;
