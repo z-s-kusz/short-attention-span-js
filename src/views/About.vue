@@ -75,7 +75,7 @@
 
 <script>
 import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
-import PalleteHelper from '@/services/pallete-helper';
+import PaletteHelper from '@/services/palette-helper';
 
 export default {
   name: 'About',
@@ -85,8 +85,8 @@ export default {
   computed: {
     poetryStyle() {
       return {
-        color: PalleteHelper.store.colors[1],
-        'background-color': PalleteHelper.store.colors[2],
+        color: PaletteHelper.store.colors[1],
+        'background-color': PaletteHelper.store.colors[2],
       };
     },
   },

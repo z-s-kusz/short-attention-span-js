@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'PalleteDisplay',
+  name: 'PaletteDisplay',
   props: {
     colors: Array,
     name: String,

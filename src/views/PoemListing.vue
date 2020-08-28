@@ -22,7 +22,7 @@
 <script>
 import axios from 'axios';
 import apiConfig from '@/services/poetry-api';
-import PalleteHelper from '@/services/pallete-helper';
+import PaletteHelper from '@/services/palette-helper';
 
 export default {
   name: 'PoemListing',
@@ -39,20 +39,20 @@ export default {
     },
     primaryStyle() {
       return {
-        'background-color': PalleteHelper.store.colors[3],
-        color: PalleteHelper.store.colors[1],
+        'background-color': PaletteHelper.store.colors[3],
+        color: PaletteHelper.store.colors[1],
       };
     },
     secondaryStyle() {
       return {
-        background: `linear-gradient(145deg, ${PalleteHelper.store.colors[2]} 0%,
-          ${PalleteHelper.store.colors[3]}) 100%`,
-        'border-color': PalleteHelper.store.colors[0],
+        background: `linear-gradient(145deg, ${PaletteHelper.store.colors[2]} 0%,
+          ${PaletteHelper.store.colors[3]}) 100%`,
+        'border-color': PaletteHelper.store.colors[0],
       };
     },
     tertiaryStyle() {
       return {
-        color: PalleteHelper.store.colors[1],
+        color: PaletteHelper.store.colors[1],
       };
     },
   },

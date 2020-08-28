@@ -7,8 +7,8 @@
       <router-link to="/color-golf">Color Golf</router-link>
       <span @click="showModal = true" v-show="showColorGolf">How to Play</span>
     </div>
-    <div class="pallete-picker-menu" v-show="showPoetry">
-      <pallete-picker></pallete-picker>
+    <div class="palette-picker-menu" v-show="showPoetry">
+      <palette-picker></palette-picker>
     </div>
     <default-modal v-if="showModal" :body="modalBody" :header="modalHeader"
       v-on:close-modal="showModal = false" />
@@ -18,12 +18,12 @@
 
 <script>
 import DefaultModal from '@/components/DefaultModal.vue';
-import PalletePicker from '@/components/pallets/PalletePicker.vue';
+import PalettePicker from '@/components/palettes/PalettePicker.vue';
 
 export default {
   components: {
     DefaultModal,
-    PalletePicker,
+    PalettePicker,
   },
   data() {
     return {
@@ -96,7 +96,7 @@ button {
   padding: 12px 32px;
   font-family: 'Roboto Mono', monospace;
 }
-.pallet-picker-menu {
+.palette-picker-menu {
   display: flex;
   align-content: center;
   justify-content: center;

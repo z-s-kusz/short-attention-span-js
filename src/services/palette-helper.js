@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-const palletes = [
+const palettes = [
   {
     colors: [
       '#8566aa',
@@ -76,8 +76,8 @@ const palletes = [
 ];
 
 const store = Vue.observable({
-  colors: palletes[0].colors,
-  name: palletes[0].name,
+  colors: palettes[0].colors,
+  name: palettes[0].name,
 });
 const mutations = {
   setColors(colors) {
@@ -90,6 +90,6 @@ const mutations = {
 
 export default {
   mutations,
-  palletes,
+  palettes,
   store,
 };
