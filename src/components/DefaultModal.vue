@@ -1,6 +1,5 @@
 <template>
   <transition name="modal">
-    <!-- TODO make modal close when clicking oputside of it -->
     <div class="modal-mask" @click="maskClick($event)">
       <div class="modal-wrapper">
         <div class="modal-container">
@@ -31,8 +30,10 @@
   </transition>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   name: 'DefaultModal',
   props: {
     header: String,
@@ -44,13 +45,13 @@ export default {
     },
   },
   methods: {
-    maskClick($event) {
-      if (this.closeOnOutsideClick && $event.toElement.className === 'modal-wrapper') {
+    maskClick($event: { target: HTMLInputElement}): void {
+      if (this.closeOnOutsideClick && $event.target.className === 'modal-wrapper') {
         this.$emit('close-modal');
       }
     },
   },
-};
+});
 </script>
 
 <style>

@@ -19,22 +19,28 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import axios from 'axios';
 import apiConfig from '@/services/poetry-api';
 import PaletteHelper from '@/services/palette-helper';
 
-export default {
+interface PoemListItem {
+  value: string;
+  link: string;
+}
+
+export default Vue.extend({
   name: 'PoemListing',
   data() {
     return {
       author: '',
-      items: [],
+      items: [] as PoemListItem[],
       loading: false,
     };
   },
   computed: {
-    header() {
+    header(): string {
       return this.$route.params.author ? `Poems by ${this.author}` : 'All Authors';
     },
     primaryStyle() {
@@ -67,10 +73,10 @@ export default {
     this.getAllAuthors();
   },
   methods: {
-    getAllAuthors() {
-      const storedList = JSON.parse(localStorage.getItem('authors'));
+    getAllAuthors(): void {
+      const storedList: string[] = JSON.parse(localStorage.getItem('authors') || '[]');
       // api NEVER changes, just store the list
-      if (storedList && storedList.length) {
+      if (storedList.length) {
         this.items = storedList.map((author) => {
           return {
             value: author,
@@ -80,7 +86,12 @@ export default {
       } else {
         this.loading = true;
 
-        axios.get(`${apiConfig.baseUrl}/authors`).then((res) => {
+        interface Response {
+          data: {
+            authors: string[];
+          };
+        }
+        axios.get(`${apiConfig.baseUrl}/authors`).then((res: Response) => {
           this.loading = false;
           if (!apiConfig.store.serverIsWoke) apiConfig.store.setServerIsWoke(true);
 
@@ -97,12 +108,19 @@ export default {
           this.loading = false;
           console.error(err);
         });
+        // TODO use finally
       }
     },
-    getPoemsByAuthor() {
+    getPoemsByAuthor(): void {
       this.loading = true;
 
-      axios.get(`${apiConfig.baseUrl}/author/${this.author}`).then((res) => {
+      interface Response {
+        data: {
+          title: string;
+          author: string;
+        }[];
+      }
+      axios.get(`${apiConfig.baseUrl}/author/${this.author}`).then((res: Response) => {
         this.loading = false;
         if (!apiConfig.store.serverIsWoke) apiConfig.store.setServerIsWoke(true);
 
@@ -117,7 +135,7 @@ export default {
         console.error(err);
       });
     },
-    wakeServer() {
+    wakeServer(): void {
       axios.get('https://poetry-app-api.herokuapp.com').then(() => {
         if (!apiConfig.store.serverIsWoke) apiConfig.store.setServerIsWoke(true);
       }).catch((err) => {
@@ -125,7 +143,7 @@ export default {
       });
     },
   },
-};
+});
 </script>
 
 <style>

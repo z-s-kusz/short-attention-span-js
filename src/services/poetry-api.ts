@@ -3,7 +3,7 @@ const baseUrl = 'https://poetry-app-api.herokuapp.com/poetry';
 
 const store = {
   serverIsWoke: false,
-  setServerIsWoke(value) {
+  setServerIsWoke(value: boolean) {
     this.serverIsWoke = value;
   },
 };

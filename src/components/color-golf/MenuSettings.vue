@@ -49,10 +49,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
 
-export default {
+export default Vue.extend({
   name: 'MenuSettings',
   components: {
     ColorGolfTitle,
@@ -76,7 +77,7 @@ export default {
     };
   },
   methods: {
-    startClick() {
+    startClick(): void {
       const data = {
         distance: this.distance,
         gameMode: this.gameMode,
@@ -88,7 +89,7 @@ export default {
     },
   },
   watch: {
-    gameMode(value) { // using watch instead of computed to assign distance easier
+    gameMode(value): void { // using watch instead of computed to assign distance easier
       if (value === 'pinChallenge') {
         this.distance = 0;
         this.disableHolesSelect = true;
@@ -97,7 +98,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style>

@@ -6,11 +6,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import PaletteHelper from '@/services/palette-helper';
 import PaletteDisplay from '@/components/palettes/PaletteDisplay.vue';
 
-export default {
+interface Palette {
+  colors: string[];
+  name: string;
+}
+
+export default Vue.extend({
   name: 'PalettePicker',
   components: {
     PaletteDisplay,
@@ -21,12 +27,12 @@ export default {
     };
   },
   methods: {
-    paletteClicked(event) {
-      PaletteHelper.mutations.setColors(event.colors);
-      PaletteHelper.mutations.setName(event.name);
+    paletteClicked(palette: Palette) {
+      PaletteHelper.mutations.setColors(palette.colors);
+      PaletteHelper.mutations.setName(palette.name);
     },
   },
-};
+});
 </script>
 
 <style scope>

@@ -72,15 +72,15 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import Vue from 'vue';
 import MgsCarousel from '@/components/mgs-carousel/MgsCarousel.vue';
 
-export default {
+export default Vue.extend({
   name: 'MgsCarouselParent',
   components: {
     MgsCarousel,
   },
-};
+});
 </script>
 
 <style scoped>
