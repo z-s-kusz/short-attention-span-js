@@ -70,6 +70,7 @@ h1, h2, h3, h4, h5, h6 {
 #nav {
   padding: 30px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
 }
