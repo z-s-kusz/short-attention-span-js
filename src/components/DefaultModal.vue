@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <!-- TODO make modal close when clicking oputside of it -->
-    <div class="modal-mask">
+    <div class="modal-mask" @click="maskClick($event)">
       <div class="modal-wrapper">
         <div class="modal-container">
 
@@ -38,6 +38,17 @@ export default {
     header: String,
     body: String,
     footer: String,
+    closeOnOutsideClick: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  methods: {
+    maskClick($event) {
+      if (this.closeOnOutsideClick && $event.toElement.className === 'modal-wrapper') {
+        this.$emit('close-modal');
+      }
+    },
   },
 };
 </script>
