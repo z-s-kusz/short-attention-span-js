@@ -16,7 +16,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
+
 const items = [
   { name: 'Star', description: '', img: '&#10029;' },
   { name: 'Shamrock', description: 'Lucky', img: '&#9752;' },
@@ -29,7 +31,8 @@ const items = [
   { name: 'Phone', description: 'Telephone', img: '&phone;' },
   { name: 'Dice', description: '3/6', img: '&#9858;' },
 ];
-export default {
+
+export default Vue.extend({
   name: 'MgsCarousel',
   data() {
     return {
@@ -43,7 +46,7 @@ export default {
   computed: {
     // how many items should appear on the top given this.items.length
     // items only show up top when 3 or more are available
-    previousItemsCount() {
+    previousItemsCount(): number {
       switch (this.items.length) {
         case 0:
         case 1:
@@ -63,7 +66,7 @@ export default {
     },
     // how many items should appear to the right given this.items.length
     // items start to appear to the right first
-    nextItemsCount() {
+    nextItemsCount(): number {
       switch (this.items.length) {
         case 0:
         case 1:
@@ -93,13 +96,13 @@ export default {
     window.removeEventListener('keyup', this.onKeyUp);
   },
   methods: {
-    changeItemIndex(next, index) {
+    changeItemIndex(next: boolean, index: number): number {
       if (next) {
         return index + 1 === this.items.length ? 0 : index + 1;
       }
       return index - 1 < 0 ? this.items.length - 1 : index - 1;
     },
-    onKeyPress(event) {
+    onKeyPress(event: KeyboardEvent): void {
       if (!this.menuIsOpen) return;
 
       const key = String.fromCharCode(event.keyCode);
@@ -121,13 +124,13 @@ export default {
         });
       }
     },
-    onKeyDown(event) {
+    onKeyDown(event: KeyboardEvent): void {
       if (event.keyCode === 73 && !this.menuIsOpen) this.menuIsOpen = true;
     },
-    onKeyUp(event) {
+    onKeyUp(event: KeyboardEvent): void {
       if (event.keyCode === 73 && this.menuIsOpen) this.menuIsOpen = false;
     },
-    getItemClass(i) {
+    getItemClass(i: number): string {
       if (i === this.selectedItemIndex) return 'selected';
       else if (!this.menuIsOpen) return 'hide';
 
@@ -142,7 +145,7 @@ export default {
       return 'hide';
     },
   },
-};
+});
 </script>
 
 <style scoped>

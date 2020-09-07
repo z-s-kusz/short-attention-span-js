@@ -10,18 +10,19 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import axios from 'axios';
 import apiConfig from '@/services/poetry-api';
 import PaletteHelper from '@/services/palette-helper';
 
-export default {
+export default Vue.extend({
   name: 'Poem',
   data() {
     return {
       author: '',
       title: '',
-      lines: [],
+      lines: [] as string[],
     };
   },
   computed: {
@@ -50,8 +51,14 @@ export default {
     this.getPoem();
   },
   methods: {
-    getPoem() {
-      axios.get(`${apiConfig.baseUrl}/title/${this.title}/author/${this.author}`).then((res) => {
+    getPoem(): void {
+      interface Response {
+        data: {
+          lines: string[];
+        }[];
+      }
+      const url = `${apiConfig.baseUrl}/title/${this.title}/author/${this.author}`;
+      axios.get(url).then((res: Response) => {
         console.log('res', res);
         this.lines = res.data[0].lines;
       }).catch((err) => {
@@ -59,7 +66,7 @@ export default {
       });
     },
   },
-};
+});
 </script>
 <!-- TODO fix styles are broken on poems when loading directly to poem page
 Fix accesibility with poem fonts by adding black white text option-->

@@ -80,10 +80,10 @@ const store = Vue.observable({
   name: palettes[0].name,
 });
 const mutations = {
-  setColors(colors) {
+  setColors(colors: string[]) {
     store.colors = colors;
   },
-  setName(name) {
+  setName(name: string) {
     store.name = name;
   },
 };

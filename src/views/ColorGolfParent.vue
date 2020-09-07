@@ -10,12 +10,30 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import ColorGolf from '@/components/color-golf/ColorGolf.vue';
 import GameOver from '@/components/color-golf/GameOver.vue';
 import MenuSettings from '@/components/color-golf/MenuSettings.vue';
 
-export default {
+interface MenuData {
+  distance: number;
+  gameMode: string;
+  numberOfHoles: number;
+  playerCount: number;
+  playerNames: string[];
+}
+interface ScoreCard {
+  redActual: number;
+  greenActual: number;
+  blueActual: number;
+  redGuess: string; // user input is string
+  greenGuess: string;
+  bluebGuess: string;
+  strokes: number;
+}
+
+export default Vue.extend({
   name: 'ColorGolfParent',
   components: {
     ColorGolf,
@@ -34,25 +52,21 @@ export default {
           'Player 1', 'Player 2', 'Player 3', 'Player 4',
         ],
       },
-      scoreCards: [],
+      scoreCards: [] as ScoreCard[],
     };
   },
   methods: {
-    gameCompleted(scoreCardData) {
+    gameCompleted(scoreCardData: ScoreCard[]): void {
       this.scoreCards = scoreCardData;
       this.gameState = 'completed';
     },
-    goToMenu() {
+    goToMenu(): void {
       this.gameState = 'menu';
     },
-    startClick(menuData) {
+    startClick(menuData: MenuData): void {
       this.menuData = menuData;
       this.gameState = 'playing';
     },
   },
-};
+});
 </script>
-
-<style>
-
-</style>

@@ -16,11 +16,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import DefaultModal from '@/components/DefaultModal.vue';
 import PalettePicker from '@/components/palettes/PalettePicker.vue';
 
-export default {
+export default Vue.extend({
   components: {
     DefaultModal,
     PalettePicker,
@@ -40,14 +41,14 @@ export default {
     };
   },
   computed: {
-    showColorGolf() {
+    showColorGolf(): boolean {
       return this.$route.fullPath.includes('/color-golf');
     },
-    showPoetry() {
+    showPoetry(): boolean {
       return this.$route.fullPath.includes('/poetry');
     },
   },
-};
+});
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');

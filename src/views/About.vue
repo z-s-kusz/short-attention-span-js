@@ -73,11 +73,12 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
 import PaletteHelper from '@/services/palette-helper';
 
-export default {
+export default Vue.extend({
   name: 'About',
   components: {
     ColorGolfTitle,
@@ -90,7 +91,7 @@ export default {
       };
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
