@@ -95,6 +95,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/main.scss';
+
 .flex-container {
   display: flex;
   flex-direction: row;

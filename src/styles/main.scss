@@ -1,0 +1,21 @@
+/*
+This file needs to be imported by every component
+any global styles like font and buttons should go here
+*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+
+h1, h2, h3, h4, h5, h6 {
+  /* override chrome default weights */
+  font-weight: normal;
+}
+
+button {
+  border-radius: 8px;
+  background-color: black;
+  padding: 12px 32px;
+  font-family: 'Roboto Mono', monospace;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
