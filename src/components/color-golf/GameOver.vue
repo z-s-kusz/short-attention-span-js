@@ -22,144 +22,151 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  Component,
+  Vue,
+  Prop,
+} from 'vue-property-decorator';
 import VueApexCharts from 'vue-apexcharts';
 
-export default {
-  name: 'GameOver',
+interface ScoreCardItem { // TODO DRY up
+  redActual: number;
+  greenActual: number;
+  blueActual: number;
+  redGuess: number;
+  greenGuess: number;
+  blueGuess: number;
+  strokes: number;
+}
+
+@Component({
   components: {
     VueApexCharts,
   },
-  props: {
-    scoreCards: {
-      type: Array,
-      default() {
-        return {
-          redActual: 0,
-          greenActual: 0,
-          blueActual: 0,
-          redGuess: '0', // strings becuase of user input type
-          greenGuess: '0',
-          blueGuess: '0',
-          strokes: 0,
-        };
-      },
-    },
-    playerNames: Array,
-  },
-  data() {
-    return {
-      activeGraphIndex: 0,
-      chartOptionsRed: this.getChartPrototype('Red'),
-      chartOptionsGreen: this.getChartPrototype('Green'),
-      chartOptionsBlue: this.getChartPrototype('Blue'),
+})
+export default class GameOver extends Vue {
+  activeGraphIndex = 0;
+  chartOptionsRed = this.getChartPrototype('Red');
+  chartOptionsGreen = this.getChartPrototype('Green');
+  chartOptionsBlue = this.getChartPrototype('Blue');
+
+  @Prop({
+    default: [],
+  }) playerNames!: string[];
+  @Prop({
+    default: [],
+  }) scoreCards!: ScoreCardItem[][];
+
+  get chartDataRed() {
+    const chartData = this.buildColorData('red', this.activeGraphIndex);
+    const chartDataRed = [
+      { name: 'Actual Value', data: chartData.actualDataSet },
+      { name: 'Your Guess', data: chartData.guessDataSet },
+    ];
+    return chartDataRed;
+  }
+  get chartDataGreen() {
+    const chartData = this.buildColorData('green', this.activeGraphIndex);
+    const chartDataRed = [
+      { name: 'Actual Value', data: chartData.actualDataSet },
+      { name: 'Your Guess', data: chartData.guessDataSet },
+    ];
+    return chartDataRed;
+  }
+  get chartDataBlue() {
+    const chartData = this.buildColorData('blue', this.activeGraphIndex);
+    const chartDataRed = [
+      { name: 'Actual Value', data: chartData.actualDataSet },
+      { name: 'Your Guess', data: chartData.guessDataSet },
+    ];
+    return chartDataRed;
+  }
+  get useCarosel() {
+    return this.scoreCards.length > 1;
+  }
+
+  buildColorData(color: string, scoreCardIndex: number) {
+    const graphData = {
+      actualDataSet: [] as number[],
+      guessDataSet: [] as number[],
     };
-  },
-  computed: {
-    chartDataRed() {
-      const chartData = this.buildColorData('red', this.activeGraphIndex);
-      const chartDataRed = [
-        { name: 'Actual Value', data: chartData.actualDataSet },
-        { name: 'Your Guess', data: chartData.guessDataSet },
-      ];
-      return chartDataRed;
-    },
-    chartDataGreen() {
-      const chartData = this.buildColorData('green', this.activeGraphIndex);
-      const chartDataRed = [
-        { name: 'Actual Value', data: chartData.actualDataSet },
-        { name: 'Your Guess', data: chartData.guessDataSet },
-      ];
-      return chartDataRed;
-    },
-    chartDataBlue() {
-      const chartData = this.buildColorData('blue', this.activeGraphIndex);
-      const chartDataRed = [
-        { name: 'Actual Value', data: chartData.actualDataSet },
-        { name: 'Your Guess', data: chartData.guessDataSet },
-      ];
-      return chartDataRed;
-    },
-    useCarosel() {
-      return this.scoreCards.length > 1;
-    },
-  },
-  methods: {
-    buildColorData(color, scoreCardIndex) {
-      const graphData = {
-        actualDataSet: [],
-        guessDataSet: [],
-      };
-      const playerScoreCard = this.scoreCards[scoreCardIndex];
-      playerScoreCard.forEach((score) => {
-        const yCoordinatesActual = score[`${color}Actual`];
-        let yCoordinatesGuess = score[`${color}Guess`];
-        yCoordinatesGuess = parseInt(yCoordinatesGuess, 10);
-        graphData.actualDataSet.push(yCoordinatesActual);
-        graphData.guessDataSet.push(yCoordinatesGuess);
-      });
-      return graphData;
-    },
-    getCategories() {
-      return this.scoreCards[0].map((score, i) => {
-        return i + 1;
-      });
-    },
-    getChartPrototype(color) {
-      return {
-        chart: {
-          height: 300,
-          width: '100%',
-          type: 'line',
-          toolbar: {
-            show: false,
+    const playerScoreCard = this.scoreCards[scoreCardIndex];
+    playerScoreCard.forEach((score) => {
+      // gross 'as any' workaround so typescript knows we only access valid properties of score
+      const actual: 'redActual' | 'greenActual' | 'blueActual' = `${color}Actual` as any;
+      const guess: 'redActual' | 'greenGuess' | 'blueGuess' = `${color}Guess` as any;
+      const yCoordinatesActual: number = score[actual];
+      const yCoordinatesGuess: number = score[guess];
+      graphData.actualDataSet.push(yCoordinatesActual);
+      graphData.guessDataSet.push(yCoordinatesGuess);
+    });
+    return graphData;
+  }
+
+  getCategories(): number[] {
+    return this.scoreCards[0].map((score, i) => {
+      return i + 1;
+    });
+  }
+
+  getChartPrototype(color: string) {
+    return {
+      chart: {
+        height: 300,
+        width: '100%',
+        type: 'line',
+        toolbar: {
+          show: false,
+        },
+      },
+      theme: {
+        mode: 'dark',
+      },
+      markers: {
+        size: 3,
+      },
+      stroke: {
+        curve: 'straight',
+      },
+      colors: [color, 'white'], // sets data point and line color
+      xaxis: {
+        categories: this.getCategories(),
+        title: {
+          text: 'Hole Number',
+        },
+      },
+      yaxis: {
+        title: {
+          text: `${color} (0 - 255)`,
+          style: {
+            fontSize: 16,
+            fill: color,
+            color,
           },
         },
-        theme: {
-          mode: 'dark',
-        },
-        markers: {
-          size: 3,
-        },
-        stroke: {
-          curve: 'straight',
-        },
-        colors: [color, 'white'], // sets data point and line color
-        xaxis: {
-          categories: this.getCategories(),
-          title: {
-            text: 'Hole Number',
-          },
-        },
-        yaxis: {
-          title: {
-            text: `${color} (0 - 255)`,
-            style: {
-              fontSize: 16,
-              fill: color,
-              color,
-            },
-          },
-        },
-      };
-    },
-    goToMenu() {
-      this.$emit('go-to-menu');
-    },
-    traverse(direction) {
-      const totalPlayers = this.scoreCards.length;
-      if (direction === 'next') {
-        this.activeGraphIndex = this.activeGraphIndex + 1 === totalPlayers
-          ? 0
-          : this.activeGraphIndex + 1;
-      } else {
-        this.activeGraphIndex = this.activeGraphIndex === 0
-          ? totalPlayers - 1
-          : this.activeGraphIndex - 1;
-      }
-    },
-  },
-};
+      },
+    };
+  }
+
+  goToMenu(): void {
+    this.$emit('go-to-menu');
+  }
+
+  traverse(direction?: string) {
+    const totalPlayers = this.scoreCards.length;
+    if (direction === 'next') {
+      this.activeGraphIndex = this.activeGraphIndex + 1 === totalPlayers
+        ? 0
+        : this.activeGraphIndex + 1;
+    } else {
+      this.activeGraphIndex = this.activeGraphIndex === 0
+        ? totalPlayers - 1
+        : this.activeGraphIndex - 1;
+    }
+  }
+
+}
 </script>
 
 <style>

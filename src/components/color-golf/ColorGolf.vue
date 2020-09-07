@@ -128,29 +128,29 @@ export default class ColorGolf extends Vue {
     return {
       'show-user-guess': this.showResults,
     };
-  };
+  }
   get courseStyle() {
     return this.showResults ? {
       background: `linear-gradient(135deg, ${this.currentColor.css} 50%, ${this.usersGuess.css} 50%`,
     } : {
       'background-color': this.currentColor.css,
     };
-  };
+  }
   get playerName() {
     return this.playerNames[this.activePlayerIndex];
-  };
+  }
 
   // lifecycle
   created() {
-    const color = this.getRandomColor();
-    color.css = this.setColorCSS(color);
+    const color = ColorGolf.getRandomColor();
+    color.css = ColorGolf.setColorCSS(color);
     this.currentColor = color;
-  };
+  }
 
-// methods
+  // methods
   adjustSlider(color: 'red' |'blue' | 'green', amount: number): void {
-     // slider changes value to a string, we must force it to a number
-     // and place it in quotes so typescript accepts its type as a valid argument to parseInt
+    // slider changes value to a string, we must force it to a number
+    // and place it in quotes so typescript accepts its type as a valid argument to parseInt
     const colorValue = parseInt(`${this[color]}`, 10);
     if (colorValue + amount > 255) {
       this[color] = 255;
@@ -159,7 +159,7 @@ export default class ColorGolf extends Vue {
     } else {
       this[color] = colorValue + amount;
     }
-  };
+  }
 
   buildUsersGuessCSS(): void {
     const color = {
@@ -168,9 +168,9 @@ export default class ColorGolf extends Vue {
       b: this.blue,
       css: '',
     };
-    color.css = this.setColorCSS(color);
+    color.css = ColorGolf.setColorCSS(color);
     this.usersGuess = color;
-  };
+  }
 
   calculateShotScore(): number {
     let score = 0;
@@ -181,7 +181,7 @@ export default class ColorGolf extends Vue {
     score += Math.abs(target.g - attempt.g);
     score += Math.abs(target.b - attempt.b);
     return score;
-  };
+  }
 
   enterClick(): void {
     if (this.showContinueButton) { // allows enter to double as continue button
@@ -203,33 +203,33 @@ export default class ColorGolf extends Vue {
       this.message = `Last shot diff: ${shotScore}`;
     }
     this.showResults = true;
-  };
+  }
 
-  gameOver():void {
+  gameOver(): void {
     this.$emit('game-completed', this.scoreCards);
     this.reset(true);
-  };
+  }
 
-  getRandomColor() {
+  static getRandomColor() {
     const color = {
-      r: this.getRandomInt(255),
-      g: this.getRandomInt(255),
-      b: this.getRandomInt(255),
+      r: ColorGolf.getRandomInt(255),
+      g: ColorGolf.getRandomInt(255),
+      b: ColorGolf.getRandomInt(255),
       css: '',
     };
-    color.css = this.setColorCSS(color);
+    color.css = ColorGolf.setColorCSS(color);
     return color;
-  };
+  }
 
-  getRandomInt(maxNum: number): number { // return int from 0 through maxNum
+  static getRandomInt(maxNum: number): number { // return int from 0 through maxNum
     return Math.floor(Math.random() * Math.floor(maxNum + 1));
-  };
+  }
 
   goToNextPlayer(): void {
     this.activePlayerIndex = this.activePlayerIndex + 1 === this.playerCount
       ? 0
       : this.activePlayerIndex + 1;
-  };
+  }
 
   next(): void {
     const activeScoreCard = this.scoreCards[this.activePlayerIndex];
@@ -248,7 +248,7 @@ export default class ColorGolf extends Vue {
     } else {
       this.reset(false);
     }
-  };
+  }
 
   reset(newGame?: boolean): void {
     if (newGame) {
@@ -269,12 +269,12 @@ export default class ColorGolf extends Vue {
     this.blue = 127;
     this.message = '';
     this.shotCount = 0;
-    this.currentColor = this.getRandomColor();
-  };
+    this.currentColor = ColorGolf.getRandomColor();
+  }
 
-  setColorCSS(color: ColorGolfColor): string {
+  static setColorCSS(color: ColorGolfColor): string {
     return `rgb(${color.r}, ${color.g}, ${color.b})`;
-  };
+  }
 
   // setScoreCards not using computed becuase we need to manually reset it when the game ends
   // which isn't posible with vue's computed properties
@@ -296,22 +296,22 @@ export default class ColorGolf extends Vue {
       scoreCards.push([...scoreCard]); // spread opporator creates unique arrays for each player
     }
     this.scoreCards = scoreCards;
-  };
+  }
 
   // watchers
   @Watch('playerCount') playerCountChanged(newVal: number, previousVal: number) {
     if (newVal !== previousVal) {
       this.setScoreCards();
     }
-  };
+  }
 
   @Watch('numberOfHoles') numberOfHolesChanged(newVal: number, previousVal: number) {
     if (newVal !== previousVal) {
       this.setScoreCards();
     }
-  };
+  }
 
-};
+}
 </script>
 
 <style scoped>
