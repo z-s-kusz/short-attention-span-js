@@ -23,7 +23,9 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+
 .label {
   margin: 6px 0 1px 0;
 }

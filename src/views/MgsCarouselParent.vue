@@ -83,7 +83,9 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+
 main {
   display: flex;
   flex-direction: column;
