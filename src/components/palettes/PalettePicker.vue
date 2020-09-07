@@ -35,7 +35,9 @@ export default Vue.extend({
 });
 </script>
 
-<style scope>
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+
 .pill-box {
   display: flex;
   flex-direction: row;

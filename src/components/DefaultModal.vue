@@ -54,7 +54,9 @@ export default Vue.extend({
 });
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -106,5 +108,9 @@ export default Vue.extend({
 
 span {
   text-align: left;
+}
+
+button {
+  color: white;
 }
 </style>

@@ -7,7 +7,7 @@
       <router-link to="/color-golf">Color Golf</router-link>
       <span @click="showModal = true" v-show="showColorGolf">How to Play</span>
     </div>
-    <div class="palette-picker-menu" v-show="showPoetry">
+    <div id="palette-picker-menu" v-show="showPoetry">
       <palette-picker></palette-picker>
     </div>
     <default-modal v-if="showModal" :body="modalBody" :header="modalHeader"
@@ -50,11 +50,15 @@ export default Vue.extend({
   },
 });
 </script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+
+<!-- these styles should be the only ones not scoped in this project!
+  becuase of that use highly specific css like id -->
+<style lang="scss">
+@import '~@/styles/main.scss';
 
 body {
   background-color: #333;
+  margin: 0;
 }
 #app {
   font-family: 'Roboto Mono', monospace;
@@ -64,41 +68,26 @@ body {
   color: white;
   background-color: #333;
 }
-h1, h2, h3, h4, h5, h6 {
-  /* override chrome default weights */
-  font-weight: normal;
-}
+
 #nav {
   padding: 30px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
+
+  & a {
+    color: white;
+    padding: 0 20px;
+  }
+  & .router-link-exact-active, span {
+    color: #9aecc7;
+    cursor: pointer;
+    padding: 0 20px;
+  }
 }
 
-#nav a {
-  color: white;
-  padding: 0 20px;
-}
-
-#nav a.router-link-exact-active, #nav span {
-  color: #9aecc7;
-  cursor: pointer;
-  padding: 0 20px;
-}
-button:hover {
-  cursor: pointer;
-}
-body {
-  margin: 0;
-}
-button {
-  border-radius: 8px;
-  background-color: black;
-  padding: 12px 32px;
-  font-family: 'Roboto Mono', monospace;
-}
-.palette-picker-menu {
+#palette-picker-menu {
   display: flex;
   align-content: center;
   justify-content: center;

@@ -148,7 +148,9 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+
 .item {
   height: 100px;
   width: 160px;

@@ -146,47 +146,7 @@ export default Vue.extend({
 });
 </script>
 
-<style>
-/*** styles intended to apply to poem page as well!!! ***/
-.flex-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-}
-.poem-container .link:hover {
-  cursor: pointer;
-  font-weight: 700;
-}
-.poem-container .link {
-  color: white;
-  display: block;
-  padding: 4px 12px 4px 12px;
-  text-decoration: none;
-}
-.poem-container .link:first-of-type {
-  margin-top: 24px;
-}
-.poem-container h1 {
-  padding: 36px 28px 24px 28px;
-  margin: 0;
-  background-color: rgb(110, 52, 110);
-}
-.poem-container {
-  min-height: calc(100vh - 99px);
-  border-radius: 20px;
-  border: 36px solid #eeeeee;
-  width: 80%;
-  flex-direction: column;
-  align-content: center;
-  justify-content: start;
-}
-
-.fade-enter-active {
-  transition: opacity 400ms;
-  transition-delay: 2s;
-}
-.fade-enter {
-  opacity: 0;
-}
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+@import '~@/styles/poem.scss';
 </style>
