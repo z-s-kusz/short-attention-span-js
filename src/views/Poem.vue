@@ -68,8 +68,8 @@ export default Vue.extend({
   },
 });
 </script>
-<!-- TODO fix styles are broken on poems when loading directly to poem page
-Fix accesibility with poem fonts by adding black white text option-->
-<style>
-/* Most styles applied from sibling PoemListing.vue */
+<!-- TODO Fix accesibility with poem fonts by adding black white text option-->
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+@import '~@/styles/poem.scss';
 </style>

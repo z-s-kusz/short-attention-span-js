@@ -1,0 +1,48 @@
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  margin-bottom: 36px;
+}
+
+.poem-container .link {
+  color: white;
+  display: block;
+  padding: 4px 12px 4px 12px;
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    font-weight: 700;
+  }
+}
+
+.poem-container {
+  min-height: calc(100vh - 99px);
+  border-radius: 20px;
+  border: 36px solid #eeeeee;
+  width: 80%;
+  flex-direction: column;
+  align-content: center;
+  justify-content: start;
+
+  & h1 {
+    padding: 36px 28px 24px 28px;
+    margin: 0;
+    background-color: rgb(110, 52, 110);
+  }
+
+  & .link:first-of-type {
+    margin-top: 24px;
+  }
+}
+
+// hooks into built in vue styles
+.fade-enter-active {
+  transition: opacity 400ms;
+  transition-delay: 1.8s;
+}
+.fade-enter {
+  opacity: 0;
+}
