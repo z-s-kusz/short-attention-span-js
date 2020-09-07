@@ -19,5 +19,6 @@ module.exports = {
     'no-else-return': [0],
     'import/newline-after-import': [0],
     'no-console': [0],
+    'lines-between-class-members': [0],
   },
 };

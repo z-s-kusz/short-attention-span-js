@@ -71,7 +71,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import MgsCarousel from '@/components/mgs-carousel/MgsCarousel.vue';
 

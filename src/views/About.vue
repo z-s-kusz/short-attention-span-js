@@ -73,7 +73,7 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
 import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
 import PaletteHelper from '@/services/palette-helper';
