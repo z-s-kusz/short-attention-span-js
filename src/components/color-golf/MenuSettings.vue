@@ -101,16 +101,13 @@ export default Vue.extend({
 });
 </script>
 
-<style>
-* {
-  color: white;
-}
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+
 option, select, input {
   color: black;
   border-radius: 4px;
-}
-.white-text {
-  color: white;
+  border-color: black;
 }
 label {
   display: block;

@@ -53,14 +53,15 @@
       <button v-on:click.prevent="enterClick()">enter &#9971;</button>
     </form>
 
-    <div v-for="(scoreCard, j) in scoreCards" v-bind:key="j">
-      <span>{{ playerNames[j] }}: </span>
-      <span v-for="(score, index) in scoreCard" v-bind:key="index">
-        <span v-if="index !== 0"> | </span>
-        <span>{{ score.strokes }}</span>
-      </span>
-    </div>
-
+    <section class="scorecard">
+      <div v-for="(scoreCard, j) in scoreCards" v-bind:key="j">
+        <span>{{ playerNames[j] }}: </span>
+        <span v-for="(score, index) in scoreCard" v-bind:key="index">
+          <span v-if="index !== 0"> | </span>
+          <span>{{ score.strokes }}</span>
+        </span>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -306,10 +307,11 @@ export default class ColorGolf extends Vue {
 }
 </script>
 
-<style scoped>
-* {
-  color: white;
-}
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+// * {
+//   color: white;
+// }
 input {
   color: black;
 }
@@ -364,11 +366,12 @@ label {
   background-color: rgba(1, 1, 1, 0.4);
 }
 button {
-  /* TODO investigate why I need to override a siblings stylsheet here??? */
-  min-width: 0;
-}
-button:active {
-  background-color: #222;
+  color: white;
+  margin: 12px 18px 12px 18px;
+
+  &:active {
+    background-color: #222;
+  }
 }
 .slider-container {
   display: flex;
@@ -423,6 +426,9 @@ button:active {
   color: #55f;
 }
 
+.scorecard {
+  margin: 8px 24px 24px 24px;
+}
 @media only screen and (max-width: 899px) {
   button {
     margin: 4px;
@@ -430,6 +436,9 @@ button:active {
   }
   .course-message {
     font-size: 26px;
+  }
+  .scorecard {
+    margin: 0 12px 18px 12px;
   }
 }
 </style>

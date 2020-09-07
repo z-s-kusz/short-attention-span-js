@@ -1,24 +1,27 @@
 <template>
   <main>
-    <h3>Game Stats for {{ playerNames[activeGraphIndex] }}:</h3>
-    <div class="carosel-container" v-if="useCarosel">
-      <button @click="traverse()">Previous</button>
-      <button @click="traverse('next')">Next</button>
-    </div>
-    <!-- TODO show background as actual color on hover, fill lines in color -->
-    <div class="chart-container">
-      <vue-apex-charts type="line" height="300"
-        :series="chartDataRed" :options="chartOptionsRed" />
-    </div>
-    <div class="chart-container">
-      <vue-apex-charts type="line" height="300"
-        :series="chartDataGreen" :options="chartOptionsGreen" />
-    </div>
-    <div class="chart-container">
-      <vue-apex-charts type="line" height="300"
-        :series="chartDataBlue" :options="chartOptionsBlue" />
-    </div>
-    <button v-on:click="goToMenu">Back to setup menu</button>
+    <button v-on:click="goToMenu">New Game</button>
+
+    <section class="stats-container">
+      <h3>Game Stats for {{ playerNames[activeGraphIndex] }}</h3>
+      <div class="carosel-container" v-if="useCarosel">
+        <button @click="traverse()">Previous Player</button>
+        <button @click="traverse('next')">Next Player</button>
+      </div>
+      <!-- TODO show background as actual color on hover, fill lines in color -->
+      <div class="chart-container">
+        <vue-apex-charts type="line" height="300"
+          :series="chartDataRed" :options="chartOptionsRed" />
+      </div>
+      <div class="chart-container">
+        <vue-apex-charts type="line" height="300"
+          :series="chartDataGreen" :options="chartOptionsGreen" />
+      </div>
+      <div class="chart-container">
+        <vue-apex-charts type="line" height="300"
+          :series="chartDataBlue" :options="chartOptionsBlue" />
+      </div>
+    </section>
   </main>
 </template>
 
@@ -160,7 +163,9 @@ export default class GameOver extends Vue {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import '~@/styles/main.scss';
+
 main {
   display: flex;
   flex-direction: column;
@@ -168,11 +173,21 @@ main {
   justify-content: center;
 }
 button {
+  color: white;
   margin: 12px;
   min-width: 140px;
 }
 .white-fill {
   fill: white !important;
+}
+.stats-container {
+  background-color: #222;
+  margin: 12px 36px 36px 36px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .carousel-container {
   display: flex;
