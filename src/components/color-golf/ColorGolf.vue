@@ -64,219 +64,253 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {
+  Component,
+  Vue,
+  Prop,
+  Watch,
+} from 'vue-property-decorator';
 import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
-export default {
-  name: 'ColorGolf',
+
+interface ColorGolfColor {
+  r: number;
+  g: number;
+  b: number;
+  css: string;
+  strokes?: number;
+}
+interface ScoreCardItem {
+  redActual: number;
+  greenActual: number;
+  blueActual: number;
+  redGuess: number;
+  greenGuess: number;
+  blueGuess: number;
+  strokes: number;
+}
+
+@Component({
   components: {
     ColorGolfTitle,
   },
+})
+export default class ColorGolf extends Vue {
+  // user input changes red, green & blue to strings
+  // we force them back to numbers before doing anything with them
+  red = 127;
+  green = 127;
+  blue = 127;
+  showResults = false;
+  message = '';
+  showContinueButton = false;
+  currentColor: ColorGolfColor = {
+    r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
+  };
+  usersGuess: ColorGolfColor = {
+    r: 0, g: 0, b: 0, css: 'rgb(0,0,0)', strokes: 0,
+  };
+  activePlayerIndex = 0;
+  holeNumber = 1;
+  shotCount = 0;
+  recalculateScoreCards = false;
+  scoreCards: ScoreCardItem[][] = []; // an array of scorecards, which are arrays
 
-  props: {
-    distance: Number, // number the player must beat to complete the hole
-    gameMode: String,
-    numberOfHoles: Number,
-    playerCount: Number,
-    playerNames: Array,
-  },
+  // Props
+  @Prop() distance!: number; // number the player must beat to complete the hole
+  @Prop() gameMode!: string;
+  @Prop() numberOfHoles!: number;
+  @Prop() playerCount!: number;
+  @Prop() playerNames!: string[];
 
-  data() {
+  // Computed
+  get courseClass() {
     return {
-      red: 127,
-      green: 127,
-      blue: 127,
-      showResults: false,
-      message: '',
-      showContinueButton: false,
-      currentColor: {
-        r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
-      },
-      usersGuess: {
-        r: 0, g: 0, b: 0, css: 'rgb(0,0,0)', strokes: 0,
-      },
-      activePlayerIndex: 0,
-      holeNumber: 1,
-      shotCount: 0,
-      recalculateScoreCards: false,
-      scoreCards: [],
+      'show-user-guess': this.showResults,
     };
-  },
+  };
+  get courseStyle() {
+    return this.showResults ? {
+      background: `linear-gradient(135deg, ${this.currentColor.css} 50%, ${this.usersGuess.css} 50%`,
+    } : {
+      'background-color': this.currentColor.css,
+    };
+  };
+  get playerName() {
+    return this.playerNames[this.activePlayerIndex];
+  };
 
-  computed: {
-    courseClass() {
-      return {
-        'show-user-guess': this.showResults,
-      };
-    },
-    courseStyle() {
-      return this.showResults ? {
-        background: `linear-gradient(135deg, ${this.currentColor.css} 50%, ${this.usersGuess.css} 50%`,
-      } : {
-        'background-color': this.currentColor.css,
-      };
-    },
-    playerName() {
-      return this.playerNames[this.activePlayerIndex];
-    },
-  },
-
+  // lifecycle
   created() {
     const color = this.getRandomColor();
     color.css = this.setColorCSS(color);
     this.currentColor = color;
-  },
+  };
 
-  methods: {
-    adjustSlider(color, amount) {
-      const colorValue = parseInt(this[color], 10); // slider changes value to a string!
-      if (colorValue + amount > 255) {
-        this[color] = 255;
-      } else if (colorValue + amount < 0) {
-        this[color] = 0;
-      } else {
-        this[color] = colorValue + amount;
-      }
-    },
-    buildUsersGuessCSS() {
-      const color = {
-        r: this.red,
-        g: this.green,
-        b: this.blue,
-        css: '',
-      };
-      color.css = this.setColorCSS(color);
-      this.usersGuess = color;
-    },
-    calculateShotScore() {
-      let score = 0;
-      const target = this.currentColor;
-      const attempt = this.usersGuess;
-      // TODO is target.r value preventing simple math from working?
-      score += Math.abs(target.r - attempt.r);
-      score += Math.abs(target.g - attempt.g);
-      score += Math.abs(target.b - attempt.b);
-      return score;
-    },
-    enterClick() {
-      if (this.showContinueButton) { // allows enter to double as continue button
-        this.next();
-        return;
-      }
-      this.shotCount++;
-      this.buildUsersGuessCSS();
-      const shotScore = this.calculateShotScore();
+// methods
+  adjustSlider(color: 'red' |'blue' | 'green', amount: number): void {
+     // slider changes value to a string, we must force it to a number
+     // and place it in quotes so typescript accepts its type as a valid argument to parseInt
+    const colorValue = parseInt(`${this[color]}`, 10);
+    if (colorValue + amount > 255) {
+      this[color] = 255;
+    } else if (colorValue + amount < 0) {
+      this[color] = 0;
+    } else {
+      this[color] = colorValue + amount;
+    }
+  };
 
-      if (shotScore <= this.distance) {
-        const dialog = shotScore === 0 ? 'Exact match!!!' : 'It\'s in the hole!';
-        this.message = `${dialog} | Diff: ${shotScore} | Shots Taken: ${this.shotCount}`;
-        this.showContinueButton = true;
-      } else if (this.shotCount >= 9) {
-        this.message = 'Shot limit reached.';
-        this.showContinueButton = true;
-      } else {
-        this.message = `Last shot diff: ${shotScore}`;
-      }
-      this.showResults = true;
-    },
-    gameOver() {
-      this.$emit('game-completed', this.scoreCards);
-      this.reset(true);
-    },
-    getRandomColor() {
-      const color = {
-        r: this.getRandomInt(255),
-        g: this.getRandomInt(255),
-        b: this.getRandomInt(255),
-        css: '',
-      };
-      color.css = this.setColorCSS(color);
-      return color;
-    },
-    getRandomInt(maxNum) { // return int from 0 through maxNum
-      return Math.floor(Math.random() * Math.floor(maxNum + 1));
-    },
-    goToNextPlayer() {
-      this.activePlayerIndex = this.activePlayerIndex + 1 === this.playerCount
-        ? 0
-        : this.activePlayerIndex + 1;
-    },
-    next() {
-      const activeScoreCard = this.scoreCards[this.activePlayerIndex];
-      activeScoreCard[this.holeNumber - 1] = {
-        redActual: this.currentColor.r,
-        greenActual: this.currentColor.g,
-        blueActual: this.currentColor.b,
-        redGuess: this.usersGuess.r,
-        greenGuess: this.usersGuess.g,
-        blueGuess: this.usersGuess.b,
-        strokes: this.shotCount,
-      };
-      if (this.holeNumber >= this.numberOfHoles
-        && this.activePlayerIndex + 1 === this.playerCount) {
-        this.gameOver();
-      } else {
-        this.reset(false);
-      }
-    },
-    reset(newGame) {
-      if (newGame) {
-        this.holeNumber = 1;
-        this.activePlayerIndex = 0;
-        this.setScoreCards();
-      } else {
-        if (this.activePlayerIndex + 1 === this.playerCount) this.holeNumber++;
-        if (this.playerCount > 1) this.goToNextPlayer();
-      }
-      this.showResults = false;
-      this.showContinueButton = false;
-      this.usersGuess = {
-        r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
-      };
-      this.red = 127;
-      this.green = 127;
-      this.blue = 127;
-      this.message = '';
-      this.shotCount = 0;
-      this.currentColor = this.getRandomColor();
-    },
-    setColorCSS(color) {
-      return `rgb(${color.r}, ${color.g}, ${color.b})`;
-    },
-    // setScoreCards not using computed becuase we need to manually reset it when the game ends
-    // which isn't posible with vue's computed properties
-    setScoreCards() {
-      const scoreCard = [];
-      for (let i = 0; i < this.numberOfHoles; i++) {
-        scoreCard.push({
-          redActual: 0,
-          greenActual: 0,
-          blueActual: 0,
-          redGuess: 0,
-          greenGuess: 0,
-          bluebGuess: 0,
-          strokes: 0,
-        });
-      }
-      const scoreCards = [];
-      for (let i = 0; i < this.playerCount; i++) {
-        scoreCards.push([...scoreCard]); // spread opporator creates unique arrays for each player
-      }
-      this.scoreCards = scoreCards;
-    },
-  },
+  buildUsersGuessCSS(): void {
+    const color = {
+      r: this.red,
+      g: this.green,
+      b: this.blue,
+      css: '',
+    };
+    color.css = this.setColorCSS(color);
+    this.usersGuess = color;
+  };
 
-  watch: {
-    playerCount(newVal, previousVal) {
-      if (newVal !== previousVal) {
-        this.setScoreCards();
-      }
-    },
-    numberOfHoles(newVal, previousVal) {
-      if (newVal !== previousVal) {
-        this.setScoreCards();
-      }
-    },
-  },
+  calculateShotScore(): number {
+    let score = 0;
+    const target = this.currentColor;
+    const attempt = this.usersGuess;
+    // TODO is target.r value preventing simple math from working?
+    score += Math.abs(target.r - attempt.r);
+    score += Math.abs(target.g - attempt.g);
+    score += Math.abs(target.b - attempt.b);
+    return score;
+  };
+
+  enterClick(): void {
+    if (this.showContinueButton) { // allows enter to double as continue button
+      this.next();
+      return;
+    }
+    this.shotCount++;
+    this.buildUsersGuessCSS();
+    const shotScore = this.calculateShotScore();
+
+    if (shotScore <= this.distance) {
+      const dialog = shotScore === 0 ? 'Exact match!!!' : 'It\'s in the hole!';
+      this.message = `${dialog} | Diff: ${shotScore} | Shots Taken: ${this.shotCount}`;
+      this.showContinueButton = true;
+    } else if (this.shotCount >= 9) {
+      this.message = 'Shot limit reached.';
+      this.showContinueButton = true;
+    } else {
+      this.message = `Last shot diff: ${shotScore}`;
+    }
+    this.showResults = true;
+  };
+
+  gameOver():void {
+    this.$emit('game-completed', this.scoreCards);
+    this.reset(true);
+  };
+
+  getRandomColor() {
+    const color = {
+      r: this.getRandomInt(255),
+      g: this.getRandomInt(255),
+      b: this.getRandomInt(255),
+      css: '',
+    };
+    color.css = this.setColorCSS(color);
+    return color;
+  };
+
+  getRandomInt(maxNum: number): number { // return int from 0 through maxNum
+    return Math.floor(Math.random() * Math.floor(maxNum + 1));
+  };
+
+  goToNextPlayer(): void {
+    this.activePlayerIndex = this.activePlayerIndex + 1 === this.playerCount
+      ? 0
+      : this.activePlayerIndex + 1;
+  };
+
+  next(): void {
+    const activeScoreCard = this.scoreCards[this.activePlayerIndex];
+    activeScoreCard[this.holeNumber - 1] = {
+      redActual: this.currentColor.r,
+      greenActual: this.currentColor.g,
+      blueActual: this.currentColor.b,
+      redGuess: this.usersGuess.r,
+      greenGuess: this.usersGuess.g,
+      blueGuess: this.usersGuess.b,
+      strokes: this.shotCount,
+    };
+    if (this.holeNumber >= this.numberOfHoles
+      && this.activePlayerIndex + 1 === this.playerCount) {
+      this.gameOver();
+    } else {
+      this.reset(false);
+    }
+  };
+
+  reset(newGame?: boolean): void {
+    if (newGame) {
+      this.holeNumber = 1;
+      this.activePlayerIndex = 0;
+      this.setScoreCards();
+    } else {
+      if (this.activePlayerIndex + 1 === this.playerCount) this.holeNumber++;
+      if (this.playerCount > 1) this.goToNextPlayer();
+    }
+    this.showResults = false;
+    this.showContinueButton = false;
+    this.usersGuess = {
+      r: 0, g: 0, b: 0, css: 'rgb(0,0,0)', strokes: 0,
+    };
+    this.red = 127;
+    this.green = 127;
+    this.blue = 127;
+    this.message = '';
+    this.shotCount = 0;
+    this.currentColor = this.getRandomColor();
+  };
+
+  setColorCSS(color: ColorGolfColor): string {
+    return `rgb(${color.r}, ${color.g}, ${color.b})`;
+  };
+
+  // setScoreCards not using computed becuase we need to manually reset it when the game ends
+  // which isn't posible with vue's computed properties
+  setScoreCards() {
+    const scoreCard: ScoreCardItem[] = [];
+    for (let i = 0; i < this.numberOfHoles; i++) {
+      scoreCard.push({
+        redActual: 0,
+        greenActual: 0,
+        blueActual: 0,
+        redGuess: 0,
+        greenGuess: 0,
+        blueGuess: 0,
+        strokes: 0,
+      });
+    }
+    const scoreCards = [];
+    for (let i = 0; i < this.playerCount; i++) {
+      scoreCards.push([...scoreCard]); // spread opporator creates unique arrays for each player
+    }
+    this.scoreCards = scoreCards;
+  };
+
+  // watchers
+  @Watch('playerCount') playerCountChanged(newVal: number, previousVal: number) {
+    if (newVal !== previousVal) {
+      this.setScoreCards();
+    }
+  };
+
+  @Watch('numberOfHoles') numberOfHolesChanged(newVal: number, previousVal: number) {
+    if (newVal !== previousVal) {
+      this.setScoreCards();
+    }
+  };
+
 };
 </script>
 
