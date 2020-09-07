@@ -72,6 +72,7 @@ import {
   Watch,
 } from 'vue-property-decorator';
 import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
+import ScoreCardItem from '@/models/ScoreCard';
 
 interface ColorGolfColor {
   r: number;
@@ -79,15 +80,6 @@ interface ColorGolfColor {
   b: number;
   css: string;
   strokes?: number;
-}
-interface ScoreCardItem {
-  redActual: number;
-  greenActual: number;
-  blueActual: number;
-  redGuess: number;
-  greenGuess: number;
-  blueGuess: number;
-  strokes: number;
 }
 
 @Component({

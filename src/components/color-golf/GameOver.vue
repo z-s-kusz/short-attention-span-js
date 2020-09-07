@@ -29,16 +29,7 @@ import {
   Prop,
 } from 'vue-property-decorator';
 import VueApexCharts from 'vue-apexcharts';
-
-interface ScoreCardItem { // TODO DRY up
-  redActual: number;
-  greenActual: number;
-  blueActual: number;
-  redGuess: number;
-  greenGuess: number;
-  blueGuess: number;
-  strokes: number;
-}
+import ScoreCardItem from '@/models/ScoreCard';
 
 @Component({
   components: {
