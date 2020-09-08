@@ -8,8 +8,12 @@
 
     <div class="course" v-bind:class="courseClass" v-bind:style="courseStyle">
       <div class="course-inner">
-        <transition name="fade">
-          <div class="course-message" v-show="showResults">{{ message }}</div>
+        <transition name="fade" appear>
+          <div class="course-message" v-show="showResults">
+            <p>{{ message.main }}</p>
+            <p>{{ message.diff }}</p>
+            <p>{{ message.shots }}</p>
+          </div>
         </transition>
           <button v-show="showContinueButton"
             class="course-button" v-on:click="next()">continue</button>
@@ -54,6 +58,7 @@
     </form>
 
     <section class="scorecard">
+      <div>Score Card</div>
       <div v-for="(scoreCard, j) in scoreCards" v-bind:key="j">
         <span>{{ playerNames[j] }}: </span>
         <span v-for="(score, index) in scoreCard" v-bind:key="index">
@@ -94,8 +99,13 @@ export default class ColorGolf extends Vue {
   red = 127;
   green = 127;
   blue = 127;
+  readonly defaultColorValue = 127;
   showResults = false;
-  message = '';
+  message = {
+    main: '',
+    diff: '',
+    shots: '',
+  };
   showContinueButton = false;
   currentColor: ColorGolfColor = {
     r: 0, g: 0, b: 0, css: 'rgb(0,0,0)',
@@ -154,6 +164,14 @@ export default class ColorGolf extends Vue {
     }
   }
 
+  buildMessage(main: string, shotScore?: number, shotCount?: number): void {
+    this.message = {
+      main,
+      diff: `Diff: ${shotScore}`,
+      shots: `Strokes: ${shotCount}`,
+    };
+  }
+
   buildUsersGuessCSS(): void {
     const color = {
       r: this.red,
@@ -169,7 +187,6 @@ export default class ColorGolf extends Vue {
     let score = 0;
     const target = this.currentColor;
     const attempt = this.usersGuess;
-    // TODO is target.r value preventing simple math from working?
     score += Math.abs(target.r - attempt.r);
     score += Math.abs(target.g - attempt.g);
     score += Math.abs(target.b - attempt.b);
@@ -184,17 +201,22 @@ export default class ColorGolf extends Vue {
     this.shotCount++;
     this.buildUsersGuessCSS();
     const shotScore = this.calculateShotScore();
+    let dialog = '';
 
     if (shotScore <= this.distance) {
-      const dialog = shotScore === 0 ? 'Exact match!!!' : 'It\'s in the hole!';
-      this.message = `${dialog} | Diff: ${shotScore} | Shots Taken: ${this.shotCount}`;
+      dialog = shotScore === 0 ? 'Exact match!' : 'It\'s in the hole!';
       this.showContinueButton = true;
     } else if (this.shotCount >= 9) {
-      this.message = 'Shot limit reached.';
+      dialog = 'Shot limit reached.';
       this.showContinueButton = true;
+    } else if (this.shotCount === 8) {
+      dialog = 'Last try on this hole.';
+    } else if (this.userNeedsInputHelp()) {
+      dialog = 'Use the sliders to enter your color guess. See How To Play for more help.';
     } else {
-      this.message = `Last shot diff: ${shotScore}`;
+      dialog = `Min diff needed: ${this.distance}`;
     }
+    this.buildMessage(dialog, shotScore, this.shotCount);
     this.showResults = true;
   }
 
@@ -257,10 +279,14 @@ export default class ColorGolf extends Vue {
     this.usersGuess = {
       r: 0, g: 0, b: 0, css: 'rgb(0,0,0)', strokes: 0,
     };
-    this.red = 127;
-    this.green = 127;
-    this.blue = 127;
-    this.message = '';
+    this.red = this.defaultColorValue;
+    this.green = this.defaultColorValue;
+    this.blue = this.defaultColorValue;
+    this.message = {
+      main: '',
+      diff: '',
+      shots: '',
+    };
     this.shotCount = 0;
     this.currentColor = ColorGolf.getRandomColor();
   }
@@ -291,6 +317,13 @@ export default class ColorGolf extends Vue {
     this.scoreCards = scoreCards;
   }
 
+  userNeedsInputHelp(): boolean {
+    // user likely hit enter without changing values;
+    return this.usersGuess.r === this.defaultColorValue
+      && this.usersGuess.g === this.defaultColorValue
+      && this.usersGuess.b === this.defaultColorValue;
+  }
+
   // watchers
   @Watch('playerCount') playerCountChanged(newVal: number, previousVal: number) {
     if (newVal !== previousVal) {
@@ -309,15 +342,13 @@ export default class ColorGolf extends Vue {
 
 <style lang="scss" scoped>
 @import '~@/styles/main.scss';
-// * {
-//   color: white;
-// }
+
 input {
   color: black;
 }
 
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+  transition: opacity 800ms;
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
@@ -344,8 +375,8 @@ input {
   width: 70%;
   height: 300px;
   display: flex;
-  align-content: center;
-  align-items: center;
+  align-content: flex-start;
+  align-items: flex-start;
 }
 form {
   display: flex;
@@ -361,10 +392,23 @@ label {
   width:100%;
 }
 .course-message {
-  font-size: 42px;
+  font-size: 34px;
   color: white;
-  background-color: rgba(1, 1, 1, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+
+  & p {
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.2);
+    margin: 0;
+    padding: 4px;
+    margin: 8px 36px;
+    text-align: start;
+  }
 }
+
 button {
   color: white;
   margin: 12px 18px 12px 18px;
@@ -429,6 +473,7 @@ button {
 .scorecard {
   margin: 8px 24px 24px 24px;
 }
+
 @media only screen and (max-width: 899px) {
   button {
     margin: 4px;
