@@ -1,13 +1,13 @@
 <template>
-  <div>
-      <menu-settings v-show="gameState === 'menu'"
-        v-on:start-click="startClick" />
-      <color-golf v-show="gameState === 'playing'"
-        v-bind="menuData" v-on:game-completed="gameCompleted" />
-      <game-over v-if="gameState === 'completed'"
-        v-bind:score-cards="scoreCards" v-bind:player-names="menuData.playerNames"
-        v-on:go-to-menu="goToMenu" />
-  </div>
+<div>
+  <menu-settings v-show="gameState === 'menu'"
+    v-on:start-click="startClick" />
+  <color-golf v-show="gameState === 'playing'"
+    v-bind="menuData" v-on:game-completed="gameCompleted" />
+  <game-over v-if="gameState === 'completed'"
+    v-bind:score-cards="scoreCards" v-bind:players="menuData.players"
+    v-on:go-to-menu="goToMenu" />
+</div>
 </template>
 
 <script lang="ts">
@@ -15,6 +15,7 @@ import Vue from 'vue';
 import ColorGolf from '@/components/color-golf/ColorGolf.vue';
 import GameOver from '@/components/color-golf/GameOver.vue';
 import MenuSettings from '@/components/color-golf/MenuSettings.vue';
+import ScoreCardItem from '@/models/ScoreCard';
 
 interface MenuData {
   distance: number;
@@ -22,15 +23,6 @@ interface MenuData {
   numberOfHoles: number;
   playerCount: number;
   playerNames: string[];
-}
-interface ScoreCard {
-  redActual: number;
-  greenActual: number;
-  blueActual: number;
-  redGuess: string; // user input is string
-  greenGuess: string;
-  bluebGuess: string;
-  strokes: number;
 }
 
 export default Vue.extend({
@@ -52,11 +44,11 @@ export default Vue.extend({
           'Player 1', 'Player 2', 'Player 3', 'Player 4',
         ],
       },
-      scoreCards: [] as ScoreCard[],
+      scoreCards: [] as ScoreCardItem[][],
     };
   },
   methods: {
-    gameCompleted(scoreCardData: ScoreCard[]): void {
+    gameCompleted(scoreCardData: ScoreCardItem[][]): void {
       this.scoreCards = scoreCardData;
       this.gameState = 'completed';
     },
