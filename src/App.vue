@@ -6,9 +6,13 @@
       <router-link to="/poetry">Poetry</router-link>
       <router-link to="/color-golf">Color Golf</router-link>
       <span @click="showModal = true" v-show="showColorGolf">How to Play</span>
+      <span @click="toggleBoxIsOpen()" v-show="showPoetry"
+        class="poem-colors-toggle" :style="poemColorsToggle">
+        &#127752;Poem Colors {{boxIsOpen ? '&uarr;' : '&darr;'}}
+      </span>
     </div>
     <div id="palette-picker-menu" v-show="showPoetry">
-      <palette-picker></palette-picker>
+      <palette-picker v-bind:box-is-open="boxIsOpen"></palette-picker>
     </div>
     <default-modal v-if="showModal" :body="modalBody" :header="modalHeader"
       v-on:close-modal="showModal = false" />
@@ -20,6 +24,7 @@
 import Vue from 'vue';
 import DefaultModal from '@/components/DefaultModal.vue';
 import PalettePicker from '@/components/palettes/PalettePicker.vue';
+import PaletteHelper from '@/services/palette-helper';
 
 export default Vue.extend({
   components: {
@@ -28,6 +33,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      boxIsOpen: true,
       modalHeader: 'How To Play Color Golf',
       modalBody: `<p>Adjust your three color levels to create the color shown.</p>
                   <p>The color you create will appear on the right
@@ -41,11 +47,22 @@ export default Vue.extend({
     };
   },
   computed: {
+    poemColorsToggle() {
+      return {
+        color: PaletteHelper.store.colors[2],
+        'background-color': PaletteHelper.store.colors[3],
+      };
+    },
     showColorGolf(): boolean {
       return this.$route.fullPath.includes('/color-golf');
     },
     showPoetry(): boolean {
       return this.$route.fullPath.includes('/poetry');
+    },
+  },
+  methods: {
+    toggleBoxIsOpen(): void {
+      this.boxIsOpen = !this.boxIsOpen;
     },
   },
 });
@@ -78,12 +95,12 @@ body {
 
   & a {
     color: white;
-    padding: 0 20px;
+    margin: 0 20px;
   }
   & .router-link-exact-active, span {
     color: #9aecc7;
     cursor: pointer;
-    padding: 0 20px;
+    margin: 0 20px;
   }
 }
 
@@ -91,5 +108,14 @@ body {
   display: flex;
   align-content: center;
   justify-content: center;
+}
+
+.poem-colors-toggle {
+  border-radius: 4px;
+  padding-right: 4px;
+  &:active {
+    /* important to override inline vue set styles */
+    background-color: white !important;
+  }
 }
 </style>

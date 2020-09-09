@@ -1,5 +1,5 @@
 <template>
-  <div class="pill-box">
+  <div class="pill-box" :class="boxIsOpenClass">
     <palette-display v-for="palette in palettes" :key="palette.name"
       v-on:click.native="paletteClicked(palette)" v-bind="palette" class="pill">
     </palette-display>
@@ -26,6 +26,14 @@ export default Vue.extend({
       palettes: PaletteHelper.palettes,
     };
   },
+  computed: {
+    boxIsOpenClass(): string {
+      return this.boxIsOpen ? '' : 'close-box';
+    },
+  },
+  props: {
+    boxIsOpen: Boolean,
+  },
   methods: {
     paletteClicked(palette: Palette) {
       PaletteHelper.mutations.setColors(palette.colors);
@@ -46,7 +54,14 @@ export default Vue.extend({
   justify-content: space-between;
   margin: 4px 36px 24px 36px;
   width: 100%;
+
+  &.close-box {
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+  }
 }
+
 .pill {
   flex: 1 1 auto;
 }
