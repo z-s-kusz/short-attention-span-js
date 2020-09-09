@@ -8,8 +8,8 @@
 
     <div class="course" v-bind:class="courseClass" v-bind:style="courseStyle">
       <div class="course-inner">
-        <transition name="fade" appear>
-          <div class="course-message" v-show="showResults">
+        <transition name="fade">
+          <div class="course-message" :key="message" v-show="showResults">
             <p>{{ message.main }}</p>
             <p>{{ message.diff }}</p>
             <p>{{ message.shots }}</p>
@@ -349,9 +349,11 @@ input {
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity 800ms;
+  transition: transform 0.5s cubic-bezier(0, 0.55, 0.45, 1);
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
+  transform: translateX(100%);
 }
 
 .container {
@@ -390,6 +392,7 @@ label {
 }
 .course-inner {
   width:100%;
+    overflow-x: hidden;
 }
 .course-message {
   font-size: 34px;
