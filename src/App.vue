@@ -35,13 +35,13 @@ export default Vue.extend({
     return {
       boxIsOpen: true,
       modalHeader: 'How To Play Color Golf',
-      modalBody: `<p>Adjust your three color levels to create the color shown.</p>
+      modalBody: `<p>Adjust the 3 color levels to create the color shown.</p>
                   <p>The color you create will appear on the right
-                  of the main window after you hit 'enter.'</p>
-                  <p>Use your color and the 'distance' to help your next guess.</p>
-                  <p>The goal is to get your distance as close to 0 as possible.
+                  of the target color after you hit 'enter.'</p>
+                  <p>Use your color and the 'diff' to help your next guess.</p>
+                  <p>The goal is to get your diff as low as possible.
                   0 distance means you got a perfect match.</p>
-                  <p>Getting within the winning range or exceeding 8 attempts
+                  <p>Getting within the target range or exceeding 9 attempts
                   ends your turn.</p>`,
       showModal: false,
     };
