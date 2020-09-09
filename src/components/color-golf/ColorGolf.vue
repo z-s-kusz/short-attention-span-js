@@ -3,12 +3,17 @@
     <color-golf-title></color-golf-title>
 
     <div class="info-panel">
-      <span>{{ playerName }}</span><span>Hole {{ holeNumber }}</span>
+      <transition name="down">
+        <span :key="playerName">{{ playerName }}</span>
+      </transition>
+      <transition name="down">
+        <span :key="holeNumber">Hole {{ holeNumber }}</span>
+      </transition>
     </div>
 
     <div class="course" v-bind:class="courseClass" v-bind:style="courseStyle">
       <div class="course-inner">
-        <transition name="fade">
+        <transition name="left">
           <div class="course-message" :key="message" v-show="showResults">
             <p>{{ message.main }}</p>
             <p>{{ message.diff }}</p>
@@ -347,12 +352,20 @@ input {
   color: black;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 800ms;
-  transition: transform 0.5s cubic-bezier(0, 0.55, 0.45, 1);
+/* Vue added transition properties */
+.down-enter-active {
+  transition: transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.fade-enter, .fade-leave-to {
-  opacity: 0;
+.down-enter {
+  transform: translateY(-100%);
+}
+.down-leave-active {
+  display: none;
+}
+.left-enter-active, .left-leave-active {
+  transition: transform 500ms cubic-bezier(0, 0.55, 0.45, 1);
+}
+.left-enter, .left-leave-to {
   transform: translateX(100%);
 }
 
@@ -368,6 +381,7 @@ input {
   display: flex;
   align-content: space-between;
   align-items: center;
+  overflow-y: hidden;
 }
 .info-panel span {
   margin: 8px;
