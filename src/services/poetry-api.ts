@@ -8,7 +8,14 @@ const store = {
   },
 };
 
+function trimToCharLimit(string: string): string {
+  const maxLength = 50;
+  if (string.length > maxLength) return string.substring(0, maxLength);
+  return string;
+}
+
 export default {
   baseUrl,
   store,
+  trimToCharLimit,
 };

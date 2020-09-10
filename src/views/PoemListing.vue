@@ -22,7 +22,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import axios from 'axios';
-import apiConfig from '@/services/poetry-api';
+import PoetryApi from '@/services/poetry-api';
 import PaletteHelper from '@/services/palette-helper';
 
 interface PoemListItem {
@@ -63,7 +63,7 @@ export default Vue.extend({
     },
   },
   created() {
-    if (!apiConfig.store.serverIsWoke) this.wakeServer();
+    if (!PoetryApi.store.serverIsWoke) this.wakeServer();
 
     if (this.$route.params.author) {
       this.author = this.$route.params.author;
@@ -91,9 +91,9 @@ export default Vue.extend({
             authors: string[];
           };
         }
-        axios.get(`${apiConfig.baseUrl}/authors`).then((res: Response) => {
+        axios.get(`${PoetryApi.baseUrl}/authors`).then((res: Response) => {
           this.loading = false;
-          if (!apiConfig.store.serverIsWoke) apiConfig.store.setServerIsWoke(true);
+          if (!PoetryApi.store.serverIsWoke) PoetryApi.store.setServerIsWoke(true);
 
           const storedAuthors = JSON.stringify(res.data.authors);
           localStorage.setItem('authors', storedAuthors);
@@ -120,14 +120,15 @@ export default Vue.extend({
           author: string;
         }[];
       }
-      axios.get(`${apiConfig.baseUrl}/author/${this.author}`).then((res: Response) => {
+      axios.get(`${PoetryApi.baseUrl}/author/${this.author}`).then((res: Response) => {
         this.loading = false;
-        if (!apiConfig.store.serverIsWoke) apiConfig.store.setServerIsWoke(true);
+        if (!PoetryApi.store.serverIsWoke) PoetryApi.store.setServerIsWoke(true);
 
         this.items = res.data.map((item) => {
+          const trimedTitle = PoetryApi.trimToCharLimit(item.title);
           return {
             value: item.title,
-            link: `/poetry/poem/${item.title}/author/${this.author}`,
+            link: `/poetry/poem/${trimedTitle}/author/${this.author}`,
           };
         });
       }).catch((err) => {
@@ -137,7 +138,7 @@ export default Vue.extend({
     },
     wakeServer(): void {
       axios.get('https://poetry-app-api.herokuapp.com').then(() => {
-        if (!apiConfig.store.serverIsWoke) apiConfig.store.setServerIsWoke(true);
+        if (!PoetryApi.store.serverIsWoke) PoetryApi.store.setServerIsWoke(true);
       }).catch((err) => {
         console.error(err);
       });

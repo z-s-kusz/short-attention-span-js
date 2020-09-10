@@ -13,7 +13,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import axios from 'axios';
-import apiConfig from '@/services/poetry-api';
+import PoetryApi from '@/services/poetry-api';
 import PaletteHelper from '@/services/palette-helper';
 
 export default Vue.extend({
@@ -47,19 +47,20 @@ export default Vue.extend({
   },
   created() {
     this.author = this.$route.params.author;
-    this.title = this.$route.params.title;
+    this.title = `${this.$route.params.title} ...`;
     this.getPoem();
   },
   methods: {
     getPoem(): void {
       interface Response {
         data: {
+          title: string;
           lines: string[];
         }[];
       }
-      const url = `${apiConfig.baseUrl}/title/${this.title}/author/${this.author}`;
+      const url = `${PoetryApi.baseUrl}/title/${this.title}/author/${this.author}`;
       axios.get(url).then((res: Response) => {
-        console.log('res', res);
+        this.title = res.data[0].title;
         this.lines = res.data[0].lines;
       }).catch((err) => {
         console.error(err);
