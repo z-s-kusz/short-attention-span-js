@@ -5,6 +5,19 @@
     <h6>by {{ author }}</h6>
     <main>
       <p v-for="(line, i) in lines" :key="i" :style="tertiaryStyle">{{ line }}</p>
+
+      <transition name="fade" appear>
+        <div v-show="loading" key="1">
+          <p>Loading...</p>
+          <p>Initial loading may take longer becuase the free
+            server from Heroku needs to be woken up first!
+          </p>
+        </div>
+      </transition>
+
+      <p v-if="showError">There was an issue retrieving the poem.
+        <a @click="refresh()">Reload</a> and if the issue persists, bug Zach.
+      </p>
     </main>
   </div>
 </div>
@@ -23,6 +36,8 @@ export default Vue.extend({
       author: '',
       title: '',
       lines: [] as string[],
+      loading: false,
+      showError: false,
     };
   },
   computed: {
@@ -47,11 +62,12 @@ export default Vue.extend({
   },
   created() {
     this.author = this.$route.params.author;
-    this.title = `${this.$route.params.title} ...`;
+    this.title = this.$route.params.title;
     this.getPoem();
   },
   methods: {
     getPoem(): void {
+      this.loading = true;
       interface Response {
         data: {
           title: string;
@@ -62,9 +78,15 @@ export default Vue.extend({
       axios.get(url).then((res: Response) => {
         this.title = res.data[0].title;
         this.lines = res.data[0].lines;
-      }).catch((err) => {
-        console.error(err);
+        this.showError = false;
+      }).catch(() => {
+        this.showError = true;
+      }).finally(() => {
+        this.loading = false;
       });
+    },
+    refresh(): void {
+      this.$router.go(0);
     },
   },
 });

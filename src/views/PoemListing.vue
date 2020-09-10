@@ -15,6 +15,10 @@
         </p>
       </div>
     </transition>
+
+    <p v-if="showError">There was an issue retrieving the data.
+      <a @click="refresh()">Reload</a> and if the issue persists, bug Zach.
+    </p>
   </main>
 </div>
 </template>
@@ -37,6 +41,7 @@ export default Vue.extend({
       author: '',
       items: [] as PoemListItem[],
       loading: false,
+      showError: false,
     };
   },
   computed: {
@@ -92,7 +97,6 @@ export default Vue.extend({
           };
         }
         axios.get(`${PoetryApi.baseUrl}/authors`).then((res: Response) => {
-          this.loading = false;
           if (!PoetryApi.store.serverIsWoke) PoetryApi.store.setServerIsWoke(true);
 
           const storedAuthors = JSON.stringify(res.data.authors);
@@ -104,11 +108,12 @@ export default Vue.extend({
               link: `/poetry/author/${author}`,
             };
           });
-        }).catch((err) => {
+          this.showError = true;
+        }).catch(() => {
+          this.showError = true;
+        }).finally(() => {
           this.loading = false;
-          console.error(err);
         });
-        // TODO use finally
       }
     },
     getPoemsByAuthor(): void {
@@ -121,7 +126,6 @@ export default Vue.extend({
         }[];
       }
       axios.get(`${PoetryApi.baseUrl}/author/${this.author}`).then((res: Response) => {
-        this.loading = false;
         if (!PoetryApi.store.serverIsWoke) PoetryApi.store.setServerIsWoke(true);
 
         this.items = res.data.map((item) => {
@@ -131,10 +135,15 @@ export default Vue.extend({
             link: `/poetry/poem/${trimedTitle}/author/${this.author}`,
           };
         });
-      }).catch((err) => {
+        this.showError = false;
+      }).catch(() => {
+        this.showError = true;
+      }).finally(() => {
         this.loading = false;
-        console.error(err);
       });
+    },
+    refresh(): void {
+      this.$router.go(0);
     },
     wakeServer(): void {
       axios.get('https://poetry-app-api.herokuapp.com').then(() => {
