@@ -128,9 +128,6 @@ li {
 h3, h4 {
   margin-bottom: 0;
 }
-a {
-  color: #9aecc7;
-}
 .mgs1 {
   color: rgb(0, 162, 255);
 }

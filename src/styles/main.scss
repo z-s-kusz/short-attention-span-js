@@ -19,3 +19,11 @@ button {
     cursor: pointer;
   }
 }
+
+a {
+  color: #9aecc7;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
+}
