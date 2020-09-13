@@ -1,13 +1,18 @@
 <template>
   <div>
-    <h3>Carousel Demo: Hold 'i' to open menu, use 'wasd' keys to page</h3>
+    <div class="controls">
+      <h3>Carousel Demo: Hold 'i' to open menu, use 'wasd' keys to page</h3>
+      <label>Volume
+        <input type="range" min="0" max="1" step="0.01" v-model="volumeControl"/>
+      </label>
+    </div>
     <div class="container">
       <div v-for="(item, i) in items" :key="i"
         class="item" :class="getItemClass(i)">
         <div v-html="item.img" class="item-image"></div>
         <span class="item-description">{{ item.description }}</span>
         <span class="item-name">{{ item.name }}</span>
-        </div>
+      </div>
     </div>
     <h1 class="show-sm-only">
       Sorry mobile, this demo is modeled after
@@ -18,6 +23,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {
+  Howl,
+  Howler,
+} from 'howler';
+import soundStore from '@/services/sound-store';
 
 const items = [
   { name: 'Star', description: '', img: '&#10029;' },
@@ -41,54 +51,24 @@ export default Vue.extend({
       previousItemIndicies: [9, 8, 7, 6],
       selectedItemIndex: 0,
       nextItemIndicies: [1, 2, 3, 4],
+      openSFX: new Howl({
+        src: [require('@/assets/coin-4.wav')],
+      }),
+      shiftSFX: new Howl({
+        src: [require('@/assets/ok-1.wav')],
+      }),
+      closeSFX: new Howl({
+        src: [require('@/assets/collect-5.wav')],
+      }),
+      volumeControl: `${soundStore.store.globalVolume}`, // uses range input which returns string
     };
-  },
-  computed: {
-    // how many items should appear on the top given this.items.length
-    // items only show up top when 3 or more are available
-    previousItemsCount(): number {
-      switch (this.items.length) {
-        case 0:
-        case 1:
-        case 2:
-          return 0;
-        case 3:
-        case 4:
-          return 1;
-        case 5:
-        case 6:
-          return 2;
-        case 7:
-          return 3;
-        default:
-          return 4;
-      }
-    },
-    // how many items should appear to the right given this.items.length
-    // items start to appear to the right first
-    nextItemsCount(): number {
-      switch (this.items.length) {
-        case 0:
-        case 1:
-          return 0;
-        case 2:
-        case 3:
-          return 1;
-        case 4:
-        case 5:
-          return 2;
-        case 6:
-        case 7:
-          return 3;
-        default:
-          return 4;
-      }
-    },
   },
   mounted() {
     window.addEventListener('keypress', this.onKeyPress);
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
+
+    Howler.volume(soundStore.store.globalVolume);
   },
   destroyed() {
     window.removeEventListener('keypress', this.onKeyPress);
@@ -114,6 +94,7 @@ export default Vue.extend({
         this.nextItemIndicies.forEach((nextItem, i) => {
           this.nextItemIndicies[i] = this.changeItemIndex(true, nextItem);
         });
+        this.shiftSFX.play();
       } else if (key === 'a' || key === 'w') {
         this.selectedItemIndex = this.changeItemIndex(false, this.selectedItemIndex);
         this.previousItemIndicies.forEach((previousItem, i) => {
@@ -122,13 +103,22 @@ export default Vue.extend({
         this.nextItemIndicies.forEach((nextItem, i) => {
           this.nextItemIndicies[i] = this.changeItemIndex(false, nextItem);
         });
+        this.shiftSFX.play();
       }
     },
     onKeyDown(event: KeyboardEvent): void {
-      if (event.keyCode === 73 && !this.menuIsOpen) this.menuIsOpen = true;
+      if (event.keyCode === 73 && !this.menuIsOpen) {
+        this.menuIsOpen = true;
+        this.closeSFX.stop();
+        this.openSFX.play();
+      }
     },
     onKeyUp(event: KeyboardEvent): void {
-      if (event.keyCode === 73 && this.menuIsOpen) this.menuIsOpen = false;
+      if (event.keyCode === 73 && this.menuIsOpen) {
+        this.menuIsOpen = false;
+        this.openSFX.stop();
+        this.closeSFX.play();
+      }
     },
     getItemClass(i: number): string {
       if (i === this.selectedItemIndex) return 'selected';
@@ -143,6 +133,13 @@ export default Vue.extend({
         return `next${classIndex}`;
       }
       return 'hide';
+    },
+  },
+  watch: {
+    volumeControl(volume: string): void {
+      const floatVolume = parseFloat(volume);
+      soundStore.store.setGlobalVolume(floatVolume);
+      Howler.volume(floatVolume);
     },
   },
 });
@@ -199,9 +196,13 @@ export default Vue.extend({
   min-height: calc(100vh - 118px);
   position: relative;
 }
+.controls {
+  padding: 24px 36px 8px 36px;
+  text-align: start;
+}
 h3 {
   text-align: start;
-  margin-bottom: 0;
+  margin: 0;
 }
 .selected .item-image, h3 {
   color: rgb(0, 136, 214);

@@ -22,5 +22,8 @@ module.exports = {
     'lines-between-class-members': [0],
     'padded-blocks': [0],
     '@typescript-eslint/no-explicit-any': [0],
+    'class-methods-use-this': [1],
+    'func-names': [0],
+    'global-require': [0],
   },
 };
