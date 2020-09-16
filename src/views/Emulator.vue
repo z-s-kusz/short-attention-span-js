@@ -25,11 +25,13 @@ export default class Emulator extends Vue {
     0,
     0,
   ];
+  readonly registersList: Instruction[] = [
+    { name: 'R1', code: 0 },
+    { name: 'R2', code: 1 },
+    { name: 'R3', code: 2 },
+    { name: 'R4', code: 3 },
+  ];
   readonly instructionsList: Instruction[] = [
-    { name: 'R0', code: 0 },
-    { name: 'R1', code: 1 },
-    { name: 'R2', code: 2 },
-    { name: 'R3', code: 3 },
     { name: 'MOVR', code: 10 },
     { name: 'MOVV', code: 11 },
     { name: 'ADD', code: 20 },
@@ -43,24 +45,25 @@ export default class Emulator extends Vue {
     { name: 'PRINT', code: 60 },
     { name: 'HALT', code: 255 },
   ];
-  str = 'MOVV 10 r1 MOVV 10 r2 ADD r1 r2 PRINT r1 HALT';
+  str = 'MOVV r1 10 MOVV r2 10 ADD r1 r2 PRINT r1 HALT';
 
   created() {
-    this.rom = Emulator.assemble(this.str, this.instructionsList);
-    console.log(this.rom);
+    const instructionsList = this.instructionsList.concat(this.registersList);
+    this.rom = Emulator.assemble(this.str, instructionsList);
     this.runProgram();
   }
 
   excecute(instruction: number) {
+    this.dummyCount++;
     switch (instruction) {
       // copies value from 1 register to another
       case 10: { // MOVR - Move Register
         const destination = this.rom[this.pc + 1];
         const source = this.rom[this.pc + 2];
 
-        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.registersList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
-        } else if (!Emulator.argumentIsValid(source, this.instructionsList)) {
+        } else if (!Emulator.argumentIsValid(source, this.registersList)) {
           return this.stopProgram(`Invalid source: ${source}`);
         }
 
@@ -73,7 +76,7 @@ export default class Emulator extends Vue {
         const destination = this.rom[this.pc + 1];
         const value = this.rom[this.pc + 2];
 
-        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.registersList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
         }
 
@@ -86,9 +89,9 @@ export default class Emulator extends Vue {
         const destination = this.rom[this.pc + 1];
         const source = this.rom[this.pc + 2];
 
-        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.registersList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
-        } else if (!Emulator.argumentIsValid(source, this.instructionsList)) {
+        } else if (!Emulator.argumentIsValid(source, this.registersList)) {
           return this.stopProgram(`Invalid source: ${source}`);
         }
 
@@ -101,9 +104,9 @@ export default class Emulator extends Vue {
         const destination = this.rom[this.pc + 1];
         const source = this.rom[this.pc + 2];
 
-        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.registersList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
-        } else if (!Emulator.argumentIsValid(source, this.instructionsList)) {
+        } else if (!Emulator.argumentIsValid(source, this.registersList)) {
           return this.stopProgram(`Invalid source: ${source}`);
         }
 
@@ -115,7 +118,7 @@ export default class Emulator extends Vue {
       case 30: { // PUSH
         const source = this.rom[this.pc + 1];
 
-        if (!Emulator.argumentIsValid(source, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(source, this.registersList)) {
           return this.stopProgram(`Invalid source: ${source}`);
         } else if (this.stack.length >= 256) {
           return this.stopProgram('Stack overflow!');
@@ -129,7 +132,7 @@ export default class Emulator extends Vue {
       case 31: { // POP
         const destination = this.rom[this.pc + 1];
 
-        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.registersList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
         } else if (this.stack.length === 0) {
           return this.stopProgram('Stack underflow!');
@@ -159,9 +162,9 @@ export default class Emulator extends Vue {
         const address = this.rom[this.pc + 3];
         const instructionAtAddress = this.rom[address];
 
-        if (!Emulator.argumentIsValid(register1, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(register1, this.registersList)) {
           return this.stopProgram(`Ivalid register at argument 1: ${register1}`);
-        } else if (!Emulator.argumentIsValid(register2, this.instructionsList)) {
+        } else if (!Emulator.argumentIsValid(register2, this.registersList)) {
           return this.stopProgram(`Ivalid register at argument 2: ${register2}`);
         } else if (!Emulator.argumentIsValid(instructionAtAddress, this.instructionsList)) {
           return this.stopProgram(`Invalid JUMP destination: ${instructionAtAddress}`);
@@ -207,16 +210,17 @@ export default class Emulator extends Vue {
       case 60: { // PRINT
         const register = this.rom[this.pc + 1];
 
-        if (!Emulator.argumentIsValid(register, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(register, this.registersList)) {
           return this.stopProgram(`Ivalid PRINT register: ${register}`);
         }
 
         this.printToUserConsole(`${this.registers[register]}`);
+        this.pc += 2;
         break;
       }
       // stops program and acts as reset
       case 255: { // HALT
-        this.stopProgram('...END');
+        this.stopProgram('HALTED');
         break;
       }
       // catch all, hopefully from user error
@@ -230,7 +234,7 @@ export default class Emulator extends Vue {
     this.printToUserConsole('START...');
     this.continue = true;
 
-    while (this.continue && this.rom.length) {
+    while (this.continue && this.pc < this.rom.length) {
       this.excecute(this.rom[this.pc]);
     }
     this.printToUserConsole('PROGRAM COMPLETE');
@@ -245,7 +249,7 @@ export default class Emulator extends Vue {
   }
 
   printToUserConsole(message: string) {
-    console.log(message);
+    console.log('user console', message);
   }
 
   static argumentIsValid(argument: number, whiteList: Instruction[]) {
