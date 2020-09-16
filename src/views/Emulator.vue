@@ -1,16 +1,14 @@
 <template>
-  <main></main>
+  <main>hi</main>
 </template>
 
 <script lang="ts">
 import {
   Component,
   Vue,
-  Prop,
-  Watch,
 } from 'vue-property-decorator';
 
-interface instruction {
+interface Instruction {
   name: string;
   code: number;
 }
@@ -27,7 +25,7 @@ export default class Emulator extends Vue {
     0,
     0,
   ];
-  readonly instructionsList: instruction[] = [
+  readonly instructionsList: Instruction[] = [
     { name: 'R0', code: 0 },
     { name: 'R1', code: 1 },
     { name: 'R2', code: 2 },
@@ -47,16 +45,22 @@ export default class Emulator extends Vue {
   ];
   str = 'MOVV 10 r1 MOVV 10 r2 ADD r1 r2 PRINT r1 HALT';
 
+  created() {
+    this.rom = Emulator.assemble(this.str, this.instructionsList);
+    console.log(this.rom);
+    this.runProgram();
+  }
+
   excecute(instruction: number) {
-    switch(instruction) {
+    switch (instruction) {
       // copies value from 1 register to another
       case 10: { // MOVR - Move Register
         const destination = this.rom[this.pc + 1];
         const source = this.rom[this.pc + 2];
 
-        if (!this.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
-        } else if (!this.argumentIsValid(source, this.instructionsList)){
+        } else if (!Emulator.argumentIsValid(source, this.instructionsList)) {
           return this.stopProgram(`Invalid source: ${source}`);
         }
 
@@ -69,7 +73,7 @@ export default class Emulator extends Vue {
         const destination = this.rom[this.pc + 1];
         const value = this.rom[this.pc + 2];
 
-        if (!this.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
         }
 
@@ -82,9 +86,9 @@ export default class Emulator extends Vue {
         const destination = this.rom[this.pc + 1];
         const source = this.rom[this.pc + 2];
 
-        if (!this.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
-        } else if (!this.argumentIsValid(source, this.instructionsList)) {
+        } else if (!Emulator.argumentIsValid(source, this.instructionsList)) {
           return this.stopProgram(`Invalid source: ${source}`);
         }
 
@@ -97,9 +101,9 @@ export default class Emulator extends Vue {
         const destination = this.rom[this.pc + 1];
         const source = this.rom[this.pc + 2];
 
-        if (!this.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
-        } else if (!this.argumentIsValid(source, this.instructionsList)) {
+        } else if (!Emulator.argumentIsValid(source, this.instructionsList)) {
           return this.stopProgram(`Invalid source: ${source}`);
         }
 
@@ -111,7 +115,7 @@ export default class Emulator extends Vue {
       case 30: { // PUSH
         const source = this.rom[this.pc + 1];
 
-        if (!this.argumentIsValid(source, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(source, this.instructionsList)) {
           return this.stopProgram(`Invalid source: ${source}`);
         } else if (this.stack.length >= 256) {
           return this.stopProgram('Stack overflow!');
@@ -125,7 +129,7 @@ export default class Emulator extends Vue {
       case 31: { // POP
         const destination = this.rom[this.pc + 1];
 
-        if (!this.argumentIsValid(destination, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(destination, this.instructionsList)) {
           return this.stopProgram(`Invalid destination: ${destination}`);
         } else if (this.stack.length === 0) {
           return this.stopProgram('Stack underflow!');
@@ -141,7 +145,7 @@ export default class Emulator extends Vue {
         const address = this.rom[this.pc + 1];
         const instructionAtAddress = this.rom[address];
 
-        if (!this.argumentIsValid(instructionAtAddress, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(instructionAtAddress, this.instructionsList)) {
           return this.stopProgram(`Invalid JUMP destination: ${instructionAtAddress}`);
         }
 
@@ -155,11 +159,11 @@ export default class Emulator extends Vue {
         const address = this.rom[this.pc + 3];
         const instructionAtAddress = this.rom[address];
 
-        if (!this.argumentIsValid(register1, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(register1, this.instructionsList)) {
           return this.stopProgram(`Ivalid register at argument 1: ${register1}`);
-        } else if (!this.argumentIsValid(register2, this.instructionsList)) {
+        } else if (!Emulator.argumentIsValid(register2, this.instructionsList)) {
           return this.stopProgram(`Ivalid register at argument 2: ${register2}`);
-        } else if (!this.argumentIsValid(instructionAtAddress, this.instructionsList)) {
+        } else if (!Emulator.argumentIsValid(instructionAtAddress, this.instructionsList)) {
           return this.stopProgram(`Invalid JUMP destination: ${instructionAtAddress}`);
         }
 
@@ -173,7 +177,7 @@ export default class Emulator extends Vue {
         const address = this.rom[this.pc + 1];
         const instructionAtAddress = this.rom[address];
 
-        if (!this.argumentIsValid(instructionAtAddress, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(instructionAtAddress, this.instructionsList)) {
           return this.stopProgram(`Invalid JUMP destination: ${instructionAtAddress}`);
         }
 
@@ -192,7 +196,7 @@ export default class Emulator extends Vue {
         const address = this.stack.pop() as number;
         const instructionAtAddress = this.rom[address];
 
-        if (!this.argumentIsValid(instructionAtAddress, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(instructionAtAddress, this.instructionsList)) {
           return this.stopProgram(`Invalid RETURN destination: ${instructionAtAddress}`);
         }
 
@@ -203,7 +207,7 @@ export default class Emulator extends Vue {
       case 60: { // PRINT
         const register = this.rom[this.pc + 1];
 
-        if (!this.argumentIsValid(register, this.instructionsList)) {
+        if (!Emulator.argumentIsValid(register, this.instructionsList)) {
           return this.stopProgram(`Ivalid PRINT register: ${register}`);
         }
 
@@ -226,7 +230,7 @@ export default class Emulator extends Vue {
     this.printToUserConsole('START...');
     this.continue = true;
 
-    while(this.continue && this.rom.length) {
+    while (this.continue && this.rom.length) {
       this.excecute(this.rom[this.pc]);
     }
     this.printToUserConsole('PROGRAM COMPLETE');
@@ -244,28 +248,38 @@ export default class Emulator extends Vue {
     console.log(message);
   }
 
-  argumentIsValid(argument: number, whiteList: instruction[]) {
+  static argumentIsValid(argument: number, whiteList: Instruction[]) {
     return whiteList.some((item) => {
       return item.code === argument;
     });
   }
 
-  assemble(input: string): number[] {
-    input = input.trim();
-    let inputArray = input.split(' ');
+  static assemble(input: string, instructions: Instruction[]): number[] {
+    const trimmedInput = input.trim();
+    const inputArray = trimmedInput.split(' ');
 
-    let outputArray: number[] = inputArray.map((word) => {
-      return 0;
-    });
+    return inputArray.map((word) => {
+      let mappedWord = 0;
 
-    this.instructionsList.forEach((instruction) => {
-      inputArray.forEach((word, wordIndex) => {
-        if (word.toLowerCase() === instruction.name) {
-          outputArray[wordIndex] = instruction.code;
+      // turn user readable commands into their number codes
+      // without overriding other 'words'
+      instructions.find((instruction) => {
+        if (word.toUpperCase() === instruction.name) {
+          mappedWord = instruction.code;
+          return instruction;
         }
+        return false;
       });
+
+      // handle remaining non-user-command inputs
+      if (mappedWord === 0) {
+        mappedWord = parseInt(word, 10);
+        // invalid inputs just returned as 0
+        if (Number.isNaN(mappedWord)) mappedWord = 0;
+      }
+
+      return mappedWord;
     });
-    return outputArray;
   }
 
 }
