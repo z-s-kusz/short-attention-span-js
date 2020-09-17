@@ -53,6 +53,13 @@ const routes = [
       return import('../views/Poem.vue');
     },
   },
+  {
+    path: '/Z468-emulator',
+    name: 'Emulator',
+    component: () => {
+      return import('../views/Emulator.vue');
+    },
+  },
 ];
 
 const router = new VueRouter({
