@@ -1,5 +1,16 @@
 <template>
-  <main>hi</main>
+<main>
+  <div class="terminal input">
+    <textarea v-model="input" rows="20" spellcheck="false">
+    </textarea>
+    <button @click="runClick()">Run</button>
+    <button @click="clearConsole()">Clear Output</button>
+  </div>
+  <div class="terminal output">
+    <textarea v-model="output" rows="20" spellcheck="false" readonly>
+    </textarea>
+  </div>
+</main>
 </template>
 
 <script lang="ts">
@@ -45,16 +56,34 @@ export default class Emulator extends Vue {
     { name: 'PRINT', code: 60 },
     { name: 'HALT', code: 255 },
   ];
-  str = 'MOVV r1 10 MOVV r2 10 ADD r1 r2 PRINT r1 HALT';
+
+  input = 'MOVV r1 10 MOVV r2 10 ADD r1 r2 PRINT r1 HALT';
+  output = '';
 
   created() {
     const instructionsList = this.instructionsList.concat(this.registersList);
-    this.rom = Emulator.assemble(this.str, instructionsList);
+    this.rom = Emulator.assemble(this.input, instructionsList);
     this.runProgram();
   }
 
+  runClick() {
+    const instructionsList = this.instructionsList.concat(this.registersList);
+    this.rom = Emulator.assemble(this.input, instructionsList);
+    this.runProgram();
+  }
+
+  /*** EMULATOR INTERFACE LAYER ***/
+  printToUserConsole(message: string) {
+    this.output += `\n${message}`;
+  }
+
+  clearConsole() {
+    this.output = '';
+  }
+  /*** INTERFACE LAYER END ***/
+
+  /*** EMULATOR LOGIC ***/
   excecute(instruction: number) {
-    this.dummyCount++;
     switch (instruction) {
       // copies value from 1 register to another
       case 10: { // MOVR - Move Register
@@ -220,36 +249,14 @@ export default class Emulator extends Vue {
       }
       // stops program and acts as reset
       case 255: { // HALT
-        this.stopProgram('HALTED');
+        this.stopProgram('PROGRAM COMPLETE');
         break;
       }
       // catch all, hopefully from user error
       default: {
-        console.log(`Error reading instruction ${instruction}`);
+        this.stopProgram(`Error reading instruction ${instruction}`);
       }
     }
-  }
-
-  runProgram() {
-    this.printToUserConsole('START...');
-    this.continue = true;
-
-    while (this.continue && this.pc < this.rom.length) {
-      this.excecute(this.rom[this.pc]);
-    }
-    this.printToUserConsole('PROGRAM COMPLETE');
-  }
-
-  stopProgram(message: string) {
-    this.continue = false;
-    this.pc = 0;
-    this.registers = [0, 0, 0, 0];
-    this.stack = [];
-    this.printToUserConsole(message);
-  }
-
-  printToUserConsole(message: string) {
-    console.log('user console', message);
   }
 
   static argumentIsValid(argument: number, whiteList: Instruction[]) {
@@ -259,8 +266,10 @@ export default class Emulator extends Vue {
   }
 
   static assemble(input: string, instructions: Instruction[]): number[] {
-    const trimmedInput = input.trim();
-    const inputArray = trimmedInput.split(' ');
+    // remove whitespace and newline characters
+    // turn text into an array of instructions
+    const trimmedInput = input.trim().replace(/[\r\n]+/gm, '');
+    const inputArray = trimmedInput.split(' ').filter((word) => word !== '');
 
     return inputArray.map((word) => {
       let mappedWord = 0;
@@ -286,9 +295,47 @@ export default class Emulator extends Vue {
     });
   }
 
+  runProgram() {
+    this.printToUserConsole('START...');
+    this.continue = true;
+
+    while (this.continue && this.pc < this.rom.length) {
+      this.excecute(this.rom[this.pc]);
+    }
+  }
+
+  stopProgram(message: string) {
+    this.continue = false;
+    this.pc = 0;
+    this.registers = [0, 0, 0, 0];
+    this.stack = [];
+    this.printToUserConsole(message);
+  }
+  /*** EMULATOR LOGIC CODE END ***/
+
 }
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/main.scss';
 
+$text-color: #4DB7C2;
+
+.terminal {
+  color: $text-color;
+  margin: 1rem;
+
+  textarea {
+    color: inherit;
+    font-size: 1.1rem;
+    font-family: "Roboto Mono", monospace;
+    background-color: black;
+    width: 80vw;
+    border: none;
+  }
+
+}
+button {
+  color: $text-color;
+}
 </style>
