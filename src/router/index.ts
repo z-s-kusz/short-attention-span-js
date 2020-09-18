@@ -39,6 +39,7 @@ const routes = [
       return import('../views/PoemListing.vue');
     },
   },
+  // TODO make poetry and emulators sub routes while still using import()
   {
     path: '/poetry/author/:author',
     name: 'PoemsByAuthor',
@@ -58,6 +59,13 @@ const routes = [
     name: 'Emulator',
     component: () => {
       return import('../views/Emulator.vue');
+    },
+  },
+  {
+    path: '/Z468-manual',
+    name: 'EmulatorManual',
+    component: () => {
+      return import('../views/EmulatorManual.vue');
     },
   },
 ];
