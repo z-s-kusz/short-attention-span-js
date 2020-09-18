@@ -1,12 +1,16 @@
 <template>
 <main>
   <div class="terminal input">
+    <div>INPUT</div>
     <textarea v-model="input" rows="20" spellcheck="false">
     </textarea>
-    <button @click="runClick()">Run</button>
-    <button @click="clearConsole()">Clear Output</button>
+    <div class="terminal-controls">
+      <button @click="runClick()">Run</button>
+      <button @click="clearConsole()">Clear Output</button>
+    </div>
   </div>
   <div class="terminal output">
+    <div>OUTPUT</div>
     <textarea v-model="output" rows="20" spellcheck="false" readonly>
     </textarea>
   </div>
@@ -86,6 +90,7 @@ export default class Emulator extends Vue {
   excecute(instruction: number) {
     switch (instruction) {
       // copies value from 1 register to another
+      // TODO - should it clear instead of copy???
       case 10: { // MOVR - Move Register
         const destination = this.rom[this.pc + 1];
         const source = this.rom[this.pc + 2];
@@ -318,8 +323,7 @@ export default class Emulator extends Vue {
 
 <style lang="scss" scoped>
 @import '~@/styles/main.scss';
-
-$text-color: #4DB7C2;
+@import '~@/styles/emulator.scss';
 
 .terminal {
   color: $text-color;
@@ -335,7 +339,9 @@ $text-color: #4DB7C2;
   }
 
 }
-button {
-  color: $text-color;
+.terminal-controls {
+  display: flex;
+  justify-content: flex-start;
 }
+
 </style>
