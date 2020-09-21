@@ -11,17 +11,36 @@
     <li v-for="keyword in keywords" :key="keyword.name">
       <a :href="`#${keyword.name}`">{{ keyword.name }}</a>
     </li>
+    <li><a href="#about">about</a></li>
   </ul>
 
   <section v-for="keyword in keywords" :key="keyword.name">
     <h2>
       <a :name="keyword.name">{{ keyword.name }}</a>
     </h2>
-    <p>Arguments >> {{ keyword.arguments }}</p>
-    <p>Description >> {{ keyword.description }}</p>
+    <p><em>Arguments >> </em>{{ keyword.arguments }}</p>
+    <p><em>Description >> </em>{{ keyword.description }}</p>
     <hr>
   </section>
 
+  <section>
+    <h2>
+      <a name="about">About</a>
+    </h2>
+    <p>
+      <em>Case Insensitive >> </em>
+      The Z468's assembly commands are case insensitive.
+      Caps cased, lower cased, and spongebob cased commands are all valid:
+      "MOVV R4 R3" or "mOvV r4 R3".</p>
+    <p>
+      <em>Work In Progress >> </em>
+      The Z468 is a state of the art chipset from 1981
+      but the tooling around it is still in development.
+      As of now syntax errors will almost always report the error: "Error reading instruction 0"
+      and terminate the program. Extrapolating the past 40 years of development history we
+      estimate a fix will be ready by 2035. Thank you for your patience.
+    </p>
+  </section>
 </main>
 </template>
 
@@ -143,5 +162,15 @@ export default class Emulator extends Vue {
 main {
   text-align: start;
   margin: 8vw;
+}
+a {
+  color: $text-color;
+}
+h2 a:hover {
+  cursor: initial;
+}
+p em {
+  font-style: initial;
+  font-size: 1.2rem;
 }
 </style>
