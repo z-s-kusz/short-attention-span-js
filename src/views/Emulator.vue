@@ -307,6 +307,9 @@ export default class Emulator extends Vue {
     while (this.continue && this.pc < this.rom.length) {
       this.excecute(this.rom[this.pc]);
     }
+    if (this.continue && this.pc >= this.rom.length) {
+      this.stopProgram('PROGRAM COMPLETE');
+    }
   }
 
   stopProgram(message: string) {
@@ -331,7 +334,7 @@ export default class Emulator extends Vue {
 
   textarea {
     color: inherit;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-family: "Roboto Mono", monospace;
     background-color: black;
     width: 80vw;
@@ -341,7 +344,10 @@ export default class Emulator extends Vue {
 }
 .terminal-controls {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
+}
+button {
+  margin: 4px 8px;
 }
 
 </style>
