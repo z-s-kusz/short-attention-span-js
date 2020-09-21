@@ -3,25 +3,23 @@
   <main class="container">
     <h1>The Site</h1>
     <p>I love coding but I hate setting up projects. Even with cli tools allowing you to
-      `creat-react-app newApp` or `ng create new myApp` there is still a lot that goes into
-      starting up a web project.
-      "Where do I want to host it? Do I want to do the styles or just use a
-      framework/component library? Should I use one I know or learn another?
-      Should I set up a CMS for the writing work? Should I do the little tasks myself to
-      fight the node_modules size or just accept the bloat and get to MVP faster?"
+      `creat-react-app newApp` there is still a lot that goes into starting up a web project.
+      "How do I want to host it? Do I want to do the styles or just use a framework library?
+      Should I set up a CMS for the writing work? Should I fight the node_modules size
+      or just accept the bloat and get to MVP faster?"
     </p>
-    <p>In contrast, one of my favorite things about going into work
-      to program is that the infrastructure is just there. I can simply open the project and
+    <p>In contrast, one of my favorite things about coding at work
+      is that the infrastructure is just there. I can simply open the project and
       code - when everything else is out of the way at least :).
-      To replicate that setting, I decided to create this catch all site.
+      To replicate that setting, I created this catch all site.
     </p>
     <p>If you've navigated here through
       <a href="https://github.com/z-s-kusz" target="_blank">github</a>
-      you will have seen that I called this project 'sas.js' - short attention span JS. It's home
-      for any small idea or project I want to implement without thinking about where to put
-      the project. To that end, it could also be called 'dfr.js' - decision fatigue
-      remover JS. So here it is, a random mish mash of javascript ideas that anyone
-      can browse through quickly. Thanks for viewing and I hope you find
+      you will have seen that I called this project short attention span JS. It's home
+      for any small idea I want to implement without thinking about set up.
+      To that end, it could also be called decision fatigue
+      remover JS. So here it is, a random mish mash of javascript ideas to
+      browse through quickly. Thanks for viewing and I hope you find
       some of my small distraction pages entertaining!
     </p>
     <div class="spacer"></div>
@@ -29,11 +27,10 @@
     <h1 :style="poetryStyle">Poetry</h1>
     <p><em :style="poetryStyle">DISCLAIMER:</em>&nbsp;
       The available poems and poets were NOT selected by me.
-      I simply grabbed an open poetry api and I'm presenting the info exactly as it comes back.
-      I have not reviewed all available poems.
+      I have not reviewed the available poems.
     </p>
     <p>The 'poetry' page started with 2 ideas:</p>
-    <p>1. Create a quick way to access lots of poems. (It's literature, but tiny!)</p>
+    <p>1. Create a quick way to access lots of poems.</p>
     <p>2. Create pill-like color palettes that
       I had seen on reddit and use them for ...whatever.
     </p>
@@ -41,7 +38,7 @@
       to write a web scraper or make a database. I found a pretty cool open source poetry
       api to use <a href="https://github.com/thundercomb/poetrydb" target="_blank">here</a>.
       I did have to set up a quick back end (using Heroku) to get around
-      CORS but it will be good to have should any other projects here require back end code.
+      CORS but it will be good to have, should any other projects here require back end code.
     </p>
     <p>So, go read some poems! If you find depressing poetry, brighten it up with a lovely
       theme like 'Royal Folk.'
@@ -65,6 +62,12 @@
       for red, green, and blue.
     </p>
     <p>Give it a try and see how good you are at blending colors!</p>
+    <div class="spacer"></div>
+
+    <h1 class="z468">&lt;&lt;The Z468&gt;&gt;</h1>
+    <p>An emulator for a non-existent chip. I enjoyed the fake assembly from TIS-100
+      and wanted to try to make my own assembly and style up a classic terminal interface.
+    </p>
     <div class="spacer"></div>
 
     <h3>Zach Kusz</h3>
@@ -111,6 +114,13 @@ export default Vue.extend({
   padding-top: 18px;
   margin: 12px;
 }
+@media only screen and (max-width: 899px) {
+  .container {
+    max-width: 85%;
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+}
 .spacer {
   border-bottom: 2px solid #f9f7f786;
   margin: 36px;
@@ -130,5 +140,9 @@ h3, h4 {
 }
 .mgs1 {
   color: rgb(0, 162, 255);
+}
+.z468 {
+  background-color: black;
+  color: #4DB7C2;
 }
 </style>
