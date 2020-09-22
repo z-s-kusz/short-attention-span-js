@@ -24,8 +24,8 @@
     </p>
     <div class="spacer"></div>
 
-    <h1 :style="poetryStyle">Poetry</h1>
-    <p><em :style="poetryStyle">DISCLAIMER:</em>&nbsp;
+    <h1 class="poetry" :style="poetryStyle">Poetry</h1>
+    <p><em :style="poetryEm">DISCLAIMER:</em>&nbsp;
       The available poems and poets were NOT selected by me.
       I have not reviewed the available poems.
     </p>
@@ -41,7 +41,9 @@
       CORS but it will be good to have, should any other projects here require back end code.
     </p>
     <p>So, go read some poems! If you find depressing poetry, brighten it up with a lovely
-      theme like 'Royal Folk.'
+      theme like
+      <span class="folk-secondary">"</span>
+      <span class="folk-primary">Royal Folk</span>.<span class="folk-secondary">"</span>
     </p>
     <div class="spacer"></div>
 
@@ -96,6 +98,11 @@ export default Vue.extend({
         'background-color': PaletteHelper.store.colors[2],
       };
     },
+    poetryEm() {
+      return {
+        color: PaletteHelper.store.colors[1],
+      };
+    },
   },
 });
 </script>
@@ -143,6 +150,15 @@ h3, h4 {
 }
 .main-theme {
   color: $vue-green;
+}
+.poetry {
+  border-radius: 8px;
+}
+.folk-primary {
+  color: rgb(201, 72, 91);
+}
+.folk-secondary {
+  color: rgb(232, 157, 162);
 }
 .mgs1 {
   color: rgb(0, 162, 255);
