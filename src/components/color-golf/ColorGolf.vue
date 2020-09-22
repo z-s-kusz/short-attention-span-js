@@ -127,8 +127,8 @@ export default class ColorGolf extends Vue {
   // Props
   @Prop() distance!: number; // number the player must beat to complete the hole
   @Prop() gameMode!: string;
-  @Prop() numberOfHoles!: number;
-  @Prop() playerCount!: number;
+  @Prop({ default: 3 }) numberOfHoles!: number;
+  @Prop({ default: 1 }) playerCount!: number;
   @Prop() playerNames!: string[];
 
   // Computed
@@ -153,6 +153,7 @@ export default class ColorGolf extends Vue {
     const color = ColorGolf.getRandomColor();
     color.css = ColorGolf.setColorCSS(color);
     this.currentColor = color;
+    this.setScoreCards();
   }
 
   // methods
@@ -374,8 +375,6 @@ input {
   flex-direction: column;
   align-content: center;
   align-items: center;
-  background-color: #333;
-  min-height: 100%;
 }
 .info-panel {
   display: flex;
@@ -393,6 +392,7 @@ input {
   display: flex;
   align-content: flex-start;
   align-items: flex-start;
+  overflow: hidden;
 }
 form {
   display: flex;
@@ -406,7 +406,6 @@ label {
 }
 .course-inner {
   width:100%;
-    overflow-x: hidden;
 }
 .course-message {
   font-size: 34px;
@@ -492,6 +491,9 @@ button {
 }
 
 @media only screen and (max-width: 899px) {
+  .course {
+    width: 85%;
+  }
   button {
     margin: 4px;
     padding: 6px;
