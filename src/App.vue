@@ -100,7 +100,7 @@ body {
     margin: 0 20px;
   }
   & .router-link-exact-active, span {
-    color: #9aecc7;
+    color: $vue-green;
     cursor: pointer;
     margin: 0 20px;
   }

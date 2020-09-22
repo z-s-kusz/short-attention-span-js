@@ -85,7 +85,7 @@ export default Vue.extend({
 }
 
 .modal-header h3 {
-  color: #9aecc7;
+  color: $vue-green;
 }
 
 .modal-body {

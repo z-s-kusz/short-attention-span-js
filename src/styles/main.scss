@@ -4,6 +4,8 @@ any global styles like font and buttons should go here
 */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
 
+$vue-green: #9aecc7;
+
 h1, h2, h3, h4, h5, h6 {
   /* override chrome default weights */
   font-weight: normal;
@@ -21,7 +23,7 @@ button {
 }
 
 a {
-  color: #9aecc7;
+  color: $vue-green;
   text-decoration: underline;
   &:hover {
     cursor: pointer;

@@ -1,7 +1,7 @@
 <template>
 <div class="flex-container">
   <main class="container">
-    <h1>The Site</h1>
+    <h1 class="main-theme">The Site</h1>
     <p>I love coding but I hate setting up projects. Even with cli tools allowing you to
       `creat-react-app newApp` there is still a lot that goes into starting up a web project.
       "How do I want to host it? Do I want to do the styles or just use a framework library?
@@ -72,6 +72,9 @@
 
     <h3>Zach Kusz</h3>
     <h4><a href="https://github.com/z-s-kusz" target="_blank">github.com/z-s-kusz</a></h4>
+    <h4>
+      <a href="https://trello.com/b/oGoAIsZA/sas-js" target="_blank">sas.js Trello Board</a>
+    </h4>
   </main>
 </div>
 </template>
@@ -137,6 +140,9 @@ li {
 }
 h3, h4 {
   margin-bottom: 0;
+}
+.main-theme {
+  color: $vue-green;
 }
 .mgs1 {
   color: rgb(0, 162, 255);
