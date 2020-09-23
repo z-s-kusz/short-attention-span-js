@@ -14,7 +14,7 @@
     <div class="course" v-bind:class="courseClass" v-bind:style="courseStyle">
       <div class="course-inner">
         <transition name="left">
-          <div class="course-message" :key="message" v-show="showResults">
+          <div class="course-message" :key="message.shots" v-show="showResults">
             <p>{{ message.main }}</p>
             <p>{{ message.diff }}</p>
             <p>{{ message.shots }}</p>
@@ -65,7 +65,8 @@
     <section class="scorecard">
       <div>Score Card</div>
       <div v-for="(scoreCard, j) in scoreCards" v-bind:key="j">
-        <span>{{ playerNames[j] }}: </span>
+        <hr>
+        <span>P{{ j + 1}}: </span>
         <span v-for="(score, index) in scoreCard" v-bind:key="index">
           <span v-if="index !== 0"> | </span>
           <span>{{ score.strokes }}</span>
@@ -508,6 +509,7 @@ button {
   }
   .scorecard {
     margin: 0 12px 18px 12px;
+    font-size: 0.9rem;
   }
 }
 </style>
