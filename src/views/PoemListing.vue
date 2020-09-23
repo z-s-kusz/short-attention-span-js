@@ -1,25 +1,27 @@
 <template>
 <div class="flex-container">
-  <main class="poem-container" :style="secondaryStyle">
-    <h1 :style="primaryStyle">{{ header }}</h1>
+  <div class="border-div" :style="borderStyle">
+    <main class="poem-container" :style="secondaryStyle">
+      <h1 :style="primaryStyle">{{ header }}</h1>
 
-    <router-link v-for="(item, i) in items" :key="i"
-      :to="item.link" class="link" :style="tertiaryStyle">{{item.value}}
-    </router-link>
+      <router-link v-for="(item, i) in items" :key="i"
+        :to="item.link" class="link" :style="tertiaryStyle">{{item.value}}
+      </router-link>
 
-    <transition name="fade" appear>
-      <div v-show="loading" key="1">
-        <p>Loading...</p>
-        <p>Initial loading may take longer becuase the free
-          server from Heroku needs to be woken up first!
-        </p>
-      </div>
-    </transition>
+      <transition name="fade" appear>
+        <div v-show="loading" key="1">
+          <p>Loading...</p>
+          <p>Initial loading may take longer becuase the free
+            server from Heroku needs to be woken up first!
+          </p>
+        </div>
+      </transition>
 
-    <p v-if="showError">There was an issue retrieving the data.
-      <a @click="refresh()">Reload</a> and if the issue persists, bug Zach.
-    </p>
-  </main>
+      <p v-if="showError">There was an issue retrieving the data.
+        <a @click="refresh()">Reload</a> and if the issue persists, bug Zach.
+      </p>
+    </main>
+  </div>
 </div>
 </template>
 
@@ -64,6 +66,12 @@ export default Vue.extend({
     tertiaryStyle() {
       return {
         color: PaletteHelper.store.colors[1],
+      };
+    },
+    borderStyle() {
+      return {
+        background: `linear-gradient(145deg, ${PaletteHelper.store.colors[0]} 0%,
+          ${PaletteHelper.store.colors[1]}) 100%`,
       };
     },
   },

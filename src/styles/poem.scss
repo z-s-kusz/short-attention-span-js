@@ -1,9 +1,19 @@
+$outer-radius: 20px;
+$inner-radius: 10px;
+
 .flex-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-content: center;
   margin-bottom: 36px;
+}
+
+/* used to give a double rounded border effect */
+.border-div {
+  border-radius: $outer-radius;
+  background-color: purple;
+  width: 70%;
 }
 
 .poem-container .link {
@@ -20,15 +30,15 @@
 
 .poem-container {
   min-height: calc(100vh - 99px);
-  border-radius: 20px;
-  border: 36px solid #eeeeee;
-  width: 80%;
+  border-radius: $inner-radius;
+  margin: 25px;
   flex-direction: column;
   align-content: center;
   justify-content: start;
 
   & h1 {
     padding: 36px 28px 24px 28px;
+    border-radius: $inner-radius $inner-radius 0 0;
     margin: 0;
     background-color: rgb(110, 52, 110);
   }
@@ -45,4 +55,21 @@
 }
 .fade-enter {
   opacity: 0;
+}
+@media only screen and (max-width: 899px) {
+  .flex-container {
+    margin: 0;
+  }
+
+  .border-div {
+    width: 100%;
+  }
+
+  .poem-container {
+    margin: 15px;
+
+    & h1 {
+      padding: 15px;
+    }
+  }
 }

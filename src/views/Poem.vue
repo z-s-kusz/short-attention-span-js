@@ -1,24 +1,26 @@
 <template>
 <div class="flex-container">
-  <div class="poem-container" :style="secondaryStyle">
-    <h1 :style="primaryStyle">{{ title }}</h1>
-    <h6>by {{ author }}</h6>
-    <main>
-      <p v-for="(line, i) in lines" :key="i" :style="tertiaryStyle">{{ line }}</p>
+  <div class="border-div" :style="borderStyle">
+    <div class="poem-container" :style="secondaryStyle">
+      <h1 :style="primaryStyle">{{ title }}</h1>
+      <h6>by {{ author }}</h6>
+      <main>
+        <p v-for="(line, i) in lines" :key="i" :style="tertiaryStyle">{{ line }}</p>
 
-      <transition name="fade" appear>
-        <div v-show="loading" key="1">
-          <p>Loading...</p>
-          <p>Initial loading may take longer becuase the free
-            server from Heroku needs to be woken up first!
-          </p>
-        </div>
-      </transition>
+        <transition name="fade" appear>
+          <div v-show="loading" key="1">
+            <p>Loading...</p>
+            <p>Initial loading may take longer becuase the free
+              server from Heroku needs to be woken up first!
+            </p>
+          </div>
+        </transition>
 
-      <p v-if="showError">There was an issue retrieving the poem.
-        <a @click="refresh()">Reload</a> and if the issue persists, bug Zach.
-      </p>
-    </main>
+        <p v-if="showError">There was an issue retrieving the poem.
+          <a @click="refresh()">Reload</a> and if the issue persists, bug Zach.
+        </p>
+      </main>
+    </div>
   </div>
 </div>
 </template>
@@ -57,6 +59,12 @@ export default Vue.extend({
     tertiaryStyle() {
       return {
         color: PaletteHelper.store.colors[1],
+      };
+    },
+    borderStyle() {
+      return {
+        background: `linear-gradient(145deg, ${PaletteHelper.store.colors[0]} 0%,
+          ${PaletteHelper.store.colors[1]}) 100%`,
       };
     },
   },
