@@ -59,7 +59,7 @@
         <button v-on:click.prevent="adjustSlider('blue', 1)">+1</button>
         <button v-on:click.prevent="adjustSlider('blue', 10)">+10</button>
       </div>
-      <button v-on:click.prevent="enterClick()">enter &#9971;</button>
+      <button v-on:click.prevent="enterClick()" class="cta">Enter&#9971;Guess</button>
     </form>
 
     <section class="scorecard">
@@ -495,8 +495,13 @@ button {
     width: 85%;
   }
   button {
-    margin: 4px;
-    padding: 6px;
+    margin: 8px;
+    padding: 6px 8px;
+
+    &.cta {
+      margin-top: 12px;
+      padding: 10px;
+    }
   }
   .course-message {
     font-size: 26px;
