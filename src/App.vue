@@ -19,13 +19,12 @@
       <span @click="showModal = true" v-show="showColorGolf">How to Play</span>
       <span @click="toggleBoxIsOpen()" v-show="showPoetry"
         class="poem-colors-toggle" :style="poemColorsToggle">
-        &#127752;Poem Colors {{boxIsOpen ? '&uarr;' : '&darr;'}}
+        &#127752;Poem Colors {{ boxIsOpen ? '&uarr;' : '&darr;' }}
       </span>
     </div>
     <div class="nav-sm">
       <span @click="showModal = true" v-show="showColorGolf">How to Play</span>
-      <span @click="toggleBoxIsOpen()" v-show="showPoetry"
-        class="poem-colors-toggle" :style="poemColorsToggle">
+      <span @click="toggleBoxIsOpen()" v-show="showPoetry">
         &#127752;Poem Colors {{boxIsOpen ? '&uarr;' : '&darr;'}}
       </span>
     </div>
@@ -43,7 +42,6 @@
 import Vue from 'vue';
 import DefaultModal from '@/components/DefaultModal.vue';
 import PalettePicker from '@/components/palettes/PalettePicker.vue';
-import PaletteHelper from '@/services/palette-helper';
 import { Slide } from 'vue-burger-menu';
 
 export default Vue.extend({
@@ -68,12 +66,6 @@ export default Vue.extend({
     };
   },
   computed: {
-    poemColorsToggle() {
-      return {
-        color: PaletteHelper.store.colors[2],
-        'background-color': PaletteHelper.store.colors[3],
-      };
-    },
     showColorGolf(): boolean {
       return this.$route.fullPath.includes('/color-golf');
     },
@@ -94,6 +86,8 @@ export default Vue.extend({
 <style lang="scss">
 @import '~@/styles/main.scss';
 $slider-width: 108px;
+$nav-padding: 40px 30px 20px 30px;
+
 body {
   background-color: #333;
   margin: 0;
@@ -105,20 +99,17 @@ body {
   text-align: center;
   color: white;
   background-color: #333;
+  height: 100%;
 }
 
-.nav-lg, .nav-sm {
+.nav-lg {
   margin-left: $slider-width;
-  padding: 30px;
+  padding: $nav-padding;
   padding-left: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-
-  /* keep consistent sizing even without content */
-  box-sizing: border-box;
-  min-height: 81px;
 
   & a {
     color: white;
@@ -130,16 +121,25 @@ body {
     cursor: pointer;
     margin: 0 20px;
   }
-
-  & a:first-of-type, span:first-of-type {
-    margin-left: 0;
-  }
-
 }
+
 .nav-sm {
   display: none;
+  padding: $nav-padding;
+  justify-content: center;
+
+  /* keep consistent sizing even without content */
+  box-sizing: border-box;
+  min-height: 81px;
+
+  & span {
+    cursor: pointer;
+  }
 }
 
+.bm-overlay {
+  height: 100%;
+}
 .bm-burger-bars {
   background-color: white;
 }
@@ -147,6 +147,15 @@ body {
   /* nowrap applied to keep the words from changing wrap as drawer opens
   this means links must be less than 20 characters to fit!!! */
   white-space: nowrap;
+
+  & a {
+    color: white;
+  }
+
+  & .router-link-exact-active, span {
+    color: $vue-green;
+    cursor: pointer;
+  }
 }
 
 #palette-picker-menu {
@@ -154,14 +163,7 @@ body {
   align-content: center;
   justify-content: center;
 }
-.poem-colors-toggle {
-  border-radius: 4px;
-  padding-right: 4px;
-  &:active {
-    /* important to override inline vue set styles */
-    background-color: white !important;
-  }
-}
+
 @media only screen and (max-width: 899px) {
   .nav-lg {
     display: none;
