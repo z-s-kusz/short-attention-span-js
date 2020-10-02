@@ -141,7 +141,7 @@ body {
   height: 100%;
 }
 .bm-burger-bars {
-  background-color: white;
+  background-color: white !important;
 }
 .slider {
   /* nowrap applied to keep the words from changing wrap as drawer opens
