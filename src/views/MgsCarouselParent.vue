@@ -2,32 +2,11 @@
   <main class="home">
     <section>
       <h3>The MGS1 Item Carousel</h3>
-      <h4>Scroll to the bottom to see my web implementation of the item selector UI from the
+      <h4>Scroll to the bottom to try my web implementation of the item selector UI from the
         Playstation 1 game Metal Gear Solid 1(MGS1).</h4>
       <img src="../assets/mgs1-carousel-example.png"
         alt="Screenshot from Metal Gear Solid 1." />
-      <p class="description">Screenshot from Metal Gear Solid 1.</p>
-      <div class="flex-image">
-        <div>
-          <p>I created this demo to emulate one of the coolest item select screens I’ve
-            seen in software, the MGS1 item select. The screenshot above shows the item selector
-            in its active state.</p>
-          <p>Many games center item lists or use a radial menu, moving the select UI away from
-            the space the equiped item occupies. The MGS1 interface keeps the
-            selected item in one place and displays the list around it. This is
-            similar to user interfaces I've seen in some date and time selectors, like the one
-            pictured to the right.</p>
-          <p>However, because the item display in MGS1 is in the left corner there is no room to
-            show preceding items further left. So those items are rotated and placed above. I was
-            thrown for a loop the first time I used it. I wasn’t sure where items were going as I
-            paged through a simple list in what appeared to be four directions. But after a few
-            moments of testing the controls it began to feel natural. Part of the reason the
-            carousel cemented in my mind as an iconic element of the game is because it
-            creates a moment of dissonance before becoming familiar.</p>
-        </div>
-        <img src="../assets/time-pick-ui.jpg"
-          alt="A sample time selection UI showig static selection location." />
-      </div>
+      <p class="description">Screenshot with menu open.</p>
 
       <h3>Web Implementation</h3>
       <p>Each item box is made with a main div that has black borders of various sizes to get the
@@ -41,16 +20,26 @@
         I could have gotten around this by using animated transformations but then I would need
         to add classes based on the direction each item could go: left, right, up, and
         down.</p>
-      <p>Instead, I abandoned the grid layout in favor of more absolute positioning. Thanks to my
-        pre-existing class structure the change only took about 10 minutes. And rather than
+      <p>Instead, I abandoned the grid layout in favor of absolute positioning. Thanks to my
+        class structure the change only took about 5 minutes. And rather than
         needing to create 4 custom transformations along with the logic of when to apply each I
         was able to get the computer to do the heavy lifting for me with 1 line of css:</p>
-      <code>
-        <pre>
-        .item {
-          transition: all 150ms ease-in;
-        }</pre>
-      </code>
+
+<!-- messed up formatting to make it work with <pre> tags -->
+<pre>
+<code>.item {
+  transition: all 150ms ease-in;
+}</code>
+</pre>
+
+      <p>A consequence of this is that you can get the items to fly around the corner if you
+        page through fast enough. Give it a try by clicking 'w' and 'd' as fast as possible.
+        This could be easily corrected with input throttling but the exercise was more about
+        css and the results are amusing so I've left it as is.</p>
+
+      <h3>Sound</h3>
+      <p>Sound effects were later added with Howler.js. I have the volume set quite low, so
+        you may need to turn it up if you don't hear anything.</p>
 
       <h3>(Im)practical Applications</h3>
       <p>I can’t imagine a practical application for this other than a web game that relies more
@@ -92,7 +81,7 @@ main {
   justify-content: center;
 }
 section {
-  max-width: 70%;
+  width: 70%;
   background-color: #272727;
   border-radius: 10px;
   padding: 20px;
@@ -103,10 +92,13 @@ section {
 h3, em, a, .description {
   color: rgb(0, 162, 255);
 }
-code pre {
-  text-align: start;
+pre code {
   background-color: black;
+  border: 1px solid #999;
+  display: block;
   padding: 8px;
+  border-radius: 10px;
+  text-align: left;
 }
 p {
   text-align: left;
@@ -120,19 +112,12 @@ img {
   margin-bottom: 0;
   max-width: 100%;
 }
-.flex-image {
-  display: flex;
-  flex-wrap: wrap;
-}
-.flex-image div {
-  flex: 1 1 50%;
-}
-.flex-image img {
-  flex: 0 1 auto;
-  height: 400px;
-  margin-left: 1.5em;
-}
 .full-screen {
   width: 100%;
+}
+@media only screen and (max-width: 899px) {
+  section {
+    width: 85%;
+  }
 }
 </style>

@@ -3,7 +3,8 @@
     <div class="controls">
       <h3>Carousel Demo: Hold 'i' to open menu, use 'wasd' keys to page</h3>
       <label>Volume
-        <input type="range" min="0" max="1" step="0.01" v-model="volumeControl"/>
+        <input type="range" min="0" max="1" step="0.01"
+        class="slider" v-model="volumeControl"/>
       </label>
     </div>
     <div class="container">
@@ -14,10 +15,10 @@
         <span class="item-name">{{ item.name }}</span>
       </div>
     </div>
-    <h1 class="show-sm-only">
+    <h3 class="show-sm-only">
       Sorry mobile, this demo is modeled after
       TV game content so it only works at desktop screen sizes (900px +).
-    </h1>
+    </h3>
   </div>
 </template>
 
@@ -208,6 +209,38 @@ h3 {
   color: rgb(0, 136, 214);
 }
 
+.slider {
+  -webkit-appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+.slider:hover {
+  opacity: 1;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #000;
+  cursor: pointer;
+}
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #000;
+  cursor: pointer;
+}
+
 .selected {
   bottom: 20px;
   left: 20px;
@@ -249,6 +282,7 @@ h3 {
 }
 
 .show-sm-only {
+  padding: 18px;
   display: none;
 }
 @media only screen and (max-width: 899px) {
