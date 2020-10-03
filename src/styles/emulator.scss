@@ -1,5 +1,10 @@
 $text-color: #4DB7C2;
+$text-color-dark: #246f77;
+$border-color: purple;
+$border-color-dark: rgb(90, 2, 90);
 
 button {
   color: $text-color;
+  margin: 4px 8px;
+  border-radius: 0;
 }

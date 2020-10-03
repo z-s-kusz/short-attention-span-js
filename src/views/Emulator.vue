@@ -1,18 +1,26 @@
 <template>
 <main>
-  <div class="terminal input">
-    <div>INPUT</div>
-    <textarea v-model="input" rows="20" spellcheck="false">
+  <div class="terminal">
+    <div class="tabs">
+      <div @click="selectTab('input')"
+        :class="selectedTab === 'input' ? 'selected' : 'not-selected'">INPUT
+      </div>
+      <div @click="selectTab('output')"
+        :class="selectedTab === 'output' ? 'selected' : 'not-selected'">OUTPUT
+      </div>
+    </div>
+
+    <textarea v-model="input" rows="12" spellcheck="false"
+      v-show="selectedTab === 'input'">
     </textarea>
+    <textarea v-model="output" rows="12" spellcheck="false" readonly
+      v-show="selectedTab === 'output'">
+    </textarea>
+
     <div class="terminal-controls">
       <button @click="runClick()">Run</button>
       <button @click="clearConsole()">Clear Output</button>
     </div>
-  </div>
-  <div class="terminal output">
-    <div>OUTPUT</div>
-    <textarea v-model="output" rows="20" spellcheck="false" readonly>
-    </textarea>
   </div>
 </main>
 </template>
@@ -27,6 +35,7 @@ interface Instruction {
   name: string;
   code: number;
 }
+type tabs = 'input' | 'output';
 
 @Component({})
 export default class Emulator extends Vue {
@@ -63,6 +72,7 @@ export default class Emulator extends Vue {
 
   input = 'MOVV r1 10 MOVV r2 10 ADD r1 r2 PRINT r1 HALT';
   output = '';
+  selectedTab: tabs = 'input';
 
   created() {
     const instructionsList = this.instructionsList.concat(this.registersList);
@@ -74,15 +84,19 @@ export default class Emulator extends Vue {
     const instructionsList = this.instructionsList.concat(this.registersList);
     this.rom = Emulator.assemble(this.input, instructionsList);
     this.runProgram();
+    this.selectTab('output');
   }
 
   /*** EMULATOR INTERFACE LAYER ***/
   printToUserConsole(message: string) {
-    this.output += `\n${message}`;
+    this.output += `${message}\n`;
   }
 
   clearConsole() {
     this.output = '';
+  }
+  selectTab(tab: tabs): void {
+    this.selectedTab = tab;
   }
   /*** INTERFACE LAYER END ***/
 
@@ -330,24 +344,56 @@ export default class Emulator extends Vue {
 
 .terminal {
   color: $text-color;
-  margin: 1rem;
+  margin: 1rem 10rem;
+  display: flex;
+  flex-direction: column;
 
   textarea {
     color: inherit;
     font-size: 1rem;
     font-family: "Roboto Mono", monospace;
     background-color: black;
-    width: 80vw;
-    border: none;
+    border: 2px solid $border-color;
+    text-align: start;
   }
 
 }
 .terminal-controls {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
-button {
-  margin: 4px 8px;
+button:first-of-type {
+  margin-left: 0;
+}
+.tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  & div {
+    border: 2px solid $border-color;
+    border-bottom: none;
+    background-color: black;
+    padding: 4px 8px;
+    margin: 0 8px;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  & .not-selected {
+    color: $text-color-dark;
+    background-color: #222;
+    border-color: $border-color-dark;
+  }
 }
 
+@media only screen and (max-width: 899px) {
+  .terminal {
+    margin: 1rem;
+  }
+}
 </style>
