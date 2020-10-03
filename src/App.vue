@@ -18,7 +18,7 @@
       <router-link to="/color-golf">Color Golf</router-link>
       <span @click="showModal = true" v-show="showColorGolf">How to Play</span>
       <span @click="toggleBoxIsOpen()" v-show="showPoetry"
-        class="poem-colors-toggle" :style="poemColorsToggle">
+        class="poem-colors-toggle">
         &#127752;Poem Colors {{ boxIsOpen ? '&uarr;' : '&darr;' }}
       </span>
     </div>
