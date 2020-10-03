@@ -5,7 +5,7 @@
   <color-golf v-show="gameState === 'playing'"
     v-bind="menuData" v-on:game-completed="gameCompleted" />
   <game-over v-if="gameState === 'completed'"
-    v-bind:score-cards="scoreCards" v-bind:players="menuData.players"
+    v-bind:score-cards="scoreCards" v-bind:playerNames="menuData.playerNames"
     v-on:go-to-menu="goToMenu" />
 </div>
 </template>
