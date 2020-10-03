@@ -500,7 +500,7 @@ button {
     padding: 6px 8px;
 
     &.cta {
-      margin-top: 12px;
+      margin-top: 20px;
       padding: 10px;
     }
   }
