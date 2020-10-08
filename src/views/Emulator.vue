@@ -70,7 +70,14 @@ export default class Emulator extends Vue {
     { name: 'HALT', code: 255 },
   ];
 
-  input = 'MOVV r1 10 MOVV r2 10 ADD r1 r2 PRINT r1 HALT';
+  // formated stupid so the textarea doesn't display indents
+  input =
+`MOVV r1 10
+MOVV r2 10
+ADD r1 r2
+PRINT r1
+HALT
+`;
   output = '';
   selectedTab: tabs = 'input';
 
@@ -101,7 +108,7 @@ export default class Emulator extends Vue {
   /*** INTERFACE LAYER END ***/
 
   /*** EMULATOR LOGIC ***/
-  excecute(instruction: number) {
+  execute(instruction: number): void {
     switch (instruction) {
       // copies value from 1 register to another
       // TODO - should it clear instead of copy???
@@ -191,7 +198,7 @@ export default class Emulator extends Vue {
         this.pc += 2;
         break;
       }
-      // Jump excecution to an arbitrary address
+      // Jump execution to an arbitrary address
       case 40: { // JUMP
         const address = this.rom[this.pc + 1];
         const instructionAtAddress = this.rom[address];
@@ -319,7 +326,7 @@ export default class Emulator extends Vue {
     this.continue = true;
 
     while (this.continue && this.pc < this.rom.length) {
-      this.excecute(this.rom[this.pc]);
+      this.execute(this.rom[this.pc]);
     }
     if (this.continue && this.pc >= this.rom.length) {
       this.stopProgram('PROGRAM COMPLETE');
