@@ -70,22 +70,9 @@ export default class Emulator extends Vue {
     { name: 'HALT', code: 255 },
   ];
 
-  // formated stupid so the textarea doesn't display indents
-  input =
-`MOVV r1 10
-MOVV r2 10
-ADD r1 r2
-PRINT r1
-HALT
-`;
+  input = 'MOVV r1 10\nMOVV r2 10\nADD r1 r2\nPRINT r1\nHALT';
   output = '';
   selectedTab: tabs = 'input';
-
-  created() {
-    const instructionsList = this.instructionsList.concat(this.registersList);
-    this.rom = Emulator.assemble(this.input, instructionsList);
-    this.runProgram();
-  }
 
   runClick() {
     const instructionsList = this.instructionsList.concat(this.registersList);
@@ -294,7 +281,7 @@ HALT
   static assemble(input: string, instructions: Instruction[]): number[] {
     // remove whitespace and newline characters
     // turn text into an array of instructions
-    const trimmedInput = input.trim().replace(/[\r\n]+/gm, '');
+    const trimmedInput = input.trim().replace(/[\r\n]+/gm, ' ');
     const inputArray = trimmedInput.split(' ').filter((word) => word !== '');
 
     return inputArray.map((word) => {
