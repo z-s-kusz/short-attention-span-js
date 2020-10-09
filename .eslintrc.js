@@ -27,5 +27,7 @@ module.exports = {
     'global-require': [0],
     'consistent-return': [0], // typescript handles this for us
     'spaced-comment': [0], // fuck this rule, needs better exception options
+    'no-trailing-spaces': [1],
+    'prefer-destructuring': [1],
   },
 };
