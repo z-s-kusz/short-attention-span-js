@@ -104,7 +104,6 @@ button {
   margin: 4px;
   border-radius: 4px;
   min-width: 160px;
-  color: white;
 }
 .disable {
   display: none;
