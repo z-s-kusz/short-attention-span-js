@@ -1,65 +1,69 @@
 <template>
-<svg width="100%" height="100%" ref="svg" class="button-svg" @click="emitClick()">
-  <!-- top row corners -->
-  <rect x="0" y="0" width="50%" height="50%" :fill="color3" rx="6" />
-  <rect x="50%" y="0" width="50%" height="50%" :fill="color2" rx="6" />
+<!-- transition appear hides pop in becuase javascript sizing -->
+<transition name="fade" appear>
+  <svg width="100%" height="100%" ref="svg" class="button-svg" @click="emitClick()">
+    <!-- top row corners -->
+    <rect x="0" y="0" width="50%" height="50%" :fill="color3" rx="6" />
+    <rect x="50%" y="0" width="50%" height="50%" :fill="color2" rx="6" />
 
-  <!-- bottom row corners -->
-  <rect x="0" y="50%" width="50%" height="50%" :fill="color4" rx="6" />
-  <rect x="50%" y="50%" width="50%" height="50%" :fill="color0" rx="6" />
+    <!-- bottom row corners -->
+    <rect x="0" y="50%" width="50%" height="50%" :fill="color4" rx="6" />
+    <rect x="50%" y="50%" width="50%" height="50%" :fill="color0" rx="6" />
 
-  <!-- top row middle -->
-  <rect x="12%" y="0" width="22%" height="50%" :fill="color1" />
-  <rect x="34%" y="0" width="18%" height="50%" :fill="color2" />
-  <rect x="52%" y="0" width="36%" height="50%" :fill="color4" />
+    <!-- top row middle -->
+    <rect x="12%" y="0" width="22%" height="50%" :fill="color1" />
+    <rect x="34%" y="0" width="18%" height="50%" :fill="color2" />
+    <rect x="52%" y="0" width="36%" height="50%" :fill="color4" />
 
-  <!-- bottom row middle -->
-  <rect x="8%" y="50%" width="40%" height="50%" :fill="color0" />
-  <rect x="48%" y="50%" width="14%" height="50%" :fill="color3" />
-  <rect x="62%" y="50%" width="22%" height="50%" :fill="color4" />
+    <!-- bottom row middle -->
+    <rect x="8%" y="50%" width="40%" height="50%" :fill="color0" />
+    <rect x="48%" y="50%" width="14%" height="50%" :fill="color3" />
+    <rect x="62%" y="50%" width="22%" height="50%" :fill="color4" />
 
-  <!-- left middle -->
-  <rect x="0" y="12%" width="50%" height="44%" :fill="color1" />
-  <rect x="0" y="56%" width="50%" height="26%" :fill="color3" />
+    <!-- left middle -->
+    <rect x="0" y="12%" width="50%" height="44%" :fill="color1" />
+    <rect x="0" y="56%" width="50%" height="26%" :fill="color3" />
 
-  <!-- right middle -->
-  <rect x="50%" y="30%" width="50%" height="44%" :fill="color1" />
+    <!-- right middle -->
+    <rect x="50%" y="30%" width="50%" height="44%" :fill="color1" />
 
-  <!-- disabled darkening overlay -->
-  <rect x="0" y ="0" width="100%" height="100%" fill="black" class="disable" />
+    <!-- disabled darkening overlay -->
+    <rect x="0" y ="0" width="100%" height="100%" fill="black" class="disable" />
 
-  <foreignObject x="0" y="0" width="100%" height="100%" :id="buttonId" tabindex="-1">
-    <button ref="button" class="inner-button">
-      <slot>Button</slot>
-    </button>
-  </foreignObject>
+    <foreignObject x="0" y="0" width="100%" height="100%" :id="buttonId" tabindex="-1">
+      <button ref="button" class="inner-button">
+        <slot>Button</slot>
+      </button>
+    </foreignObject>
 
-  <!-- shining lights animation -->
-  <!-- top light -->
-  <circle cx="-10%" cy="2%" :r="buttonBorderSize" :fill="color1">
-    <animate attributeName="cx"
-      :begin="animationBegin" :end="animationEnd"
-      repeatDur="indefinite" dur="5s"
-      restart="whenNotActive"
-      calcMode="spline" values="2%; 96%"
-      keyTimes="0; 1" keySplines=".2 .31 .56 .78" />
-    <animate attributeName="fill" repeatDur="indefinite" dur="4.3s"
-      :values="`${color1}; white; ${color1}`"/>
-  </circle>
+    <!-- shining lights animation -->
+    <!-- top light -->
+    <circle cx="-10%" cy="2%" :r="buttonBorderSize" :fill="color1">
+      <animate attributeName="cx"
+        :begin="animationBegin" :end="animationEnd"
+        repeatDur="indefinite" dur="5s"
+        restart="whenNotActive"
+        calcMode="spline" values="2%; 96%"
+        keyTimes="0; 1" keySplines=".2 .31 .56 .78" />
+      <animate attributeName="fill" repeatDur="indefinite" dur="4.3s"
+        :values="`${color1}; white; ${color1}`"/>
+    </circle>
 
-  <!-- bottom light -->
-  <circle cx="-10%" cy="98%" :r="buttonBorderSize" :fill="color2" id="#test">
-    <animate attributeName="cx"
-      :begin="animationBegin" :end="animationEnd"
-      repeatDur="indefinite" dur="4s"
-      restart="whenNotActive"
-      calcMode="spline" values="98%; 4%"
-      keyTimes="0; 1" keySplines=".26 .66 .62 .89" />
-    <animate attributeName="fill" repeatDur="indefinite" dur="3.1s"
-      :values="`${color2}; white; ${color2}`"/>
-  </circle>
+    <!-- bottom light -->
+    <circle cx="-10%" cy="98%" :r="buttonBorderSize" :fill="color2" id="#test">
+      <animate attributeName="cx"
+        :begin="animationBegin" :end="animationEnd"
+        repeatDur="indefinite" dur="4s"
+        restart="whenNotActive"
+        calcMode="spline" values="98%; 4%"
+        keyTimes="0; 1" keySplines=".26 .66 .62 .89" />
+      <animate attributeName="fill" repeatDur="indefinite" dur="3.1s"
+        :values="`${color2}; white; ${color2}`"/>
+    </circle>
 
-</svg>
+  </svg>
+</transition>
+
 <!--
   shining lights info becuase I know I will need it later:
   *begin and end tell animation when to start and stop. each needs a target id
@@ -187,5 +191,11 @@ button {
 }
 .inner-button:focus {
   background-color: #333;
+}
+.fade-enter-active {
+  transition: opacity 400ms;
+}
+.fade-enter {
+  opacity: 0;
 }
 </style>
