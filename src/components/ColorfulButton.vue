@@ -26,14 +26,54 @@
   <rect x="50%" y="30%" width="50%" height="44%" :fill="color1" />
 
   <!-- disabled darkening overlay -->
-  <rect x=0 y = 0 width="100%" height="100%" fill="black" class="disable" />
+  <rect x="0" y ="0" width="100%" height="100%" fill="black" class="disable" />
 
-  <foreignObject x="0" y="0" width="100%" height="100%">
-    <button ref="button">
+  <foreignObject x="0" y="0" width="100%" height="100%" :id="buttonId" tabindex="-1">
+    <button ref="button" class="inner-button">
       <slot>Button</slot>
     </button>
   </foreignObject>
+
+  <!-- shining lights animation -->
+  <!-- top light -->
+  <circle cx="-10%" cy="2%" :r="buttonBorderSize" :fill="color1">
+    <animate attributeName="cx"
+      :begin="animationBegin" :end="animationEnd"
+      repeatDur="indefinite" dur="5s"
+      restart="whenNotActive"
+      calcMode="spline" values="2%; 96%"
+      keyTimes="0; 1" keySplines=".2 .31 .56 .78" />
+    <animate attributeName="fill" repeatDur="indefinite" dur="4.3s"
+      :values="`${color1}; white; ${color1}`"/>
+  </circle>
+
+  <!-- bottom light -->
+  <circle cx="-10%" cy="98%" :r="buttonBorderSize" :fill="color2" id="#test">
+    <animate attributeName="cx"
+      :begin="animationBegin" :end="animationEnd"
+      repeatDur="indefinite" dur="4s"
+      restart="whenNotActive"
+      calcMode="spline" values="98%; 4%"
+      keyTimes="0; 1" keySplines=".26 .66 .62 .89" />
+    <animate attributeName="fill" repeatDur="indefinite" dur="3.1s"
+      :values="`${color2}; white; ${color2}`"/>
+  </circle>
+
 </svg>
+<!--
+  shining lights info becuase I know I will need it later:
+  *begin and end tell animation when to start and stop. each needs a target id
+    which is why we set them via vuejs
+  *repeatDur: allows animation to loop infinitly.
+  *restart="whenNotActive": keeps animation from restarting when
+    user mouses over and clicks.
+    becuase clicking focuses it, and focusing it triggers a start.
+  *calc-mode="spline" along with values, keyTimes and keySplines allows
+    anmating with cubic-bezier curves.
+  *values are what we are animating to/from.
+  -->
+  <!-- TODO I would like the shining lights animations to have
+    some pauses between instead of constantly going -->
 </template>
 
 <script lang="ts">
@@ -66,6 +106,16 @@ export default Vue.extend({
       type: String,
       default: '#92FF33',
     },
+    buttonId: {
+      type: [String, Number],
+      required: true,
+      default: 'id',
+    },
+    // TODO prevent twinkle effect while disabled
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -73,13 +123,21 @@ export default Vue.extend({
       buttonBorderSize: 4,
     };
   },
+  computed: {
+    animationBegin(): string {
+      return `${this.buttonId}.mouseenter; ${this.buttonId}.focusin`;
+    },
+    animationEnd(): string {
+      return `${this.buttonId}.mouseleave; ${this.buttonId}.focusout`;
+    },
+  },
   mounted() {
     this.setSvgWidth();
     this.setSvgHeight();
   },
   methods: {
     emitClick() {
-      this.$emit('buttonClick');
+      if (!this.disabled) this.$emit('buttonClick');
     },
     setSvgHeight() {
       const { svg, button }: any = this.$refs;
@@ -109,5 +167,11 @@ button {
   display: none;
   fill-opacity: 0.6;
 }
-
+// override chrome focus styles on button and svg
+:focus {
+  outline: none !important;
+}
+.inner-button:focus {
+  background-color: #333;
+}
 </style>
