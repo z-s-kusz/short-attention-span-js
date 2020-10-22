@@ -173,7 +173,6 @@ main {
   justify-content: center;
 }
 button {
-  color: white;
   margin: 12px;
   min-width: 140px;
 }

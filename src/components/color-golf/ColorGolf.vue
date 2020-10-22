@@ -410,7 +410,6 @@ label {
 }
 .course-message {
   font-size: 34px;
-  color: white;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

@@ -109,8 +109,4 @@ export default Vue.extend({
 span {
   text-align: left;
 }
-
-button {
-  color: white;
-}
 </style>

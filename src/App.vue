@@ -7,6 +7,7 @@
       <router-link to="/Z468-emulator">Z468</router-link>
       <router-link to="/Z468-manual">Z468 Manual</router-link>
       <router-link to="/color-golf">Color Golf</router-link>
+      <router-link to="/hades-style-demo">Hades Style Demo</router-link>
     </slide>
 
     <div class="nav-lg">
@@ -16,6 +17,7 @@
       <router-link to="/Z468-emulator">Z468</router-link>
       <router-link to="/Z468-manual">Z468 Manual</router-link>
       <router-link to="/color-golf">Color Golf</router-link>
+      <router-link to="/hades-style-demo">Hades Style Demo</router-link>
       <span @click="showModal = true" v-show="showColorGolf">How to Play</span>
       <span @click="toggleBoxIsOpen()" v-show="showPoetry"
         class="poem-colors-toggle">
