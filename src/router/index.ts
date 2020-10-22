@@ -68,6 +68,13 @@ const routes = [
       return import('../views/EmulatorManual.vue');
     },
   },
+  {
+    path: '/hades-style-demo',
+    name: 'HadesStyleDemo',
+    component: () => {
+      return import('../views/HadesDemo.vue');
+    },
+  },
 ];
 
 const router = new VueRouter({
