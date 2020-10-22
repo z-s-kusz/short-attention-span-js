@@ -29,5 +29,6 @@ module.exports = {
     'spaced-comment': [0], // fuck this rule, needs better exception options
     'no-trailing-spaces': [1],
     'prefer-destructuring': [1],
+    'no-multiple-empty-lines': [1],
   },
 };
