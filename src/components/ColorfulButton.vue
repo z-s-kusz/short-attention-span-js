@@ -107,9 +107,17 @@ export default Vue.extend({
       default: '#92FF33',
     },
     buttonId: {
-      type: [String, Number],
+      type: String,
       required: true,
       default: 'id',
+      validator(value) {
+        if (value.includes('-')) {
+          console.error('buttonId can\'t contain minus "-" as it breaks the svg '
+          + 'event selectors. camelCase values are recomended.');
+          return false;
+        }
+        return true;
+      },
     },
     // TODO prevent twinkle effect while disabled
     disabled: {
@@ -142,12 +150,18 @@ export default Vue.extend({
     setSvgHeight() {
       const { svg, button }: any = this.$refs;
       const svgHeight = button.clientHeight + this.buttonBorderSize * 2;
-      svg.setAttribute('height', svgHeight);
+      // setTimeout is to asure size is locked when setting attribute
+      // ran into inconsistent sizing issues without it
+      setTimeout(() => {
+        svg.setAttribute('height', svgHeight);
+      }, 0);
     },
     setSvgWidth() {
       const { svg, button }: any = this.$refs;
       const svgWidth = button.clientWidth + this.buttonBorderSize * 2;
-      svg.setAttribute('width', svgWidth);
+      setTimeout(() => {
+        svg.setAttribute('width', svgWidth);
+      }, 0);
     },
   },
 });
