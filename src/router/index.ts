@@ -75,6 +75,13 @@ const routes = [
       return import('../views/HadesDemo.vue');
     },
   },
+  {
+    path: '/tng-panel',
+    name: 'TngPanel',
+    component: () => {
+      return import('../views/TngPanel.vue');
+    },
+  },
 ];
 
 const router = new VueRouter({
