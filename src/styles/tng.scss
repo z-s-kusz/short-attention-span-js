@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'tng-panel-font';
+  src: url('~@/assets/star-trek-panel-font.ttf');
+}
+
+$orange: rgb(232,141,52);
+$india-red: rgb(194,112,114);
+$plum: rgb(199,158,200);
+$portage: rgb(146,155,212);
+$light-blue: rgb(163,205,245);
+$cornflower-blue: rgb(80,157,235);
+$steel-blue: rgb(65,106,187);
+$white: rgb(237,237,254);
+
+$padding: 20px;
+$banner-height: 120px;
+$overhang-height: $padding;
+$overhang-width: 120px;
+$banner-radius: 50px;
