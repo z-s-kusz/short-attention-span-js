@@ -83,4 +83,30 @@ export default Vue.extend({
   margin-bottom: $padding;
   //
 }
+
+@media only screen and (max-width: 899px) {
+  .banner-container {
+    height: $banner-height-sm;
+  }
+  .banner-bar {
+    border-top-left-radius: $banner-radius-sm;
+  }
+  .overhang-visable {
+    width: $overhang-width-sm;
+  }
+  .banner-title-edge {
+    border-top-right-radius: $banner-radius-sm;
+    border-bottom-right-radius: $banner-radius-sm;
+    width: $banner-radius-sm;
+  }
+  .banner-title-text {
+    height: $banner-height-sm - $overhang-height;
+    font-size: $banner-height-sm - ($padding / 2);
+
+    // wierd hacks becuase of the font family to get it centered
+    margin-top: -$padding / 2;
+    margin-bottom: $padding / 2;
+    //
+  }
+}
 </style>
