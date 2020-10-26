@@ -111,8 +111,8 @@ export default Vue.extend({
 
   .cut-cover {
     height: 50%;
-    margin-left: $small-gap;
-    margin-right: $small-gap; // todo rename to $gap everywhere
+    margin-left: $gap;
+    margin-right: $gap;
   }
 }
 
