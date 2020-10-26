@@ -21,7 +21,9 @@
   </div>
 
   <div class="screen-1">
-    <tng-border-wrap-around :accentX="true"></tng-border-wrap-around>
+    <tng-border-wrap-around :accentX="true">
+      <button-screen></button-screen>
+    </tng-border-wrap-around>
   </div>
 
   <div class="screen-2">
@@ -36,8 +38,12 @@ import TngBanner from '@/components/tng-panel/TngBanner.vue';
 import TngBlockButton from '@/components/tng-panel/TngBlockButton.vue';
 import TngBorderWrapAround from '@/components/tng-panel/TngBorderWrapAround.vue';
 
+import ButtonScreen from '@/components/tng-demos/ButtonScreen.vue';
+
 export default Vue.extend({
   components: {
+    ButtonScreen,
+
     TngBanner,
     TngBlockButton,
     TngBorderWrapAround,
