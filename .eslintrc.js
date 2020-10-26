@@ -30,5 +30,6 @@ module.exports = {
     'no-trailing-spaces': [1],
     'prefer-destructuring': [1],
     'no-multiple-empty-lines': [1],
+    'comma-spacing': [1],
   },
 };
