@@ -21,7 +21,7 @@
   </div>
 
   <div class="screen-1">
-    <tng-border-wrap-around :accentX="'cut'"></tng-border-wrap-around>
+    <tng-border-wrap-around :accentX="true"></tng-border-wrap-around>
   </div>
 
   <div class="screen-2">

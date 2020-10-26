@@ -4,8 +4,8 @@
 
     <div class="tail-accent"></div>
 
-    <div :class="accentXClass">
-      <div v-if="accentX === 'cut'" class="cut-cover" :class="colorClass"></div>
+    <div class="accent-x-cut" v-if="accentX">
+      <div class="cut-cover" :class="colorClass"></div>
     </div>
 
     <div class="accent-y-container" v-if="accentY !== 'none'">
@@ -28,9 +28,6 @@ const colorOptions: readonly string[] = [
 const accentYOptions: readonly string[] = [
   ...colorOptions, 'none',
 ];
-const accentXOptions: readonly string[] = [
-  'none', 'cut',
-];
 export default Vue.extend({
   props: {
     borderColor: {
@@ -45,15 +42,8 @@ export default Vue.extend({
       },
     },
     accentX: {
-      type: String,
-      default: 'none',
-      validator(value) {
-        if (!accentXOptions.includes(value)) {
-          console.error(`accentX must be one of the following: ${accentXOptions}`);
-          return false;
-        }
-        return true;
-      },
+      type: Boolean,
+      default: false,
     },
     accentY: {
       type: String,
@@ -68,10 +58,6 @@ export default Vue.extend({
     },
   },
   computed: {
-    accentXClass(): string {
-      if (this.accentX === 'none') return '';
-      return `accent-x-${this.accentX}`;
-    },
     accentYClass(): string {
       if (this.accentY === 'none') return '';
       return `accent-y-fill tng-${this.accentY}`;
@@ -85,6 +71,11 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 @import '~@/styles/tng.scss';
+
+$border-width: 4%;
+$content-height: 100% - $border-width;
+$border-height: 4%;
+$content-width: 100% - $border-width;
 
 .border-container {
   background-color: black;
@@ -101,16 +92,16 @@ export default Vue.extend({
 .tail-accent {
   position: absolute;
   bottom: 0;
-  right: 4%;
-  height: 4%;
-  width: 4px;
+  right: $border-width;
+  height: $border-height;
+  width: $gap;
   background-color: black;
 }
 .accent-x-cut {
   position: absolute;
   bottom: 0%;
   right: 40%;
-  height: 4%;
+  height: $border-height;
   width: 20%;
   background-color: black;
 
@@ -126,7 +117,7 @@ export default Vue.extend({
   left: 0;
   top: 30%;
   height: 40%;
-  width: 4%;
+  width: $border-width;
   background-color: black;
 
   .accent-y-fill {
@@ -141,10 +132,9 @@ export default Vue.extend({
   position: absolute;
   top: 0;
   right: 0;
-
-  height: 96%;
   background-color: black;
-  width: 96%;
+  height: $content-height;
+  width: $content-width;
   border-bottom-left-radius: $padding;
 }
 
