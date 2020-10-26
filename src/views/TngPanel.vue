@@ -21,21 +21,26 @@
   </div>
 
   <div class="screen-1">
-
+    <tng-border-wrap-around :accentX="'cut'"></tng-border-wrap-around>
   </div>
 
-  <div class="screen-2"></div>
+  <div class="screen-2">
+    <tng-border-wrap-around :borderColor="'portage'" :accentY="'orange'">
+    </tng-border-wrap-around>
+  </div>
 </main>
 </template>
 <script lang="ts">
 import Vue from 'vue';
 import TngBanner from '@/components/tng-panel/TngBanner.vue';
 import TngBlockButton from '@/components/tng-panel/TngBlockButton.vue';
+import TngBorderWrapAround from '@/components/tng-panel/TngBorderWrapAround.vue';
 
 export default Vue.extend({
   components: {
     TngBanner,
     TngBlockButton,
+    TngBorderWrapAround,
   },
 });
 </script>

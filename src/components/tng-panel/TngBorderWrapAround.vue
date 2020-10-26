@@ -1,8 +1,12 @@
 <template>
   <div class="border-container">
-    <div class="border" :class="borderClass"></div>
+    <div class="border" :class="colorClass"></div>
 
     <div class="tail-accent"></div>
+    <div :class="accentXClass">
+      <div v-if="accentX === 'cut'" class="cut-cover" :class="colorClass"></div>
+    </div>
+    <div :class="accentYClass"></div>
 
     <div class="content-area">
       <slot></slot>
@@ -16,14 +20,42 @@ import Vue from 'vue';
 const colorOptions: readonly string[] = [
   'orange', 'red', 'plum', 'portage', 'light-blue', 'cornflower-blue', 'steel-blue', 'white',
 ];
+const accentYOptions: readonly string[] = [
+  ...colorOptions, 'none',
+];
+const accentXOptions: readonly string[] = [
+  'none', 'cut',
+];
 export default Vue.extend({
   props: {
-    mainColor: {
+    borderColor: {
       type: String,
       default: 'light-blue',
       validator(value) {
         if (!colorOptions.includes(value)) {
-          console.error(`mainColor must be one of the following: ${colorOptions}`);
+          console.error(`borderColor must be one of the following: ${colorOptions}`);
+          return false;
+        }
+        return true;
+      },
+    },
+    accentX: {
+      type: String,
+      default: 'none',
+      validator(value) {
+        if (!accentXOptions.includes(value)) {
+          console.error(`accentX must be one of the following: ${accentXOptions}`);
+          return false;
+        }
+        return true;
+      },
+    },
+    accentY: {
+      type: String,
+      default: 'none',
+      validator(value) {
+        if (!accentYOptions.includes(value)) {
+          console.error(`accentY must be one of the following: ${accentYOptions}`);
           return false;
         }
         return true;
@@ -31,8 +63,16 @@ export default Vue.extend({
     },
   },
   computed: {
-    borderClass(): string {
-      return `tng-${this.mainColor}`;
+    accentXClass(): string {
+      if (this.accentX === 'none') return '';
+      return `accent-x-${this.accentX}`;
+    },
+    accentYClass(): string {
+      if (this.accentY === 'none') return '';
+      return `accent-y-${this.accentY}`;
+    },
+    colorClass(): string {
+      return `tng-${this.borderColor}`;
     },
   },
 });
@@ -60,6 +100,20 @@ export default Vue.extend({
   height: 4%;
   width: 4px;
   background-color: black;
+}
+.accent-x-cut {
+  position: absolute;
+  bottom: 0%;
+  right: 40%;
+  height: 4%;
+  width: 20%;
+  background-color: black;
+
+  .cut-cover {
+    height: 50%;
+    margin-left: $small-gap;
+    margin-right: $small-gap; // todo rename to $gap everywhere
+  }
 }
 
 .content-area {
