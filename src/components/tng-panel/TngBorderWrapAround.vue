@@ -3,14 +3,19 @@
     <div class="border" :class="colorClass"></div>
 
     <div class="tail-accent"></div>
+
     <div :class="accentXClass">
       <div v-if="accentX === 'cut'" class="cut-cover" :class="colorClass"></div>
     </div>
-    <div :class="accentYClass"></div>
+
+    <div class="accent-y-container" v-if="accentY !== 'none'">
+      <div :class="accentYClass"></div>
+    </div>
 
     <div class="content-area">
       <slot></slot>
     </div>
+
   </div>
 </template>
 
@@ -69,7 +74,7 @@ export default Vue.extend({
     },
     accentYClass(): string {
       if (this.accentY === 'none') return '';
-      return `accent-y-${this.accentY}`;
+      return `accent-y-fill tng-${this.accentY}`;
     },
     colorClass(): string {
       return `tng-${this.borderColor}`;
@@ -113,6 +118,22 @@ export default Vue.extend({
     height: 50%;
     margin-left: $gap;
     margin-right: $gap;
+  }
+}
+
+.accent-y-container {
+  position: absolute;
+  left: 0;
+  top: 30%;
+  height: 40%;
+  width: 4%;
+  background-color: black;
+
+  .accent-y-fill {
+    height: calc(100% - #{$gap} * 2);
+    width: 100%;
+    margin-top: $gap;
+    margin-bottom: $gap;
   }
 }
 
