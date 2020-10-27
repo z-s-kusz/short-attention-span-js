@@ -77,6 +77,11 @@ export default Vue.extend({
   position: relative;
   height: 100%;
   width: 100%;
+  cursor: pointer;
+
+  &:active {
+    box-shadow: inset 0px 0px 12px rgba(0,0,0,0.4);
+  }
 }
 .button-text {
   position: absolute;
