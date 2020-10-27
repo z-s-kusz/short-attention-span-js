@@ -6,13 +6,13 @@
     <tng-block-button class="nav-button-sm" :color="'plum'">
       7890
     </tng-block-button>
-    <tng-block-button class="nav-button-md" :color="'portage'">
+    <tng-block-button class="nav-button-md" :color="'portage'" :textPosition="'br'">
       3400
     </tng-block-button>
     <tng-block-button class="nav-button-lg">
       Data
     </tng-block-button>
-    <tng-block-button class="nav-button-md" :color="'steel-blue'">
+    <tng-block-button class="nav-button-md" :color="'steel-blue'" :textPosition="'br'">
       8518
     </tng-block-button>
     <tng-block-button class="nav-button-md">
