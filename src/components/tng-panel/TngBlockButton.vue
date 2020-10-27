@@ -1,7 +1,6 @@
 <template>
 <div class="block-button-container">
-  <div class="block-button"
-    :class="blockButtonClass">
+  <div class="block-button" :class="blockButtonClass">
     <span class="button-text" :class="buttonTextClass">
       <slot></slot>
     </span>
@@ -13,26 +12,22 @@
 import Vue from 'vue';
 
 const textPositionOptions: readonly string[] = ['tr', 'br', 'bl', 'tl'];
+const roundSidesOptions: readonly string[] = ['none', 'top', 'right', 'bottom', 'left', 'all'];
 const colorOptions: readonly string[] = [
   'orange', 'red', 'plum', 'portage', 'light-blue', 'cornflower-blue', 'steel-blue', 'white',
 ];
 export default Vue.extend({
   props: {
-    roundTR: {
-      type: Boolean,
-      default: false,
-    },
-    roundBR: {
-      type: Boolean,
-      default: false,
-    },
-    roundBL: {
-      type: Boolean,
-      default: false,
-    },
-    roundTL: {
-      type: Boolean,
-      default: false,
+    roundSides: {
+      type: String,
+      default: 'none',
+      validator(value) {
+        if (!roundSidesOptions.includes(value)) {
+          console.error(`roundSidesOptions must be one of the following: ${textPositionOptions}`);
+          return false;
+        }
+        return true;
+      },
     },
     textPosition: {
       type: String,
@@ -45,12 +40,12 @@ export default Vue.extend({
         return true;
       },
     },
-    bgColor: {
+    color: {
       type: String,
       default: 'orange',
       validator(value) {
         if (!colorOptions.includes(value)) {
-          console.error(`bgColor must be one of the following: ${colorOptions}`);
+          console.error(`color must be one of the following: ${colorOptions}`);
           return false;
         }
         return true;
@@ -59,12 +54,8 @@ export default Vue.extend({
   },
   computed: {
     blockButtonClass(): string {
-      let blockButtonClass = '';
-      blockButtonClass += this.roundTR ? 'round-tr ' : '';
-      blockButtonClass += this.roundBR ? 'round-br ' : '';
-      blockButtonClass += this.roundBL ? 'round-bl ' : '';
-      blockButtonClass += this.roundTL ? 'round-tl ' : '';
-      blockButtonClass += `tng-${this.bgColor}`;
+      let blockButtonClass = `tng-${this.color}`;
+      if (this.roundSides !== 'none') blockButtonClass += ` round-${this.roundSides}`;
       return blockButtonClass;
     },
     buttonTextClass(): string {
@@ -112,16 +103,29 @@ export default Vue.extend({
   left: 0;
 }
 
-.round-tr {
-  border-top-right-radius: 50px;
+.round-top {
+  border-radius: $banner-radius $banner-radius 0 0;
 }
-.round-br {
-  border-bottom-right-radius: 50px;
+.round-right {
+  border-radius: 0 $banner-radius $banner-radius 0;
+  & .button-text {
+    padding-right: $banner-radius / 2;
+  }
 }
-.round-bl {
-  border-bottom-left-radius: 50px;
+.round-bottom { // nice
+  border-radius: 0 0 $banner-radius $banner-radius;
 }
-.round-tl {
-  border-top-left-radius: 50px;
+.round-left {
+  border-radius: $banner-radius 0 0 $banner-radius;
+  & .button-text {
+    padding-left: $banner-radius / 2;
+  }
+}
+.round-all {
+  border-radius: $banner-radius;
+  & .button-text {
+    padding-right: $banner-radius / 2;
+    padding-left: $banner-radius / 2;
+  }
 }
 </style>
