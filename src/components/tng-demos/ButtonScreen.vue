@@ -37,14 +37,14 @@ const buttonData = [
     active: true,
     color: 'orange',
     roundSides: 'left',
-    textPosition: 'ml',
+    textPosition: 'tr',
   },
   {
     text: 'Hdr',
     active: false,
     color: 'orange',
     roundSides: 'none',
-    textPosition: 'mr',
+    textPosition: 'tr',
   },
   {
     text: '001',
