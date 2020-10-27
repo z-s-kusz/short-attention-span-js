@@ -27,7 +27,7 @@
   </div>
 
   <div class="screen-2">
-    <tng-border-wrap-around :borderColor="'portage'" :accentY="'orange'">
+    <tng-border-wrap-around :color="'portage'" :accentY="'orange'">
     </tng-border-wrap-around>
   </div>
 </main>

@@ -27,12 +27,12 @@ const accentYOptions: readonly string[] = [
 ];
 export default Vue.extend({
   props: {
-    borderColor: {
+    color: {
       type: String,
       default: 'light-blue',
       validator(value) {
         if (!colorOptions.includes(value)) {
-          console.error(`borderColor must be one of the following: ${colorOptions}`);
+          console.error(`color must be one of the following: ${colorOptions}`);
           return false;
         }
         return true;
@@ -60,7 +60,7 @@ export default Vue.extend({
       return `accent-y-fill tng-${this.accentY}`;
     },
     colorClass(): string {
-      return `tng-${this.borderColor}`;
+      return `tng-${this.color}`;
     },
   },
 });
