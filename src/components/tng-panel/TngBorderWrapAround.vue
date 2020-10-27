@@ -1,22 +1,19 @@
 <template>
-  <div class="border-container">
-    <div class="border" :class="colorClass"></div>
-
-    <div class="tail-accent"></div>
-
-    <div class="accent-x-cut" v-if="accentX">
-      <div class="cut-cover" :class="colorClass"></div>
-    </div>
-
-    <div class="accent-y-container" v-if="accentY !== 'none'">
-      <div :class="accentYClass"></div>
-    </div>
-
-    <div class="content-area">
-      <slot></slot>
-    </div>
-
+<div class="border" :class="colorClass">
+  <div class="content-area">
+    <slot></slot>
   </div>
+
+  <div class="accent-tail"></div>
+
+  <div class="accent-x-cut" v-if="accentX">
+    <div class="cut-cover" :class="colorClass"></div>
+  </div>
+
+  <div class="accent-y-container" v-if="accentY !== 'none'">
+    <div :class="accentYClass"></div>
+  </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -77,19 +74,14 @@ $content-height: 100% - $border-width;
 $border-height: 4%;
 $content-width: 100% - $border-width;
 
-.border-container {
-  background-color: black;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
 .border {
+  position: relative;
   width: 100%;
   height: 100%;
   border-bottom-left-radius: $banner-radius;
 }
 
-.tail-accent {
+.accent-tail {
   position: absolute;
   bottom: 0;
   right: $border-width;
@@ -132,9 +124,9 @@ $content-width: 100% - $border-width;
   position: absolute;
   top: 0;
   right: 0;
+  left: $border-width;
+  bottom: $border-height;
   background-color: black;
-  height: $content-height;
-  width: $content-width;
   border-bottom-left-radius: $padding;
 }
 
