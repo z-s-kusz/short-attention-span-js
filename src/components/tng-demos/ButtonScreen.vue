@@ -1,22 +1,25 @@
 <template>
-<section>
+<section class="container">
   <div class="flex-row">
     <tng-block-button v-for="(button, i) in row1" :key="i"
-      class="button-array-item" :bgColor="button.color">
+      class="button-array-item" :color="button.color" :textPosition="button.textPosition"
+      :roundSides="button.roundSides">
       {{ button.text }}
     </tng-block-button>
   </div>
 
   <div class="flex-row">
     <tng-block-button v-for="(button, i) in row2" :key="i"
-      class="button-array-item" :bgColor="button.color">
+      class="button-array-item" :color="button.color" :textPosition="button.textPosition"
+      :roundSides="button.roundSides">
       {{ button.text }}
     </tng-block-button>
   </div>
 
   <div class="flex-row">
     <tng-block-button v-for="(button, i) in row3" :key="i"
-      class="button-array-item" :bgColor="button.color">
+      class="button-array-item" :color="button.color" :textPosition="button.textPosition"
+      :roundSides="button.roundSides">
       {{ button.text }}
     </tng-block-button>
   </div>
@@ -33,73 +36,85 @@ const buttonData = [
     text: 'D17',
     active: true,
     color: 'orange',
-    size: 'sm',
+    roundSides: 'left',
+    textPosition: 'ml',
   },
   {
     text: 'Hdr',
     active: false,
     color: 'orange',
-    size: 'lg',
+    roundSides: 'none',
+    textPosition: 'mr',
   },
   {
     text: '001',
     active: true,
     color: 'red',
-    size: 'md',
+    roundSides: 'none',
+    textPosition: 'tr',
   },
   {
     text: '501',
     active: false,
     color: 'orange',
-    size: 'lg',
+    roundSides: 'right',
+    textPosition: 'tr',
   },
   {
     text: 'OLT',
     active: true,
     color: 'white',
-    size: 'md',
+    roundSides: 'left',
+    textPosition: 'tr',
   },
   {
     text: 'DIR9',
     active: true,
     color: 'orange',
-    size: 'lg',
+    roundSides: 'none',
+    textPosition: 'tr',
   },
   {
     text: 'CD1',
     active: true,
     color: 'steel-blue',
-    size: 'sm',
+    roundSides: 'none',
+    textPosition: 'tr',
   },
   {
     text: 'OUT2-4',
     active: true,
     color: 'plum',
-    size: 'lg',
+    roundSides: 'right',
+    textPosition: 'tr',
   },
   {
     text: '1-200',
     active: false,
     color: 'orange',
-    size: 'lg',
+    roundSides: 'left',
+    textPosition: 'tr',
   },
   {
     text: 'DRK5',
     active: false,
     color: 'orange',
-    size: 'lg',
+    roundSides: 'none',
+    textPosition: 'tr',
   },
   {
     text: '7366',
     active: false,
     color: 'steel-blue',
-    size: 'lg',
+    roundSides: 'none',
+    textPosition: 'tr',
   },
   {
     text: '897',
     active: false,
     color: 'steel-blue',
-    size: 'lg',
+    roundSides: 'right',
+    textPosition: 'tr',
   },
 ];
 export default Vue.extend({
@@ -119,8 +134,15 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import '~@/styles/tng.scss';
 
-.flex-box {
+.container {
+  height: 100%;
+  box-sizing: border-box;
+  padding: $padding;
+  overflow: hidden;
+}
+.flex-row {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
@@ -129,5 +151,6 @@ export default Vue.extend({
   height: 60px;
   width: 160px;
   margin: $padding;
+  flex: 1 1 auto;
 }
 </style>

@@ -3,16 +3,16 @@
   <tng-banner class="mission-ops">Mission Ops</tng-banner>
 
   <div class="nav">
-    <tng-block-button class="nav-button-sm" :bgColor="'plum'">
+    <tng-block-button class="nav-button-sm" :color="'plum'">
       7890
     </tng-block-button>
-    <tng-block-button class="nav-button-md" :bgColor="'portage'">
+    <tng-block-button class="nav-button-md" :color="'portage'">
       3400
     </tng-block-button>
     <tng-block-button class="nav-button-lg">
       Data
     </tng-block-button>
-    <tng-block-button class="nav-button-md" :bgColor="'steel-blue'">
+    <tng-block-button class="nav-button-md" :color="'steel-blue'">
       8518
     </tng-block-button>
     <tng-block-button class="nav-button-md">
