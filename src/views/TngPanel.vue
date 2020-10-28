@@ -86,15 +86,15 @@ export default Vue.extend({
 .nav-button {
   &-sm {
     height: 80px;
-    padding-top: $gap;
+    margin-top: $gap;
   }
   &-md {
     height: 140px;
-    padding-top: $gap;
+    margin-top: $gap;
   }
   &-lg {
     height: 180px;
-    padding-top: $gap;
+    margin-top: $gap;
   }
 }
 </style>

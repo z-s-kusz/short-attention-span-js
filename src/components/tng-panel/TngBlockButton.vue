@@ -1,10 +1,8 @@
 <template>
-<div class="block-button-container">
-  <div class="block-button" :class="blockButtonClass">
-    <span class="button-text" :class="buttonTextClass">
-      <slot></slot>
-    </span>
-  </div>
+<div class="block-button" :class="blockButtonClass">
+  <span class="button-text" :class="buttonTextClass">
+    <slot></slot>
+  </span>
 </div>
 </template>
 
@@ -68,16 +66,12 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import '~@/styles/tng.scss';
 
-.block-button-container {
-  background-color: black;
-  height: 100%;
-  width: 100%;
-}
 .block-button {
   position: relative;
   height: 100%;
   width: 100%;
   cursor: pointer;
+  transition: box-shadow 50ms ease-out;
 
   &:active {
     box-shadow: inset 0px 0px 12px rgba(0,0,0,0.4);

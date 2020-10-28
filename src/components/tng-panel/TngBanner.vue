@@ -1,17 +1,12 @@
 <template>
-  <div class="banner-container">
-    <div class="banner-bar"></div>
+  <div class="banner">
+    <div class="overhang-cover"></div>
 
     <div class="banner-title">
       <span class="banner-title-text">
-        <slot>Panel</slot>
+        <slot></slot>
       </span>
       <div class="banner-title-edge"></div>
-    </div>
-
-    <div class="overhang">
-      <div class="overhang-visable"></div>
-      <div class="overhang-cover"></div>
     </div>
   </div>
 </template>
@@ -27,33 +22,21 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import '~@/styles/tng.scss';
 
-.banner-container {
-  background-color: black;
-  width: 100%;
-  height: $banner-height;
-  position: relative;
-}
-.banner-bar {
-  background-color: $orange;
+.banner {
+  background-color: orange;
   width: 100%;
   height: 100%;
+  position: relative;
   border-top-left-radius: $banner-radius;
 }
-.overhang {
+.overhang-cover {
   position: absolute;
   bottom: 0;
-  display: flex;
-  height: $overhang-height;
-  width: 100%;
-}
-.overhang-visable {
-  background-color: $orange;
-  width: $overhang-width;
-}
-.overhang-cover {
-  flex: 1 0 auto;
+  right: 0;
+  left: $overhang-width;
+  height: $padding;
+  border-top-left-radius: $padding;
   background-color: black;
-  border-top-left-radius: 20px;
 }
 
 .banner-title {
@@ -61,6 +44,7 @@ export default Vue.extend({
   background-color: black;
   position: absolute;
   top: 0;
+  bottom: $padding;
   right: 0;
   display: flex;
 }
@@ -85,15 +69,6 @@ export default Vue.extend({
 }
 
 @media only screen and (max-width: 899px) {
-  .banner-container {
-    height: $banner-height-sm;
-  }
-  .banner-bar {
-    border-top-left-radius: $banner-radius-sm;
-  }
-  .overhang-visable {
-    width: $overhang-width-sm;
-  }
   .banner-title-edge {
     border-top-right-radius: $banner-radius-sm;
     border-bottom-right-radius: $banner-radius-sm;
