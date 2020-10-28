@@ -1,9 +1,9 @@
 <template>
-  <div class="banner">
+  <div class="banner" :class="colorClass">
     <div class="overhang-cover"></div>
 
     <div class="banner-title">
-      <span class="banner-title-text">
+      <span class="banner-title-text" :class="textColorClass">
         <slot></slot>
       </span>
       <div class="banner-title-edge"></div>
@@ -14,8 +14,42 @@
 <script lang="ts">
 import Vue from 'vue';
 
+const colorOptions: readonly string[] = [
+  'orange', 'red', 'plum', 'portage', 'light-blue', 'cornflower-blue', 'steel-blue', 'white',
+];
 export default Vue.extend({
-
+  props: {
+    color: {
+      type: String,
+      default: 'orange',
+      validator(value) {
+        if (!colorOptions.includes(value)) {
+          console.error(`color must be one of the following: ${colorOptions}`);
+          return false;
+        }
+        return true;
+      },
+    },
+    textColor: {
+      type: String,
+      default: 'cornflower-blue',
+      validator(value) {
+        if (!colorOptions.includes(value)) {
+          console.error(`textColor must be one of the following: ${colorOptions}`);
+          return false;
+        }
+        return true;
+      },
+    },
+  },
+  computed: {
+    colorClass(): string {
+      return `tng-${this.color}`;
+    },
+    textColorClass(): string {
+      return `tng-text-${this.textColor}`;
+    },
+  },
 });
 </script>
 
@@ -23,7 +57,7 @@ export default Vue.extend({
 @import '~@/styles/tng.scss';
 
 .banner {
-  background-color: orange;
+  background-color: $orange;
   width: 100%;
   height: 100%;
   position: relative;
