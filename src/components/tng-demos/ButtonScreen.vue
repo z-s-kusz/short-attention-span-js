@@ -1,35 +1,47 @@
 <template>
 <section class="container">
   <div class="flex-row">
-    <tng-block-button v-for="(button, i) in row1" :key="i"
-      class="button-array-item" :color="button.color" :textPosition="button.textPosition"
-      :roundSides="button.roundSides">
-      {{ button.text }}
-    </tng-block-button>
+    <div v-for="(button, i) in row1" :key="i" class="button-array-item">
+      <tng-block-button v-if="button.active"
+        :color="button.color" :textPosition="button.textPosition"
+        :roundSides="button.roundSides">
+        {{ button.text }}
+      </tng-block-button>
+      <div v-else></div>
+    </div>
   </div>
 
   <div class="flex-row">
-    <tng-block-button v-for="(button, i) in row2" :key="i"
-      class="button-array-item" :color="button.color" :textPosition="button.textPosition"
-      :roundSides="button.roundSides">
-      {{ button.text }}
-    </tng-block-button>
+    <div v-for="(button, i) in row2" :key="i" class="button-array-item">
+      <tng-block-button v-if="button.active"
+        :color="button.color" :textPosition="button.textPosition"
+        :roundSides="button.roundSides">
+        {{ button.text }}
+      </tng-block-button>
+      <div v-else></div>
+    </div>
   </div>
 
   <div class="flex-row">
-    <tng-block-button v-for="(button, i) in row3" :key="i"
-      class="button-array-item" :color="button.color" :textPosition="button.textPosition"
-      :roundSides="button.roundSides">
-      {{ button.text }}
-    </tng-block-button>
+    <div v-for="(button, i) in row3" :key="i" class="button-array-item">
+      <tng-block-button v-if="button.active"
+        :color="button.color" :textPosition="button.textPosition"
+        :roundSides="button.roundSides">
+        {{ button.text }}
+      </tng-block-button>
+      <div v-else></div>
+    </div>
   </div>
 
   <div class="flex-row">
-    <tng-block-button v-for="(button, i) in row4" :key="i"
-      class="button-array-item" :color="button.color" :textPosition="button.textPosition"
-      :roundSides="button.roundSides">
-      {{ button.text }}
-    </tng-block-button>
+    <div v-for="(button, i) in row4" :key="i" class="button-array-item">
+      <tng-block-button v-if="button.active"
+        :color="button.color" :textPosition="button.textPosition"
+        :roundSides="button.roundSides">
+        {{ button.text }}
+      </tng-block-button>
+      <div v-else></div>
+    </div>
   </div>
 </section>
 </template>
@@ -62,7 +74,7 @@ const buttonData = [
   },
   {
     text: '501',
-    active: false,
+    active: true,
     color: 'orange',
     roundSides: 'right',
     textPosition: 'tr',
@@ -76,7 +88,7 @@ const buttonData = [
   },
   {
     text: 'DIR9',
-    active: true,
+    active: false,
     color: 'orange',
     roundSides: 'none',
     textPosition: 'tr',
@@ -104,14 +116,14 @@ const buttonData = [
   },
   {
     text: 'DRK5',
-    active: false,
+    active: true,
     color: 'orange',
     roundSides: 'none',
     textPosition: 'tr',
   },
   {
     text: '7366',
-    active: false,
+    active: true,
     color: 'steel-blue',
     roundSides: 'none',
     textPosition: 'tr',
@@ -146,7 +158,7 @@ const buttonData = [
   },
   {
     text: '589001',
-    active: false,
+    active: true,
     color: 'light-blue',
     roundSides: 'right',
     textPosition: 'tr',
