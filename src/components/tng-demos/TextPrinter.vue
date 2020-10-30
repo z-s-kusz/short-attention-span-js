@@ -7,7 +7,7 @@
 <script lang="ts">
 import Vue from 'vue';
 
-const text = `Testing. Type many words out as fast as possible and don't worry about spelling
+const text = `Preposterous. Type many words out as fast as possible and don't worry about spelling
 becuase this should be replaced anyway.
 What do you think it will do with novel lines? Hopefully preserve them.
 If not I can add new line characters every so often. I wonder how quickly I should make the typing
@@ -22,7 +22,7 @@ export default Vue.extend({
   data() {
     return {
       currentLetterIndex: 0,
-      breakTime: 30,
+      breakTime: 15,
       paragraph1: '',
     };
   },
