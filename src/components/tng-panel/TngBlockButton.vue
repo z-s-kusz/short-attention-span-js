@@ -1,5 +1,6 @@
 <template>
-<div class="block-button" :class="blockButtonClass">
+<div class="tng-component-root block-button"
+  :class="blockButtonClass" type="button">
   <span class="button-text" :class="buttonTextClass">
     <slot></slot>
   </span>
@@ -103,28 +104,28 @@ export default Vue.extend({
 }
 
 .round-top {
-  border-radius: $banner-radius $banner-radius 0 0;
+  border-radius: var(--banner-radius) var(--banner-radius) 0 0;
 }
 .round-right {
-  border-radius: 0 $banner-radius $banner-radius 0;
+  border-radius: 0 var(--banner-radius) var(--banner-radius) 0;
   & .button-text {
-    padding-right: $banner-radius / 2;
+    padding-right: calc( var(--banner-radius) / 2 );
   }
 }
 .round-bottom { // nice
-  border-radius: 0 0 $banner-radius $banner-radius;
+  border-radius: 0 0 var(--banner-radius) var(--banner-radius);
 }
 .round-left {
-  border-radius: $banner-radius 0 0 $banner-radius;
+  border-radius: var(--banner-radius) 0 0 var(--banner-radius);
   & .button-text {
-    padding-left: $banner-radius / 2;
+    padding-left: calc( var(--banner-radius) / 2 );
   }
 }
 .round-all {
-  border-radius: $banner-radius;
+  border-radius: var(--banner-radius);
   & .button-text {
-    padding-right: $banner-radius / 2;
-    padding-left: $banner-radius / 2;
+    padding-right: calc( var(--banner-radius) / 2 );
+    padding-left: calc( var(--banner-radius) / 2 );
   }
 }
 </style>

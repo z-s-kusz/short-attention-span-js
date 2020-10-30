@@ -1,5 +1,5 @@
 <template>
-<div class="border" :class="borderClass">
+<div class="tng-component-root border" :class="borderClass">
   <div class="content-area">
     <slot></slot>
   </div>
@@ -138,7 +138,7 @@ $content-width: 100% - $border-width;
 }
 
 .tr-border {
-  border-top-right-radius: $banner-radius;
+  border-top-right-radius: var(--banner-radius);
 
   .content-area {
     top: $border-width;
@@ -160,7 +160,7 @@ $content-width: 100% - $border-width;
 }
 
 .br-border {
-  border-bottom-right-radius: $banner-radius;
+  border-bottom-right-radius: var(--banner-radius);
 
   .content-area {
     top: 0;
@@ -182,7 +182,7 @@ $content-width: 100% - $border-width;
 }
 
 .bl-border {
-  border-bottom-left-radius: $banner-radius;
+  border-bottom-left-radius: var(--banner-radius);
 
  .content-area {
     top: 0;
@@ -204,7 +204,7 @@ $content-width: 100% - $border-width;
 }
 
 .tl-border {
-  border-top-left-radius: $banner-radius;
+  border-top-left-radius: var(--banner-radius);
 
  .content-area {
     top: $border-width;
@@ -222,12 +222,6 @@ $content-width: 100% - $border-width;
   }
   .accent-y-container {
     left: 0;
-  }
-}
-
-@media only screen and (max-width: 899px) {
-  .border {
-    border-bottom-left-radius: $banner-radius-sm;
   }
 }
 </style>

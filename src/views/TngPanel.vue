@@ -1,5 +1,6 @@
 <template>
-<main class="panel-screen">
+<!-- todo refactor so I dont need to add root here -->
+<main class="tng-component-root panel-screen">
   <tng-banner class="mission-ops">Mission Ops</tng-banner>
 
   <div class="nav-tng-large">
@@ -79,8 +80,8 @@ export default Vue.extend({
   padding: $padding;
 
   display: grid;
-  grid-template-columns: $overhang-width 1fr;
-  grid-template-rows: $banner-height 1fr 1fr;
+  grid-template-columns: var(--overhang-width) 1fr;
+  grid-template-rows: var(--banner-height) 1fr 1fr;
 }
 
 .mission-ops {
@@ -135,8 +136,6 @@ export default Vue.extend({
 @media only screen and (max-width: 899px) {
   .panel-screen {
     padding: $gap;
-    grid-template-columns: $overhang-width-sm 1fr;
-    grid-template-rows: $banner-height-sm 1fr 1fr;
   }
   .nav-tng-large {
     display: none;

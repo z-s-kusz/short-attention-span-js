@@ -137,5 +137,8 @@ td {
   table {
     font-size: 28px;
   }
+  .table-button {
+    display: none;
+  }
 }
 </style>

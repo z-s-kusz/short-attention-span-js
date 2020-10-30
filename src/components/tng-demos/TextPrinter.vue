@@ -12,12 +12,11 @@ becuase this should be replaced anyway.
 What do you think it will do with novel lines? Hopefully preserve them.
 If not I can add new line characters every so often. I wonder how quickly I should make the typing
 happen. Pretty fast I sould think.
-Maybe 1 character every tenth of a second. Somewhere around there
-anyway. Not much more or less I'd think.
-This looks like enough to test with. Then we will have to loop it from the top.
-Anyway wow it actually works way better than I thought it would.
-Supplementing with more content but this is a smashing success.
-Another couple of lines would be greatly
+Maybe 1 character every tenth of a second. Somewhere around there anyway.
+Not much more or less I'd think. This looks like enough to test with.
+Then we will have to loop it from the top. Anyway wow it actually works
+way better than I thought it would. Supplementing with more content but this is a
+smashing success. Another couple of lines would be greatly
 beneficial to the text so it will approach the bottom without any scroll.`;
 
 export default Vue.extend({
@@ -54,11 +53,10 @@ div {
   font-size: 24px;
   // allows text to break at points as determined by the written text (ie \n)
   white-space: pre-line;
-  height: 298px;
 }
 @media only screen and (max-width: 899px) {
   div {
-    height: 540px;
+    height: 460px;
   }
 }
 </style>

@@ -30,13 +30,18 @@ $white: rgb(237,237,254);
 .tng-text-steel-blue { color: $steel-blue; }
 .tng-text-white { color: $white; }
 
+.tng-component-root {
+  --banner-radius: 50px;
+  --banner-height: 120px;
+  --overhang-width: 120px;
+}
+@media only screen and (max-width: 899px) {
+  .tng-component-root {
+    --banner-radius: 30px;
+    --banner-height: 80px;
+    --overhang-width: 10px;
+  }
+}
+
 $padding: 20px;
 $gap: 4px;
-$overhang-height: $padding;
-$banner-height: 120px;
-$overhang-width: 120px;
-$banner-radius: 50px;
-
-$banner-height-sm: 80px;
-$overhang-width-sm: 10px;
-$banner-radius-sm: 30px;
