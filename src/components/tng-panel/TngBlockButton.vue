@@ -1,6 +1,6 @@
 <template>
 <div class="tng-component-root block-button"
-  :class="blockButtonClass" type="button">
+  :class="blockButtonClass" type="button" @click="$emit('tng-btn-click', $event)">
   <span class="button-text" :class="buttonTextClass">
     <slot></slot>
   </span>
@@ -73,6 +73,8 @@ export default Vue.extend({
   width: 100%;
   cursor: pointer;
   transition: box-shadow 50ms ease-out;
+  // prevent highlighting outer box on mobile which looks really bad on rounded buttons
+  -webkit-tap-highlight-color: transparent;
 
   &:active {
     box-shadow: inset 0px 0px 12px rgba(0,0,0,0.4);
