@@ -101,7 +101,7 @@ const buttonData = [
     textPosition: 'tr',
   },
   {
-    text: 'OUT2-4',
+    text: 'OUT-4',
     active: true,
     color: 'plum',
     roundSides: 'right',
@@ -157,7 +157,7 @@ const buttonData = [
     textPosition: 'tr',
   },
   {
-    text: '589001',
+    text: '5801',
     active: true,
     color: 'light-blue',
     roundSides: 'right',
@@ -202,5 +202,11 @@ export default Vue.extend({
   width: 100px;
   margin: 8px;
   flex: 1 1 auto;
+}
+@media only screen and (max-width: 899px) {
+  .button-array-item {
+    height: 50px;
+    width: 64px;
+  }
 }
 </style>

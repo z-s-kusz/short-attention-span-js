@@ -117,7 +117,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import '~@/styles/tng.scss';
 
-$vertical-padding: 4px;
 .container {
   display: flex;
 }
@@ -126,12 +125,17 @@ table {
   font-size: 38px;
 }
 td {
-  padding: $vertical-padding 12px;
+  padding: 4px 12px;
   border-spacing: 8px;
   text-align: end;
 }
-
 .table-button {
-  width: 80px
+  width: 80px;
+}
+
+@media only screen and (max-width: 899px) {
+  table {
+    font-size: 28px;
+  }
 }
 </style>

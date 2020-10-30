@@ -24,8 +24,8 @@ export default Vue.extend({
   data() {
     return {
       currentLetterIndex: 0,
-      breakTime: 15,
-      paragraph1: '',
+      breakTime: 10,
+      paragraph1: text,
     };
   },
   mounted() {
@@ -55,5 +55,10 @@ div {
   // allows text to break at points as determined by the written text (ie \n)
   white-space: pre-line;
   height: 298px;
+}
+@media only screen and (max-width: 899px) {
+  div {
+    height: 540px;
+  }
 }
 </style>

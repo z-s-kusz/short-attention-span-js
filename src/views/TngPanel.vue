@@ -144,5 +144,15 @@ export default Vue.extend({
   .nav-tng-small {
     display: initial;
   }
+  .screen-1 {
+    padding: $padding / 2;
+    padding-top: 0;
+  }
+  .screen-2 {
+    padding: $padding / 2;
+  }
+  .flex {
+    flex-direction: column;
+  }
 }
 </style>
