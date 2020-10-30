@@ -94,7 +94,6 @@ export default Vue.extend({
   font-size: $banner-height;
   padding-right: $padding;
   padding-left: $padding;
-  height: $banner-height - $overhang-height;
 
   // wierd hacks becuase of the font family to get it centered
   margin-top: -$padding;
@@ -109,13 +108,17 @@ export default Vue.extend({
     width: $banner-radius-sm;
   }
   .banner-title-text {
-    height: $banner-height-sm - $overhang-height;
-    font-size: $banner-height-sm - ($padding / 2);
+    font-size: 50px;
 
     // wierd hacks becuase of the font family to get it centered
-    margin-top: -$padding / 2;
-    margin-bottom: $padding / 2;
+    margin-top: 0;
+    margin-bottom: 0;
     //
+  }
+  // todo only use these overhang sizers on parent,
+  // pass value to this component
+  .overhang-cover {
+    left: $overhang-width-sm;
   }
 }
 </style>

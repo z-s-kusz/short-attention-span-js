@@ -2,7 +2,7 @@
 <main class="panel-screen">
   <tng-banner class="mission-ops">Mission Ops</tng-banner>
 
-  <div class="nav">
+  <div class="nav-tng-large">
     <tng-block-button class="nav-button-sm" :color="'plum'">
       7890
     </tng-block-button>
@@ -18,6 +18,17 @@
     <tng-block-button class="nav-button-md">
       0010
     </tng-block-button>
+  </div>
+  <div class="nav-tng-small">
+    <tng-block-button class="nav-button-sm" :color="'plum'"></tng-block-button>
+    <tng-block-button class="nav-button-md"
+      :color="'portage'" :textPosition="'br'">
+    </tng-block-button>
+    <tng-block-button class="nav-button-lg"></tng-block-button>
+    <tng-block-button class="nav-button-md"
+      :color="'steel-blue'" :textPosition="'br'">
+    </tng-block-button>
+    <tng-block-button class="nav-button-md"></tng-block-button>
   </div>
 
   <div class="screen-1">
@@ -76,19 +87,27 @@ export default Vue.extend({
   grid-area: 1 / 1 / 2 / 3;
 }
 
-.nav {
+.nav-tng-large {
   grid-area: 2 / 1 / 4 / 2;
+}
+.nav-tng-small {
+  grid-area: 2 / 1 / 4 / 2;
+  display: none;
 }
 
 .screen-1 {
   grid-area: 2 / 2 / 3 / 3;
   padding-left: $padding;
+  height: 350px;
+  box-sizing: border-box;
 }
 
 .screen-2 {
   grid-area: 3 / 2 / 4 / 3;
   padding-top: $padding / 2;
   padding-left: $padding;
+  height: 350px;
+  box-sizing: border-box;
 }
 
 .nav-button {
@@ -111,5 +130,19 @@ export default Vue.extend({
 .flex-half {
   flex: 1 1 50%;
   margin: 0 ($padding / 2)
+}
+
+@media only screen and (max-width: 899px) {
+  .panel-screen {
+    padding: $gap;
+    grid-template-columns: $overhang-width-sm 1fr;
+    grid-template-rows: $banner-height-sm 1fr 1fr;
+  }
+  .nav-tng-large {
+    display: none;
+  }
+  .nav-tng-small {
+    display: initial;
+  }
 }
 </style>
