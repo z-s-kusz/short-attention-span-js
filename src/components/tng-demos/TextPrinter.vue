@@ -1,11 +1,16 @@
 <template>
 <section class="container">
-  <div>{{ paragraph1 }}</div>
+  <tng-block-button :color="'steel-blue'" @tng-btn-click="startReport()"
+    :roundSides="'all'" :textPosition="'tl'" class="start-btn">
+    Report
+  </tng-block-button>
+  <div class="text">{{ paragraph1 }}</div>
 </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import TngBlockButton from '@/components/tng-panel/TngBlockButton.vue';
 
 const text = `Preposterous. Type many words out as fast as possible and don't worry about spelling
 becuase this should be replaced anyway.
@@ -20,6 +25,9 @@ smashing success. Another couple of lines would be greatly
 beneficial to the text so it will approach the bottom without any scroll.`;
 
 export default Vue.extend({
+  components: {
+    TngBlockButton,
+  },
   data() {
     return {
       currentLetterIndex: 0,
@@ -31,15 +39,18 @@ export default Vue.extend({
     this.printNextLetter();
   },
   methods: {
+    startReport() {
+      this.currentLetterIndex = 0;
+      this.printNextLetter();
+    },
     printNextLetter() {
       this.paragraph1 = text.substring(0, this.currentLetterIndex);
       this.currentLetterIndex++;
-      if (this.currentLetterIndex >= text.length) {
-        this.currentLetterIndex = 0;
+      if (this.currentLetterIndex <= text.length) {
+        setTimeout(() => {
+          this.printNextLetter();
+        }, this.breakTime);
       }
-      setTimeout(() => {
-        this.printNextLetter();
-      }, this.breakTime);
     },
   },
 });
@@ -48,15 +59,29 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import '~@/styles/tng.scss';
 
-div {
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.text {
   text-align: left;
   font-size: 24px;
   // allows text to break at points as determined by the written text (ie \n)
   white-space: pre-line;
 }
+.start-btn {
+  max-width: 120px;
+  height: 60px;
+  margin: 8px;
+}
 @media only screen and (max-width: 899px) {
-  div {
+  .text {
     height: 460px;
+  }
+  .start-btn {
+    height: 50px;
   }
 }
 </style>
