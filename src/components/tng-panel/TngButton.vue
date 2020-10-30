@@ -75,6 +75,7 @@ export default Vue.extend({
   transition: box-shadow 50ms ease-out;
   // prevent highlighting outer box on mobile which looks really bad on rounded buttons
   -webkit-tap-highlight-color: transparent;
+  user-select: none;
 
   &:active {
     box-shadow: inset 0px 0px 12px rgba(0,0,0,0.4);
@@ -86,6 +87,7 @@ export default Vue.extend({
   color: black;
   font-size: 24px;
   text-transform: uppercase;
+  user-select: none;
 }
 
 .text-tr {

@@ -131,6 +131,7 @@ body {
   display: none;
   padding: $nav-padding;
   justify-content: center;
+  user-select: none;
 
   /* keep consistent sizing even without content */
   box-sizing: border-box;
