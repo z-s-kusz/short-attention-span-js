@@ -1,16 +1,16 @@
 <template>
 <section class="container">
-  <tng-block-button :color="'steel-blue'" @tng-btn-click="startReport()"
+  <tng-button :color="'steel-blue'" @tng-btn-click="startReport()"
     :roundSides="'all'" :textPosition="'tl'" class="start-btn">
     Report
-  </tng-block-button>
+  </tng-button>
   <div class="text">{{ paragraph1 }}</div>
 </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import TngBlockButton from '@/components/tng-panel/TngBlockButton.vue';
+import TngButton from '@/components/tng-panel/TngButton.vue';
 
 const text = `Preposterous. Type many words out as fast as possible and don't worry about spelling
 becuase this should be replaced anyway.
@@ -26,7 +26,7 @@ beneficial to the text so it will approach the bottom without any scroll.`;
 
 export default Vue.extend({
   components: {
-    TngBlockButton,
+    TngButton,
   },
   data() {
     return {

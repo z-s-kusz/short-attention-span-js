@@ -4,32 +4,32 @@
   <tng-banner class="mission-ops">Mission Ops</tng-banner>
 
   <div class="nav-tng-large">
-    <tng-block-button class="nav-button-sm" :color="'plum'">
+    <tng-button class="nav-button-sm" :color="'plum'">
       7890
-    </tng-block-button>
-    <tng-block-button class="nav-button-md" :color="'portage'" :textPosition="'br'">
+    </tng-button>
+    <tng-button class="nav-button-md" :color="'portage'" :textPosition="'br'">
       3400
-    </tng-block-button>
-    <tng-block-button class="nav-button-lg">
+    </tng-button>
+    <tng-button class="nav-button-lg">
       Data
-    </tng-block-button>
-    <tng-block-button class="nav-button-md" :color="'steel-blue'" :textPosition="'br'">
+    </tng-button>
+    <tng-button class="nav-button-md" :color="'steel-blue'" :textPosition="'br'">
       8518
-    </tng-block-button>
-    <tng-block-button class="nav-button-md">
+    </tng-button>
+    <tng-button class="nav-button-md">
       0010
-    </tng-block-button>
+    </tng-button>
   </div>
   <div class="nav-tng-small">
-    <tng-block-button class="nav-button-sm" :color="'plum'"></tng-block-button>
-    <tng-block-button class="nav-button-md"
+    <tng-button class="nav-button-sm" :color="'plum'"></tng-button>
+    <tng-button class="nav-button-md"
       :color="'portage'" :textPosition="'br'">
-    </tng-block-button>
-    <tng-block-button class="nav-button-lg"></tng-block-button>
-    <tng-block-button class="nav-button-md"
+    </tng-button>
+    <tng-button class="nav-button-lg"></tng-button>
+    <tng-button class="nav-button-md"
       :color="'steel-blue'" :textPosition="'br'">
-    </tng-block-button>
-    <tng-block-button class="nav-button-md"></tng-block-button>
+    </tng-button>
+    <tng-button class="nav-button-md"></tng-button>
   </div>
 
   <div class="screen-1">
@@ -51,7 +51,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import TngBanner from '@/components/tng-panel/TngBanner.vue';
-import TngBlockButton from '@/components/tng-panel/TngBlockButton.vue';
+import TngButton from '@/components/tng-panel/TngButton.vue';
 import TngBorderWrapAround from '@/components/tng-panel/TngBorderWrapAround.vue';
 
 import ButtonScreen from '@/components/tng-demos/ButtonScreen.vue';
@@ -65,7 +65,7 @@ export default Vue.extend({
     TextPrinter,
 
     TngBanner,
-    TngBlockButton,
+    TngButton,
     TngBorderWrapAround,
   },
 });

@@ -14,7 +14,7 @@
         <td class="table-button">
         </td>
         <td class="table-button">
-          <tng-block-button :color="'portage'" :roundSides="'right'">1 9767</tng-block-button>
+          <tng-button :color="'portage'" :roundSides="'right'">1 9767</tng-button>
         </td>
       </tr>
       <tr class="tng-text-red">
@@ -27,10 +27,10 @@
         <td>01001</td>
         <td>54</td>
         <td class="table-button">
-          <tng-block-button :color="'steel-blue'">90 245</tng-block-button>
+          <tng-button :color="'steel-blue'">90 245</tng-button>
         </td>
         <td class="table-button">
-          <tng-block-button :roundSides="'right'">15 112</tng-block-button>
+          <tng-button :roundSides="'right'">15 112</tng-button>
         </td>
       </tr>
       <tr class="tng-text-red">
@@ -45,7 +45,7 @@
         <td class="table-button">
         </td>
         <td class="table-button">
-          <tng-block-button :color="'plum'" :roundSides="'right'">8 673</tng-block-button>
+          <tng-button :color="'plum'" :roundSides="'right'">8 673</tng-button>
         </td>
       </tr>
       <tr>
@@ -58,7 +58,7 @@
         <td>10110</td>
         <td>52</td>
         <td class="table-button">
-          <tng-block-button :color="'white'">7 138</tng-block-button>
+          <tng-button :color="'white'">7 138</tng-button>
         </td>
         <td class="table-button">
         </td>
@@ -75,7 +75,7 @@
         <td class="table-button">
         </td>
         <td class="table-button">
-          <tng-block-button :color="'red'" :roundSides="'right'">19 505</tng-block-button>
+          <tng-button :color="'red'" :roundSides="'right'">19 505</tng-button>
         </td>
       </tr>
       <tr class="tng-text-orange">
@@ -88,28 +88,28 @@
         <td>01001</td>
         <td>54</td>
         <td class="table-button">
-          <tng-block-button>90 245</tng-block-button>
+          <tng-button>90 245</tng-button>
         </td>
         <td class="table-button">
-          <tng-block-button :color="'light-blue'" :roundSides="'right'">8 673</tng-block-button>
+          <tng-button :color="'light-blue'" :roundSides="'right'">8 673</tng-button>
         </td>
       </tr>
     </tbody>
   </table>
 
   <!-- <div class="buttons">
-    <tng-block-button :color="'light-blue'" :textPosition="'br'">754 39</tng-block-button>
+    <tng-button :color="'light-blue'" :textPosition="'br'">754 39</tng-button>
   </div> -->
 </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import TngBlockButton from '@/components/tng-panel/TngBlockButton.vue';
+import TngButton from '@/components/tng-panel/TngButton.vue';
 
 export default Vue.extend({
   components: {
-    TngBlockButton,
+    TngButton,
   },
 });
 </script>

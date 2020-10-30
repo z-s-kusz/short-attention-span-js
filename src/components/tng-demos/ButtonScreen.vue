@@ -2,44 +2,44 @@
 <section class="container">
   <div class="flex-row">
     <div v-for="(button, i) in row1" :key="i" class="button-array-item">
-      <tng-block-button v-if="button.active"
+      <tng-button v-if="button.active"
         :color="button.color" :textPosition="button.textPosition"
         :roundSides="button.roundSides">
         {{ button.text }}
-      </tng-block-button>
+      </tng-button>
       <div v-else></div>
     </div>
   </div>
 
   <div class="flex-row">
     <div v-for="(button, i) in row2" :key="i" class="button-array-item">
-      <tng-block-button v-if="button.active"
+      <tng-button v-if="button.active"
         :color="button.color" :textPosition="button.textPosition"
         :roundSides="button.roundSides">
         {{ button.text }}
-      </tng-block-button>
+      </tng-button>
       <div v-else></div>
     </div>
   </div>
 
   <div class="flex-row">
     <div v-for="(button, i) in row3" :key="i" class="button-array-item">
-      <tng-block-button v-if="button.active"
+      <tng-button v-if="button.active"
         :color="button.color" :textPosition="button.textPosition"
         :roundSides="button.roundSides">
         {{ button.text }}
-      </tng-block-button>
+      </tng-button>
       <div v-else></div>
     </div>
   </div>
 
   <div class="flex-row">
     <div v-for="(button, i) in row4" :key="i" class="button-array-item">
-      <tng-block-button v-if="button.active"
+      <tng-button v-if="button.active"
         :color="button.color" :textPosition="button.textPosition"
         :roundSides="button.roundSides">
         {{ button.text }}
-      </tng-block-button>
+      </tng-button>
       <div v-else></div>
     </div>
   </div>
@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import TngBlockButton from '@/components/tng-panel/TngBlockButton.vue';
+import TngButton from '@/components/tng-panel/TngButton.vue';
 
 const buttonData = [
   {
@@ -166,7 +166,7 @@ const buttonData = [
 ];
 export default Vue.extend({
   components: {
-    TngBlockButton,
+    TngButton,
   },
   data() {
     return {
