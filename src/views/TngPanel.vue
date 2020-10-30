@@ -22,7 +22,10 @@
 
   <div class="screen-1">
     <tng-border-wrap-around :accentX="true">
-      <button-screen></button-screen>
+      <div class="flex">
+        <button-screen class="flex-half"></button-screen>
+        <text-printer class="flex-half"></text-printer>
+      </div>
     </tng-border-wrap-around>
   </div>
 
@@ -41,11 +44,13 @@ import TngBorderWrapAround from '@/components/tng-panel/TngBorderWrapAround.vue'
 
 import ButtonScreen from '@/components/tng-demos/ButtonScreen.vue';
 import TableScreen from '@/components/tng-demos/TableScreen.vue';
+import TextPrinter from '@/components/tng-demos/TextPrinter.vue';
 
 export default Vue.extend({
   components: {
     ButtonScreen,
     TableScreen,
+    TextPrinter,
 
     TngBanner,
     TngBlockButton,
@@ -99,5 +104,12 @@ export default Vue.extend({
     height: 180px;
     margin-top: $gap;
   }
+}
+.flex {
+  display: flex;
+}
+.flex-half {
+  flex: 1 1 50%;
+  margin: 0 ($padding / 2)
 }
 </style>

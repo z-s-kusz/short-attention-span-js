@@ -16,7 +16,9 @@ Maybe 1 character every tenth of a second. Somewhere around there
 anyway. Not much more or less I'd think.
 This looks like enough to test with. Then we will have to loop it from the top.
 Anyway wow it actually works way better than I thought it would.
-Supplementing with more content but this is a smashing success.`;
+Supplementing with more content but this is a smashing success.
+Another couple of lines would be greatly
+beneficial to the text so it will approach the bottom without any scroll.`;
 
 export default Vue.extend({
   data() {
@@ -52,5 +54,6 @@ div {
   font-size: 24px;
   // allows text to break at points as determined by the written text (ie \n)
   white-space: pre-line;
+  height: 298px;
 }
 </style>

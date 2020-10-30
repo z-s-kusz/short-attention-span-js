@@ -98,6 +98,7 @@ $content-width: 100% - $border-width;
 .content-area {
   position: absolute;
   background-color: black;
+  overflow: auto;
 }
 
 .accent-tail {

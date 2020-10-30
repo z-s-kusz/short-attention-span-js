@@ -24,6 +24,13 @@
     </tng-block-button>
   </div>
 
+  <div class="flex-row">
+    <tng-block-button v-for="(button, i) in row4" :key="i"
+      class="button-array-item" :color="button.color" :textPosition="button.textPosition"
+      :roundSides="button.roundSides">
+      {{ button.text }}
+    </tng-block-button>
+  </div>
 </section>
 </template>
 
@@ -35,7 +42,7 @@ const buttonData = [
   {
     text: 'D17',
     active: true,
-    color: 'orange',
+    color: 'red',
     roundSides: 'left',
     textPosition: 'tr',
   },
@@ -63,7 +70,7 @@ const buttonData = [
   {
     text: 'OLT',
     active: true,
-    color: 'white',
+    color: 'light-blue',
     roundSides: 'left',
     textPosition: 'tr',
   },
@@ -116,6 +123,34 @@ const buttonData = [
     roundSides: 'right',
     textPosition: 'tr',
   },
+  {
+    text: 'D17',
+    active: true,
+    color: 'plum',
+    roundSides: 'left',
+    textPosition: 'tr',
+  },
+  {
+    text: 'Hdr',
+    active: false,
+    color: 'portage',
+    roundSides: 'none',
+    textPosition: 'tr',
+  },
+  {
+    text: '011',
+    active: true,
+    color: 'portage',
+    roundSides: 'none',
+    textPosition: 'tr',
+  },
+  {
+    text: '589001',
+    active: false,
+    color: 'light-blue',
+    roundSides: 'right',
+    textPosition: 'tr',
+  },
 ];
 export default Vue.extend({
   components: {
@@ -125,7 +160,8 @@ export default Vue.extend({
     return {
       row1: buttonData.filter((b, i) => i < 4),
       row2: buttonData.filter((b, i) => i >= 4 && i < 8),
-      row3: buttonData.filter((b, i) => i >= 8),
+      row3: buttonData.filter((b, i) => i >= 8 && i < 12),
+      row4: buttonData.filter((b, i) => i >= 12 && i < 16),
     };
   },
 });
@@ -137,8 +173,10 @@ export default Vue.extend({
 .container {
   height: 100%;
   box-sizing: border-box;
-  padding: $padding;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .flex-row {
   display: flex;
@@ -149,8 +187,8 @@ export default Vue.extend({
 }
 .button-array-item {
   height: 60px;
-  width: 160px;
-  margin: $padding;
+  width: 100px;
+  margin: 8px;
   flex: 1 1 auto;
 }
 </style>
