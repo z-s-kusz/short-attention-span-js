@@ -28,6 +28,7 @@
 
   <div class="screen-2">
     <tng-border-wrap-around :color="'portage'" :accentY="'orange'" :sides="'br'">
+      <table-screen></table-screen>
     </tng-border-wrap-around>
   </div>
 </main>
@@ -39,10 +40,12 @@ import TngBlockButton from '@/components/tng-panel/TngBlockButton.vue';
 import TngBorderWrapAround from '@/components/tng-panel/TngBorderWrapAround.vue';
 
 import ButtonScreen from '@/components/tng-demos/ButtonScreen.vue';
+import TableScreen from '@/components/tng-demos/TableScreen.vue';
 
 export default Vue.extend({
   components: {
     ButtonScreen,
+    TableScreen,
 
     TngBanner,
     TngBlockButton,
@@ -79,7 +82,7 @@ export default Vue.extend({
 
 .screen-2 {
   grid-area: 3 / 2 / 4 / 3;
-  padding-top: $padding;
+  padding-top: $padding / 2;
   padding-left: $padding;
 }
 
