@@ -131,7 +131,6 @@ body {
   display: none;
   padding: $nav-padding;
   justify-content: center;
-  user-select: none;
 
   /* keep consistent sizing even without content */
   box-sizing: border-box;
@@ -139,6 +138,8 @@ body {
 
   & span {
     cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
