@@ -72,9 +72,8 @@ export default Vue.extend({
   white-space: pre-line;
 }
 .start-btn {
-  max-width: 120px;
   height: 60px;
-  margin: 8px;
+  margin-top: 8px;
 }
 @media only screen and (max-width: 899px) {
   .text {
@@ -82,6 +81,7 @@ export default Vue.extend({
   }
   .start-btn {
     height: 50px;
+    margin-top: 4px;
   }
 }
 </style>

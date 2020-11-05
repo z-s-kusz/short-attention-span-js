@@ -77,6 +77,9 @@ export default Vue.extend({
   color: $cornflower-blue;
   background-color: black;
   position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
   top: 0;
   bottom: $padding;
   right: 0;
@@ -93,14 +96,18 @@ export default Vue.extend({
   display: inline-block;
   background-color: black;
   text-transform: uppercase;
-  font-size: var(--banner-height);
   padding-right: $padding;
   padding-left: $padding;
+  // unsure why these magic font-size and line-height numbers
+  // are necessary to work in chrome for windows
+  font-size: 135px;
+  line-height: 75%;
 }
 
 @media only screen and (max-width: 899px) {
   .banner-title-text {
-    font-size: 52px;
+    font-size: 60px;
+    line-height: 100%;
   }
 }
 </style>

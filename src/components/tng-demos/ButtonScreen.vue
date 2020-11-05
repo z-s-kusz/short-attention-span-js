@@ -60,14 +60,14 @@ const buttonData = [
   },
   {
     text: 'Hdr',
-    active: false,
+    active: true,
     color: 'orange',
     roundSides: 'none',
     textPosition: 'tr',
   },
   {
     text: '001',
-    active: true,
+    active: false,
     color: 'red',
     roundSides: 'none',
     textPosition: 'tr',
@@ -88,7 +88,7 @@ const buttonData = [
   },
   {
     text: 'DIR9',
-    active: false,
+    active: true,
     color: 'orange',
     roundSides: 'none',
     textPosition: 'tr',
@@ -207,6 +207,7 @@ export default Vue.extend({
   .button-array-item {
     height: 50px;
     width: 64px;
+    margin: 4px 8px;
   }
 }
 </style>

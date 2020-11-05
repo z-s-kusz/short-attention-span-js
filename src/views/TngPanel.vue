@@ -153,5 +153,8 @@ export default Vue.extend({
   .flex {
     flex-direction: column;
   }
+  .flex-half {
+    margin-right: 0;
+  }
 }
 </style>
