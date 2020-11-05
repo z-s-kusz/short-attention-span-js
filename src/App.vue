@@ -92,6 +92,18 @@ export default Vue.extend({
 $slider-width: 108px;
 $nav-padding: 40px 30px 20px 30px;
 
+// prevent chrome anrdoid from auto highlighting when user touches anything
+// it was getting in the way of scrolling even
+:root {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   background-color: #333;
   margin: 0;
