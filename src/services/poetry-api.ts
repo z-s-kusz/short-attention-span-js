@@ -1,5 +1,4 @@
-// const baseUrl = 'https://poetry-app-api.herokuapp.com/poetry';
-const baseUrl = 'http://localhost:3000/poetry';
+const baseUrl = process.env.VUE_APP_POETRY_BASE_URL;
 
 const store = {
   serverIsWoke: false,
