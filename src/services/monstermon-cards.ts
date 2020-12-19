@@ -1,0 +1,1292 @@
+export interface Monstermon {
+  name: string;
+  type: string;
+  description: string;
+  art: string;
+  color: string; // could be array if strings if we multitype
+  rarity: number;
+  set: string;
+  attack: {
+    cost: number;
+    description: string;
+    affectType: string;
+    affectValue: number;
+    extra: {
+      requirement: string;
+      affectType: string;
+      affectValue: number;
+    } | null;
+  };
+  defence: {
+    cost: number;
+    description: string;
+    affectType: string;
+    affectValue: number;
+    extra: {
+      requirement: string;
+      affectType: string;
+      affectValue: number;
+    } | null;
+  };
+}
+
+const k2BlueMonstermon = [
+  {
+    name: 'Celestial Slug',
+    type: 'Magical',
+    description: 'It travels from galaxy to galaxy very slowly. It still hasn\'t left the one it was born in yet.',
+    art: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fftl.fandom.com%2Fwiki%2FRaces%2FSlug&psig=AOvVaw0twV9JulmFtqa2EOmXJVQf&ust=1608226748042000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKiuhtyF0-0CFQAAAAAdAAAAABAD',
+    color: 'blue',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce a RED monstermon\'s damage by 3.',
+      affectType: 'reduce_red',
+      affectValue: 3,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Hard Boogar',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'blue',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 4 damage.',
+      affectType: 'damage',
+      affectValue: 4,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce ANY monstermon\'s damage by 1.',
+      affectType: 'reduce_any',
+      affectValue: 1,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Bucket O Water',
+    type: 'Magical',
+    description: '',
+    art: '',
+    color: 'blue',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage, +2 damage if your last discarded card is BLUE.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: {
+        requirement: 'discarded_blue',
+        affectType: 'damage',
+        affectValue: 2,
+      },
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce ANY monstermon\'s damage by 1.',
+      affectType: 'reduce_any',
+      affectValue: 1,
+    },
+  },
+
+  {
+    name: 'Ultralodon',
+    type: 'Fish',
+    description: '',
+    art: '',
+    color: 'blue',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 3,
+      description: 'Deal 6 damage.',
+      affectType: 'damage',
+      affectValue: 6,
+      extra: null,
+    },
+    defence: {
+      cost: 0,
+      description: '',
+      affectType: 'none',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Pale Tuna',
+    type: 'Fish',
+    description: '',
+    art: '',
+    color: 'blue',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce a RED monstermon\'s damage by 3.',
+      affectType: 'reduce_red',
+      affectValue: 3,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Carnivorous Nimbus',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'blue',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 4 damage.',
+      affectType: 'damage',
+      affectValue: 4,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce ANY Monstermon\'s damage by 1.',
+      affectType: 'reduce_any',
+      affectValue: 1,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Tiny Squid',
+    type: 'Fish',
+    description: '',
+    art: '',
+    color: 'blue',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce a RED Monstermon\'s damage by 3.',
+      affectType: 'reduce_red',
+      affectValue: 3,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Coral That Looks Like Hand',
+    type: 'Odd Shape',
+    description: '',
+    art: '',
+    color: 'blue',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 3 damage, +3 damage if your hand is all blue (must show your hand to opponent).',
+      affectType: 'damage',
+      affectValue: 3,
+      extra: {
+        requirement: 'hand_blue',
+        affectType: 'damage',
+        affectValue: 3,
+      },
+    },
+    defence: {
+      cost: 2,
+      description: 'Block a RED monstermon.',
+      affectType: 'block_red',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Hermit Frog',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'blue',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 0,
+      description: 'Deal 1 damage.',
+      affectType: 'damage',
+      affectValue: 1,
+      extra: null,
+    },
+    defence: {
+      cost: 3,
+      description: 'Reflect a RED monstermon.',
+      affectType: 'reflect_red',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Castle of Sand',
+    type: 'Artifact',
+    description: '',
+    art: '',
+    color: 'blue',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 3 damage, +2 damage if you have less HP.',
+      affectType: 'damage',
+      affectValue: 3,
+      extra: {
+        requirement: 'less_hp',
+        affectType: 'damage',
+        affectValue: 2,
+      },
+    },
+    defence: {
+      cost: 3,
+      description: 'Reflect a RED monstermon.',
+      affectType: 'reflect_red',
+      affectValue: 3,
+      extra: null,
+    },
+  },
+] as Monstermon[];
+
+const k2RedMonstermon = [
+  {
+    name: 'Man on Fire',
+    type: 'Unfortunate',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage, +2 damage if your last discarded card is RED.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: {
+        requirement: 'discarded_red',
+        affectType: 'damage',
+        affectValue: 2,
+      },
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce ANY Monstermon\'s damage by 1.',
+      affectType: 'reduce_any',
+      affectValue: 1,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Chair of Spikes',
+    type: 'Artifact',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 4 damage.',
+      affectType: 'damage',
+      affectValue: 4,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce ANY Monstermon\'s damage by 1.',
+      affectType: 'reduce_any',
+      affectValue: 1,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Cigaretmon',
+    type: 'Magical',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce a GREEN Monstermon\'s damage by 3.',
+      affectType: 'reduce_green',
+      affectValue: 3,
+    },
+  },
+
+  {
+    name: 'Dune Worm',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 3,
+      description: 'Deal 6 damage.',
+      affectType: 'damage',
+      affectValue: 6,
+      extra: null,
+    },
+    defence: {
+      cost: 0,
+      description: '',
+      affectType: 'none',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Stressed Llama',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce a GREEN Monstermon\'s damage by 3.',
+      affectType: 'reduce_green',
+      affectValue: 3,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Cyclops Duckling',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 0,
+      description: 'Deal 1 damage.',
+      affectType: 'damage',
+      affectValue: 1,
+      extra: null,
+    },
+    defence: {
+      cost: 3,
+      description: 'Reflect a GREEN Monstermon.',
+      affectType: 'reflect_green',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Teenage Mutant Zombie',
+    type: 'Humanoid',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce a GREEN monstermon\'s damage by 3.',
+      affectType: 'reduce_green',
+      affectValue: 3,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Lonely Dragon',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 4 damage.',
+      affectType: 'damage',
+      affectValue: 4,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce ANY Monstermon\'s damage by 1.',
+      affectType: 'reduce_any',
+      affectValue: 1,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Million-Head Hydra',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 3 damage, +3 damage if your hand is all RED (must show your hand to opponent).',
+      affectType: 'damage',
+      affectValue: 3,
+      extra: {
+        requirement: 'hand_red',
+        affectType: 'damage',
+        affectValue: 3,
+      },
+    },
+    defence: {
+      cost: 2,
+      description: 'Block a Green Monstermon.',
+      affectType: 'block_green',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Dab Hero',
+    type: 'Humanoid',
+    description: '',
+    art: '',
+    color: 'red',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 3 damage, +2 damage if you have less HP.',
+      affectType: 'damage',
+      affectValue: 3,
+      extra: {
+        requirement: 'less_hp',
+        affectType: 'damage',
+        affectValue: 2,
+      },
+    },
+    defence: {
+      cost: 3,
+      description: 'Reflect a GREEN Monstermon.',
+      affectType: 'reflect_green',
+      affectValue: 3,
+      extra: null,
+    },
+  },
+] as Monstermon[];
+
+const k2GreenMonstermon = [
+  {
+    name: 'Monstrous Flytrap',
+    type: 'Plant',
+    description: '',
+    art: '',
+    color: 'green',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce a BLUE monstermon\'s damage by 3.',
+      affectType: 'reduce_blue',
+      affectValue: 3,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'The Tallest Tree',
+    type: 'Plant',
+    description: '',
+    art: '',
+    color: 'green',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 3 damage, +3 damage if your hand is all GREEN (must show your hand to opponent).',
+      affectType: 'damage',
+      affectValue: 3,
+      extra: {
+        requirement: 'hand_green',
+        affectType: 'damage',
+        affectValue: 3,
+      },
+    },
+    defence: {
+      cost: 2,
+      description: 'Block a BLUE monstermon.',
+      affectType: 'block_blue',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Chill Stump',
+    type: 'Magical',
+    description: 'He\'s chillin dude.',
+    art: '',
+    color: 'green',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce a BLUE monstermon\'s damage by 3.',
+      affectType: 'reduce_blue',
+      affectValue: 3,
+    },
+  },
+
+  {
+    name: 'Gnome of Garden',
+    type: 'Magical',
+    description: '',
+    art: '',
+    color: 'green',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 4 damage.',
+      affectType: 'damage',
+      affectValue: 4,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce ANY Montermon\'s damage by 1.',
+      affectType: 'reduce_any',
+      affectValue: 1,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Ofaka Tornado',
+    type: 'Magical',
+    description: '',
+    art: '',
+    color: 'green',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage, +2 damage if your last discarded card is GREEN.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: {
+        requirement: 'discarded_green',
+        affectType: 'damage',
+        affectValue: 2,
+      },
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce ANY Monstermon\'s damage by 1.',
+      affectType: 'reduce_any',
+      affectValue: 1,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Literally Grass',
+    type: 'Nothing Special',
+    description: '',
+    art: '',
+    color: 'green',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce a BLUE Monstermon\'s damage by 3.',
+      affectType: 'reduce_blue',
+      affectValue: 3,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Doodoo Bug',
+    type: 'Insect',
+    description: '',
+    art: '',
+    color: 'green',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 3 damage, +2 damage if you have less HP.',
+      affectType: 'damage',
+      affectValue: 3,
+      extra: {
+        requirement: 'less_hp',
+        affectType: 'damage',
+        affectValue: 2,
+      },
+    },
+    defence: {
+      cost: 3,
+      description: 'Reflect a BLUE Monstermon.',
+      affectType: 'reflect_blue',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Mystical Tomato',
+    type: 'Vegetable',
+    description: '',
+    art: '',
+    color: 'green',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 0,
+      description: 'Deal 1 damage.',
+      affectType: 'damage',
+      affectValue: 1,
+      extra: null,
+    },
+    defence: {
+      cost: 3,
+      description: 'Reflect a BLUE Monstermon.',
+      affectType: 'reflect_blue',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Hissing Fauna',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'green',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 4 damage.',
+      affectType: 'damage',
+      affectValue: 4,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Reduce ANY Monstermon\'s damage by 1.',
+      affectType: 'reduce_any',
+      affectValue: 1,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Legendary Sword',
+    type: 'Artifact',
+    description: '',
+    art: '',
+    color: 'green',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 3,
+      description: 'Deal 6 damage.',
+      affectType: 'damage',
+      affectValue: 6,
+      extra: null,
+    },
+    defence: {
+      cost: 0,
+      description: '',
+      affectType: 'none',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+] as Monstermon[];
+
+const k2YellowMonstermon = [
+  {
+    name: 'Golden Dewdrop',
+    type: 'Magical',
+    description: 'A drop, made golden in his new life by THE ARCHITECT.',
+    art: '',
+    color: 'yellow',
+    rarity: 2,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Heal 4 HP.',
+      affectType: 'heal_hp',
+      affectValue: 4,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a PURPLE Monstermon',
+      affectType: 'block_purple',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Zen Octopus',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'yellow',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a PURPLE Monstermon.',
+      affectType: 'block_purple',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Forbidden Book',
+    type: 'Artifact',
+    description: '',
+    art: '',
+    color: 'yellow',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Swap MANA with your opponent (after paying MANA cost).',
+      affectType: 'swap_mana',
+      affectValue: 0,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a PURPLE Monstermon.',
+      affectType: 'block_purple',
+      affectValue: 0,
+    },
+  },
+
+  {
+    name: 'Marshmallow',
+    type: 'Magical',
+    description: '',
+    art: '',
+    color: 'yellow',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 3,
+      description: 'Swap HP with your opponent.',
+      affectType: 'swap_hp',
+      affectValue: 0,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a PURPLE Monstermon.',
+      affectType: 'block_purple',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Pot of Grease',
+    type: 'Artifact',
+    description: 'A cool reference made cooler by THE ARCHITECT.',
+    art: '',
+    color: 'yellow',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Heal 3 HP',
+      affectType: 'heal',
+      affectValue: 3,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a PUPLE Monstermon.',
+      affectType: 'block_purple',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Lamb With Cleaver',
+    type: 'Beast',
+    description: 'THE ARCHITECT grants power to those who deserve it.',
+    art: '',
+    color: 'yellow',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Gain 3 MANA (after paying MANA cost).',
+      affectType: 'mana',
+      affectValue: 3,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a PURPLE Monstermon.',
+      affectType: 'block_purple',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Treasure Chest',
+    type: 'Artifact',
+    description: 'The greatest treasure is bestowed by THE ARCHITECT.',
+    art: '',
+    color: 'yellow',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Gain 3 MANA (after paying MANA cost).',
+      affectType: 'mana',
+      affectValue: 3,
+      extra: null,
+    },
+    defence: {
+      cost: 3,
+      description: 'Block ANY Monstermon.',
+      affectType: 'block_any',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Mr. Nice Guy',
+    type: 'Vegetable',
+    description: 'And THE ARCHITECT said to him, \'No more.\'',
+    art: '',
+    color: 'yellow',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 3,
+      description: 'Heal 4 HP',
+      affectType: 'heal_hp',
+      affectValue: 4,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a PURPLE Monstermon',
+      affectType: 'block_purple',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'The Slurper',
+    type: 'Disgusting',
+    description: '',
+    art: '',
+    color: 'yellow',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 5,
+      description: 'Deal 8 damage.',
+      affectType: 'damage',
+      affectValue: 8,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a PURPLE Monstermon.',
+      affectType: 'block_purple',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Rare Jewel',
+    type: 'Artifact',
+    description: 'THE ARCHITECT only keeps legendary or epic jewels.',
+    art: '',
+    color: 'yellow',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Gain 3 MANA (after paying MANA cost).',
+      affectType: 'mana',
+      affectValue: 3,
+      extra: null,
+    },
+    defence: {
+      cost: 4,
+      description: 'Reflect ANY Monstermon.',
+      affectType: 'reflect_any',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+] as Monstermon[];
+
+const k2PurpleMonstermon = [
+  {
+    name: 'Onion',
+    type: 'Vegetable',
+    description: '',
+    art: '',
+    color: 'purple',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Deal 2 damage.',
+      affectType: 'damage',
+      affectValue: 2,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a YELLOW Monstermon',
+      affectType: 'block_yellow',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Killer EYE',
+    type: 'Organ',
+    description: '',
+    art: '',
+    color: 'purple', // also green????
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 3 damage, +3 damage if your hand is all RED (must show your hand to opponent).',
+      affectType: 'damage',
+      affectValue: 3,
+      extra: {
+        requirement: 'hand_red',
+        affectType: 'damage',
+        affectValue: 3,
+      },
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a YELLOW monstermon.',
+      affectType: 'block_yellow',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Purple Plush',
+    type: 'Magical',
+    description: '',
+    art: '',
+    color: 'purple',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 3,
+      description: 'Swap HP with your opponent.',
+      affectType: 'swap_hp',
+      affectValue: 0,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a YELLOW Monstermon.',
+      affectType: 'block_yellow',
+      affectValue: 0,
+    },
+  },
+
+  {
+    name: 'Spiky Flim Flam',
+    type: 'Beast',
+    description: 'Monkey\'s paw of THE ARCHITECT.',
+    art: '',
+    color: 'purple',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Gain 3 MANA (after paying MANA cost).',
+      affectType: 'mana',
+      affectValue: 3,
+      extra: null,
+    },
+    defence: {
+      cost: 3,
+      description: 'Block ANY Monstermon.',
+      affectType: 'block_any',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Monster Ghost',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'purple',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 3 damage, +3 if your hand is all GREEN (must show your hand to opponent).',
+      affectType: 'damage',
+      affectValue: 3,
+      extra: {
+        requirement: 'hand_green',
+        affectType: 'damage',
+        affectValue: 3,
+      },
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a YELLOW Monstermon.',
+      affectType: 'block_yellow',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Knight Who Turned Evil',
+    type: 'Humanoid',
+    description: 'THE ARCHITECT takes power from those who wield it.',
+    art: '',
+    color: 'purple',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Gain 4 MANA (after paying MANA cost).',
+      affectType: 'mana',
+      affectValue: 4,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a YELLOW Monstermon.',
+      affectType: 'block_yellow',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Evil Thwarter',
+    type: 'Beast',
+    description: 'Killed by THE ARCHITECT.',
+    art: '',
+    color: 'purple',
+    rarity: 2,
+    set: 'kindergarden2',
+    attack: {
+      cost: 3,
+      description: 'Gain 5 MANA (after paying MANA cost).',
+      affectType: 'mana',
+      affectValue: 5,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a YELLOW Monstermon.',
+      affectType: 'block_yellow',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Mysterious Package',
+    type: 'Artifact',
+    description: '',
+    art: '',
+    color: 'purple',
+    rarity: 1,
+    set: 'kindergarden2',
+    attack: {
+      cost: 1,
+      description: 'Swap MANA with your opponent.',
+      affectType: 'swap_mana',
+      affectValue: 0,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a YELLOW Monstermon',
+      affectType: 'block_yellow',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Oglebop Ogre',
+    type: 'Beast',
+    description: '',
+    art: '',
+    color: 'purple',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 2,
+      description: 'Deal 3 damage, +3 damage if your hand is all BLUE (must show your hand to opponent).',
+      affectType: 'damage',
+      affectValue: 3,
+      extra: {
+        requirement: 'hand_blue',
+        affectType: 'damage',
+        affectValue: 3,
+      },
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a YELLOW Monstermon.',
+      affectType: 'block_yellow',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+
+  {
+    name: 'Dank Magician',
+    type: 'Magical',
+    description: 'THE ARCHITECT only keeps legendary or epic jewels.',
+    art: '',
+    color: 'purple',
+    rarity: 0,
+    set: 'kindergarden2',
+    attack: {
+      cost: 5,
+      description: 'Deal 8 damage.',
+      affectType: 'damage',
+      affectValue: 8,
+      extra: null,
+    },
+    defence: {
+      cost: 1,
+      description: 'Block a YELLOW Monstermon.',
+      affectType: 'block_yellow',
+      affectValue: 0,
+      extra: null,
+    },
+  },
+] as Monstermon[];
+
+export default {
+  k2BlueMonstermon,
+  k2RedMonstermon,
+  k2GreenMonstermon,
+  k2YellowMonstermon,
+  k2PurpleMonstermon,
+};

@@ -82,6 +82,13 @@ const routes = [
       return import('../views/TngPanel.vue');
     },
   },
+  {
+    path: '/monstermon',
+    name: 'Monstermon',
+    component: () => {
+      return import('../views/MonstermonParent.vue');
+    },
+  },
 ];
 
 const router = new VueRouter({
