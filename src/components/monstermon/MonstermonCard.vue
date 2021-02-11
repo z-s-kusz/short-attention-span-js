@@ -41,8 +41,8 @@ section {
   border: 2px solid purple;
   padding: 8px;
   margin: 12px 24px;
-  width: 280px;
-  height: 420px;
+  width: 260px;
+  height: 390px;
 
   display: grid;
   grid-template-columns: 1fr;
@@ -62,5 +62,15 @@ section {
   border: 8px solid rgb(51, 105, 255);
   padding: 8px;
   margin-right: 16px;
+}
+
+h1 {
+  font-size: 1.2rem;
+}
+h2 {
+  font-size: 0.9rem;
+}
+p {
+  font-size: 0.8rem;
 }
 </style>
