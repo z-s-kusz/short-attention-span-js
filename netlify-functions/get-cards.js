@@ -2,7 +2,7 @@ const mongoClient = require('mongodb').MongoClient;
 const connectionString = process.env.COSMOS_DB_PRIMARY_CONNECTION_STRING;
 
 exports.handler = async (event, context) => {
-  return mongoClient.connect(connectionString, (connectError, client) => {
+  return mongoClient.connect(connectionString, async (connectError, client) => {
     if (connectError) {
       console.error('connection error:', connectError);
       return {
