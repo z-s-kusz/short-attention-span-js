@@ -1,28 +1,50 @@
+// https://docs.atlas.mongodb.com/best-practices-connecting-to-aws-lambda/
 const mongoClient = require('mongodb').MongoClient;
 const connectionString = process.env.COSMOS_DB_PRIMARY_CONNECTION_STRING;
+const connectionOptions = {
+  useUnifiedTopology: true,
+};
+let cachedDB = null;
 
-exports.handler = (event, context) => {
-  mongoClient.connect(connectionString, async (connectError, client) => {
-    if (connectError) {
-      console.error('connection error:', connectError);
-      return {
-        statusCode: 500,
-        body: 'Error establishing mongo client connection.',
-      };
-    }
+// TODO extract connectToDatabase to shared folder instead of repeating it
+function connectToDatabase() {
+  if (cachedDB && mongoClient) {
+    console.log('Using cached database instance.');
+    return Promise.resolve(cachedDB);
+  }
 
-    try {
-      const cards = await client.db('monstermon').collection('Cards').find().toArray();
-      return {
-        statusCode: 200,
-        body: cards,
-      };
-    } catch (readError) {
-      console.error('read error:', readError);
-      return {
-        statusCode: 500,
-        body: 'Error reading cards documents.',
-      };
-    }
+  console.log('Using fresh database instance.');
+  return mongoClient.connect(connectionString, connectionOptions).then((client) => {
+    return client.db('monstermon');
+  }).catch((error) => {
+    console.error('Error establishing db connection.', error);
+    return error;
   });
+}
+
+function queryAllCards(db) {
+  return db.collection('Cards').find().toArray().then((cards) => {
+    return JSON.stringify(cards);
+  }).catch((error) => {
+    console.error('Error querying db.', error);
+    return error;
+  });
+}
+
+exports.handler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  try {
+    const db = await connectToDatabase();
+    const cards = await queryAllCards(db);
+    return {
+      statusCode: 200,
+      body: cards,
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: 'Error getting cards.',
+    };
+  }
 };

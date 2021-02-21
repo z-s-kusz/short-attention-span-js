@@ -23,5 +23,15 @@ npm run build
 npm run lint
 ```
 
+### Netlify Functions
+Local development requires global install of netlify-cli:
+```
+npm i netlify-cli -g
+```
+To run local server and test netlify functions:
+```
+netlify dev
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
