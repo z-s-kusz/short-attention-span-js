@@ -3,6 +3,7 @@ const mongoClient = require('mongodb').MongoClient;
 const connectionString = process.env.COSMOS_DB_PRIMARY_CONNECTION_STRING;
 const connectionOptions = {
   useUnifiedTopology: true,
+  retryWrites: false,
 };
 let cachedDB = null;
 
@@ -15,7 +16,8 @@ function connectToDatabase() {
 
   console.log('Using fresh database instance.');
   return mongoClient.connect(connectionString, connectionOptions).then((client) => {
-    return client.db('monstermon');
+    cachedDB = client.db('monstermon');
+    return cachedDB;
   }).catch((error) => {
     console.error('Error establishing db connection.', error);
     return error;
@@ -42,6 +44,7 @@ exports.handler = async (event, context) => {
       body: cards,
     };
   } catch (error) {
+    console.error(error);
     return {
       statusCode: 500,
       body: 'Error getting cards.',
