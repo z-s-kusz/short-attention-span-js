@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <slide :closeOnNavigation="true" class="slider">
-      <div data-netlify-identity-menu></div>
       <router-link to="/about">About</router-link>
       <router-link to="/poetry">Poetry</router-link>
       <router-link to="/mgs-carousel">MGS1 Carousel Demo</router-link>
@@ -13,7 +12,6 @@
     </slide>
 
     <div class="nav-lg">
-      <div data-netlify-identity-menu></div>
       <router-link to="/about">About</router-link>
       <router-link to="/poetry">Poetry</router-link>
       <router-link to="/mgs-carousel">MGS1 Carousel Demo</router-link>
