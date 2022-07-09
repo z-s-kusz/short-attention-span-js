@@ -17,8 +17,8 @@
       <a href="https://github.com/z-s-kusz" target="_blank">github</a>
       you will have seen that I called this project short attention span JS. It's home
       for any small idea I want to implement without thinking about set up.
-      To that end, it could also be called decision fatigue
-      remover JS. So here it is, a random mish mash of javascript ideas to
+      To that end, it could also be called "decision fatigue
+      remover JS." So here it is, a random mish mash of javascript ideas to
       browse through quickly. Thanks for viewing and I hope you find
       some of my small distraction pages entertaining!
     </p>
@@ -27,18 +27,20 @@
     <h1 class="poetry" :style="poetryStyle">Poetry</h1>
     <p><em :style="poetryEm">DISCLAIMER:</em>&nbsp;
       The available poems and poets were NOT selected by me.
-      I have not reviewed the available poems.
+      I have not reviewed all available poems.
     </p>
     <p>The 'poetry' page started with 2 ideas:</p>
     <p>1. Create a quick way to access lots of poems.</p>
     <p>2. Create pill-like color palettes that
-      I had seen on reddit and use them for ...whatever.
+      I had seen on reddit.
     </p>
     <p>Because this site is set up to do quick front end experiments, I didn't want
       to write a web scraper or make a database. I found a pretty cool open source poetry
       api to use <a href="https://github.com/thundercomb/poetrydb" target="_blank">here</a>.
       I did have to set up a quick back end (using Heroku) to get around
       CORS but it will be good to have, should any other projects here require back end code.
+      * Edit: Now that netlify functions have been improved I might migrate over to it in
+      a future update.
     </p>
     <p>So, go read some poems! If you find depressing poetry, brighten it up with a lovely
       theme like
