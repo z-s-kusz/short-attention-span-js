@@ -82,6 +82,13 @@ const routes = [
       return import('../views/TngPanel.vue');
     },
   },
+  {
+    path: '/sandboxes',
+    name: 'Sandboxes',
+    component: () => {
+      return import('../views/Sandboxes.vue');
+    },
+  },
 ];
 
 const router = new VueRouter({
