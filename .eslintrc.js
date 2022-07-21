@@ -13,7 +13,7 @@ module.exports = {
   },
   rules: {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-param-reassign': [2, { 'props': false }],
+    'no-param-reassign': [2, { props: false }],
     'no-plusplus': 'off',
     'arrow-body-style': [0], // fuck this rule, needs to play better with column limits
     'no-else-return': [0],
@@ -31,5 +31,10 @@ module.exports = {
     'prefer-destructuring': [1],
     'no-multiple-empty-lines': [1],
     'comma-spacing': [1],
+    'vue/multi-word-component-names': [0],
+    // TODO reenable for accessibility
+    'vuejs-accessibility/click-events-have-key-events': [0],
+    'vuejs-accessibility/form-control-has-label': [0],
+    'vuejs-accessibility/label-has-for': [0],
   },
 };

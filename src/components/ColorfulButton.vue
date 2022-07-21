@@ -83,11 +83,6 @@
 <script lang="ts">
 import Vue from 'vue';
 
-interface RefElements {
-  svg: HTMLElement;
-  button: HTMLElement;
-}
-
 export default Vue.extend({
   props: {
     color0: {
