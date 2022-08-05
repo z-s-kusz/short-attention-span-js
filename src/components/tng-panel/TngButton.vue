@@ -20,7 +20,7 @@ export default Vue.extend({
     roundSides: {
       type: String,
       default: 'none',
-      validator(value) {
+      validator(value: string) {
         if (!roundSidesOptions.includes(value)) {
           console.error(`roundSidesOptions must be one of the following: ${textPositionOptions}`);
           return false;
@@ -31,7 +31,7 @@ export default Vue.extend({
     textPosition: {
       type: String,
       default: 'tr',
-      validator(value) {
+      validator(value: string) {
         if (!textPositionOptions.includes(value)) {
           console.error(`textPosition must be one of the following: ${textPositionOptions}`);
           return false;
@@ -42,7 +42,7 @@ export default Vue.extend({
     color: {
       type: String,
       default: 'orange',
-      validator(value) {
+      validator(value: string) {
         if (!colorOptions.includes(value)) {
           console.error(`color must be one of the following: ${colorOptions}`);
           return false;

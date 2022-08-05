@@ -109,7 +109,7 @@ export default Vue.extend({
       type: String,
       required: true,
       default: 'id',
-      validator(value) {
+      validator(value: string) {
         if (value.includes('-')) {
           console.error('buttonId can\'t contain minus "-" as it breaks the svg '
           + 'event selectors. camelCase values are recomended.');

@@ -22,7 +22,7 @@ export default Vue.extend({
     color: {
       type: String,
       default: 'orange',
-      validator(value) {
+      validator(value: string) {
         if (!colorOptions.includes(value)) {
           console.error(`color must be one of the following: ${colorOptions}`);
           return false;
@@ -33,7 +33,7 @@ export default Vue.extend({
     textColor: {
       type: String,
       default: 'cornflower-blue',
-      validator(value) {
+      validator(value: string) {
         if (!colorOptions.includes(value)) {
           console.error(`textColor must be one of the following: ${colorOptions}`);
           return false;

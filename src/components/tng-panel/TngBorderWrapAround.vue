@@ -31,7 +31,7 @@ export default Vue.extend({
     color: {
       type: String,
       default: 'light-blue',
-      validator(value) {
+      validator(value: string) {
         if (!colorOptions.includes(value)) {
           console.error(`color must be one of the following: ${colorOptions}`);
           return false;
@@ -42,7 +42,7 @@ export default Vue.extend({
     sides: {
       type: String,
       default: 'bl',
-      validator(value) {
+      validator(value: string) {
         if (!sideOptions.includes(value)) {
           console.error(`sideOptions must be one of the following: ${sideOptions}`);
           return false;
@@ -57,7 +57,7 @@ export default Vue.extend({
     accentY: {
       type: String,
       default: 'none',
-      validator(value) {
+      validator(value: string) {
         if (!accentYOptions.includes(value)) {
           console.error(`accentY must be one of the following: ${accentYOptions}`);
           return false;
