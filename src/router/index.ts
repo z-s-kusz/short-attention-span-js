@@ -26,6 +26,13 @@ const routes = [
     },
   },
   {
+    path: '/color-stack',
+    name: 'Color Stack',
+    component: () => {
+      return import('../views/ColorStacksParent.vue');
+    },
+  },
+  {
     path: '/mgs-carousel',
     name: 'MgsCarousel',
     component: () => {
