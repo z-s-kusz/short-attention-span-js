@@ -1,10 +1,15 @@
 <template>
-  <div class="color-stack-box" :style="boxStyle"></div>
+  <div class="color-stack-box" :style="boxStyle" @click="onBoxClick(index)">
+    <AnchorIcon :hidden="!isAnchor" />
+    <EmoticonIcon :hidden="!active" />
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { CSSProperties } from 'vue/types/jsx.d';
+import AnchorIcon from 'vue-material-design-icons/Anchor.vue';
+import EmoticonIcon from 'vue-material-design-icons/Emoticon.vue';
 
 export default Vue.extend({
   name: 'ColorStackBoxVue',
@@ -15,6 +20,15 @@ export default Vue.extend({
       type: Boolean,
       default: true,
     },
+    active: {
+      type: Boolean,
+      default: false,
+    },
+    onBoxClick: Function,
+  },
+  components: {
+    AnchorIcon,
+    EmoticonIcon,
   },
   computed: {
     boxStyle(): CSSProperties {
