@@ -1,5 +1,5 @@
 <template>
-  <div class="color-stack-box" :style="boxStyle" @click="onBoxClick(index)">
+  <div class="color-stack-box" :style="boxStyle" @click="handleBoxClick()">
     <AnchorIcon :hidden="!isAnchor" />
     <EmoticonIcon :hidden="!active" />
   </div>
@@ -37,6 +37,15 @@ export default Vue.extend({
       };
     },
   },
+  methods: {
+    handleBoxClick() {
+      if (!this.isAnchor) {
+        this.onBoxClick(this.index, this.hsl);
+      } else {
+        // shake box 'no click, only look!'
+      }
+    },
+  },
 });
 </script>
 
@@ -45,6 +54,8 @@ export default Vue.extend({
   .color-stack-box {
     width: 20rem;
     height: 2rem;
-    background-color: hsl(0, 0%, 100%)
+    background-color: hsl(0, 0%, 100%);
+    margin-top: 4px;
+    margin-bottom: 4px;
   }
 </style>
