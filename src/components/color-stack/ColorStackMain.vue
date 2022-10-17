@@ -1,16 +1,16 @@
 <template>
   <div class="box-group-container">
-    <div>
+    <div class="box margin-right">
       <color-stack-box-vue v-for="(colorBox, i) in startStack" :key="colorBox.index"
         :index="i" :hsl="colorBox.hsl"
         :isAnchor="colorBox.isAnchor" :active="colorBox.active"
-        :onBoxClick="onStartBoxClick" />
+        :onBoxClick="onStartBoxClick" :emptyColorString="emptyColorString" />
     </div>
-    <div>
+    <div class="box margin-left">
       <color-stack-box-vue v-for="(colorBox, i) in finalStack" :key="colorBox.index"
         :index="i" :hsl="colorBox.hsl"
         :isAnchor="colorBox.isAnchor" :active="colorBox.active"
-        :onBoxClick="onEndBoxClick" />
+        :onBoxClick="onEndBoxClick" :emptyColorString="emptyColorString" />
     </div>
   </div>
 </template>
@@ -65,6 +65,7 @@ export default Vue.extend({
   },
   data() {
     return {
+      emptyColorString, // declared again here to use im template
       startStack: [
         {
           hsl: emptyColorString, index: 0, isAnchor: false, active: false,
@@ -227,5 +228,15 @@ export default Vue.extend({
 .box-group-container {
   display: flex;
   justify-content: space-between;
+}
+
+.box {
+  flex: 0 1 auto;
+}
+.margin-right {
+  margin-right: 4rem;
+}
+.margin-left {
+  margin-left: 4rem;
 }
 </style>

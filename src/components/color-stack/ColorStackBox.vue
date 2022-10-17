@@ -1,5 +1,6 @@
 <template>
-  <div class="color-stack-box" :style="boxStyle" @click="handleBoxClick()">
+  <div class="color-stack-box" :class="{ shake: shake }"
+    :style="boxStyle" @click="handleBoxClick()">
     <AnchorIcon :hidden="!isAnchor" />
     <EmoticonIcon :hidden="!active" />
   </div>
@@ -25,10 +26,16 @@ export default Vue.extend({
       default: false,
     },
     onBoxClick: Function,
+    emptyColorString: String,
   },
   components: {
     AnchorIcon,
     EmoticonIcon,
+  },
+  data() {
+    return {
+      shake: false,
+    };
   },
   computed: {
     boxStyle(): CSSProperties {
@@ -39,10 +46,14 @@ export default Vue.extend({
   },
   methods: {
     handleBoxClick() {
-      if (!this.isAnchor) {
+      if (!this.isAnchor && !(this.hsl !== this.emptyColorString)) {
         this.onBoxClick(this.index, this.hsl);
       } else {
         // shake box 'no click, only look!'
+        this.shake = true;
+        setTimeout(() => {
+          this.shake = false;
+        }, 1500);
       }
     },
   },
@@ -57,5 +68,35 @@ export default Vue.extend({
     background-color: hsl(0, 0%, 100%);
     margin-top: 4px;
     margin-bottom: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .shake {
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    transform: translate3d(0, 0, 0);
+  }
+  @keyframes shake {
+    10%,
+    90% {
+      transform: translate3d(-2px, 0, 0);
+    }
+
+    20%,
+    80% {
+      transform: translate3d(4px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+      transform: translate3d(-6px, 0, 0);
+    }
+
+    40%,
+    60% {
+      transform: translate3d(6px, 0, 0);
+    }
   }
 </style>
