@@ -1,8 +1,7 @@
 <template>
-  <div class="color-stack-box" :class="{ shake: shake }"
+  <div class="color-stack-box" :class="{ shake: shake, active: active }"
     :style="boxStyle" @click="handleBoxClick()">
     <AnchorIcon :hidden="!isAnchor" />
-    <EmoticonIcon :hidden="!active" />
   </div>
 </template>
 
@@ -10,7 +9,6 @@
 import Vue from 'vue';
 import { CSSProperties } from 'vue/types/jsx.d';
 import AnchorIcon from 'vue-material-design-icons/Anchor.vue';
-import EmoticonIcon from 'vue-material-design-icons/Emoticon.vue';
 
 export default Vue.extend({
   name: 'ColorStackBoxVue',
@@ -30,11 +28,10 @@ export default Vue.extend({
   },
   components: {
     AnchorIcon,
-    EmoticonIcon,
   },
   data() {
     return {
-      shake: false,
+      shake: false, // shake to show user can't click
     };
   },
   computed: {
@@ -48,6 +45,8 @@ export default Vue.extend({
     handleBoxClick() {
       if (!this.isAnchor && !(this.hsl !== this.emptyColorString)) {
         this.onBoxClick(this.index, this.hsl);
+      } else if (this.active) {
+        // do the more gentle reminder bunp out instead of shake
       } else {
         // shake box 'no click, only look!'
         this.shake = true;
@@ -98,5 +97,10 @@ export default Vue.extend({
     60% {
       transform: translate3d(6px, 0, 0);
     }
+  }
+
+  .active {
+    transition: all 500ms;
+    transform: translateX(4rem);
   }
 </style>
