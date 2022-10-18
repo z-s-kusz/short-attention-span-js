@@ -70,6 +70,8 @@ export default Vue.extend({
     display: flex;
     justify-content: center;
     align-items: center;
+  
+    transition: transform 500ms;
   }
 
   .shake {
@@ -100,7 +102,6 @@ export default Vue.extend({
   }
 
   .active {
-    transition: all 500ms;
     transform: translateX(4rem);
   }
 </style>
