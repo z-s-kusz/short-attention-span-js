@@ -1,5 +1,5 @@
 <template>
-  <div class="color-stack-box" :class="{ shake: shake, active: active }"
+  <div class="color-stack-box" :class="{ shake: shake, active: active, remind: remind }"
     :style="boxStyle" @click="handleBoxClick()">
     <AnchorIcon :hidden="!isAnchor" />
   </div>
@@ -32,6 +32,7 @@ export default Vue.extend({
   data() {
     return {
       shake: false, // shake to show user can't click
+      remind: false, // slight pop out to show active selection
     };
   },
   computed: {
@@ -46,7 +47,11 @@ export default Vue.extend({
       if (!this.isAnchor && !(this.hsl !== this.emptyColorString)) {
         this.onBoxClick(this.index, this.hsl);
       } else if (this.active) {
-        // do the more gentle reminder bunp out instead of shake
+        // gentle reminder bump out
+        this.remind = true;
+        setTimeout(() => {
+          this.remind = false;
+        }, 250);
       } else {
         // shake box 'no click, only look!'
         this.shake = true;
@@ -103,5 +108,8 @@ export default Vue.extend({
 
   .active {
     transform: translateX(4rem);
+  }
+  .remind {
+    transform: translateX(5rem);
   }
 </style>
