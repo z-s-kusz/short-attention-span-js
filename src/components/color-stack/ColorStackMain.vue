@@ -4,13 +4,13 @@
       <p class="round-message" v-show="showRoundMessage">{{ roundMessage }}</p>
     </transition>
 
-    <div class="box margin-right">
+    <div class="box margin-right start-stack" :class="{ winStart: win}">
       <color-stack-box-vue v-for="(colorBox, i) in startStack" :key="colorBox.index"
         :index="i" :hsl="colorBox.hsl"
         :isAnchor="colorBox.isAnchor" :active="colorBox.active"
         :onBoxClick="onStartBoxClick" :emptyColorString="emptyColorString" />
     </div>
-    <div class="box margin-left">
+    <div class="box margin-left final-stack" :class="{ winFinal: win}">
       <color-stack-box-vue v-for="(colorBox, i) in finalStack" :key="colorBox.index"
         :index="i" :hsl="colorBox.hsl"
         :isAnchor="colorBox.isAnchor" :active="colorBox.active"
@@ -48,6 +48,7 @@ function cloneBox(box: ColorStackBoxModel): ColorStackBoxModel {
 }
 
 const emptyColorString = 'hsl(0, 100%, 100%)';
+const testWin = false; // set true to get to win condition faster for testing
 
 export default Vue.extend({
   name: 'ColorStackMain',
@@ -76,10 +77,12 @@ export default Vue.extend({
       selectedBoxIndex: 0,
       roundIndex: 0,
       showRoundMessage: true,
+      win: false, // used for animation
     };
   },
   computed: {
     roundMessage(): string {
+      if (this.win) return 'You Win!';
       return `Stack #${this.roundIndex + 1}`;
     },
   },
@@ -113,7 +116,7 @@ export default Vue.extend({
       if (this.selectedBoxIndex < this.startStack.length - 1) {
         this.selectedBoxIndex++;
       } else if (!this.allowStartBoxClicks) {
-        this.advanceRound();
+        return this.advanceRound();
       } else {
         this.selectedBoxIndex = 0;
       }
@@ -174,7 +177,11 @@ export default Vue.extend({
     },
     advanceRound() {
       if (this.gameWon()) {
-        this.handleWin();
+        this.win = true; // for animation
+        this.showRoundMessage = true;
+        setTimeout(() => {
+          this.handleWin();
+        }, 4000);
       } else {
         // need to move things over and keep playing
         this.startStack = this.finalStack.map((box) => {
@@ -195,6 +202,7 @@ export default Vue.extend({
           win = false;
         }
       });
+      if (testWin) win = true; // for fast testing
       return win;
     },
     fadeMessageInOut() {
@@ -222,6 +230,19 @@ export default Vue.extend({
 }
 .margin-left {
   margin-left: 4rem;
+}
+
+.start-stack {
+  transition: opacity 1200ms ease-in;
+}
+.winStart {
+  opacity: 0;
+}
+
+.winFinal {
+  animation: winFinal 4s;
+}
+@keyframes winFinal {
 }
 
 .round-message {
