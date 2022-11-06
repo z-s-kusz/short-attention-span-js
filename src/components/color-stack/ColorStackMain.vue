@@ -1,5 +1,9 @@
 <template>
   <div class="box-group-container">
+    <transition name="fade" active>
+      <p class="round-message" v-show="showRoundMessage">{{ roundMessage }}</p>
+    </transition>
+
     <div class="box margin-right">
       <color-stack-box-vue v-for="(colorBox, i) in startStack" :key="colorBox.index"
         :index="i" :hsl="colorBox.hsl"
@@ -70,14 +74,24 @@ export default Vue.extend({
       finalStack: [] as ColorStackBoxModel[],
       transitionStack: [] as ColorStackBoxModel[],
       selectedBoxIndex: 0,
+      roundIndex: 0,
+      showRoundMessage: true,
     };
   },
+  computed: {
+    roundMessage(): string {
+      return `Stack #${this.roundIndex + 1}`;
+    },
+  },
   mounted() {
-    /// setInitialStartStack and setInitialSelectedBoxIndex must be done in order :/ sorry
+    this.showRoundMessage = true;
+    /// must be done in order :/ sorry
     this.setInitialStartStack();
     this.setInitialSelectedBoxIndex();
-    ///
     this.setFinalAndTransitionStack();
+    ///
+
+    this.fadeMessageInOut();
   },
   methods: {
     onStartBoxClick(index: number) {
@@ -170,6 +184,8 @@ export default Vue.extend({
           return cloneBox(box);
         });
         this.setInitialSelectedBoxIndex();
+        this.roundIndex++;
+        this.fadeMessageInOut();
       }
     },
     gameWon(): boolean {
@@ -181,6 +197,12 @@ export default Vue.extend({
       });
       return win;
     },
+    fadeMessageInOut() {
+      this.showRoundMessage = true;
+      setTimeout(() => {
+        this.showRoundMessage = false;
+      }, 2000);
+    },
   },
 });
 </script>
@@ -189,6 +211,7 @@ export default Vue.extend({
 .box-group-container {
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 .box {
@@ -199,5 +222,27 @@ export default Vue.extend({
 }
 .margin-left {
   margin-left: 4rem;
+}
+
+.round-message {
+  position: absolute;
+  top: 40%;
+  // todo find a better way to set right #
+  right: calc(50% - 4rem);
+  width: 8rem;
+}
+
+// hooks into built in vue styles
+.fade-leave-active {
+  transition: opacity .5s ease-in-out;
+}
+
+.fade-enter-active {
+  transition: opacity 350ms;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>
