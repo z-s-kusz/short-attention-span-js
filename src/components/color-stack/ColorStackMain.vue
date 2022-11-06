@@ -66,57 +66,9 @@ export default Vue.extend({
   data() {
     return {
       emptyColorString, // declared again here to use im template
-      startStack: [
-        {
-          hsl: emptyColorString, index: 0, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 1, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 2, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 3, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 4, isAnchor: false, active: false,
-        },
-      ] as ColorStackBoxModel[],
-      finalStack: [
-        {
-          hsl: emptyColorString, index: 0, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 1, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 2, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 3, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 4, isAnchor: false, active: false,
-        },
-      ] as ColorStackBoxModel[],
-      transitionStack: [
-        {
-          hsl: emptyColorString, index: 0, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 1, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 2, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 3, isAnchor: false, active: false,
-        },
-        {
-          hsl: emptyColorString, index: 4, isAnchor: false, active: false,
-        },
-      ] as ColorStackBoxModel[],
+      startStack: [] as ColorStackBoxModel[],
+      finalStack: [] as ColorStackBoxModel[],
+      transitionStack: [] as ColorStackBoxModel[],
       selectedBoxIndex: 0,
     };
   },
@@ -125,7 +77,7 @@ export default Vue.extend({
     this.setInitialStartStack();
     this.setInitialSelectedBoxIndex();
     ///
-    this.setAnchorsInFinalAndTransitionStack();
+    this.setFinalAndTransitionStack();
   },
   methods: {
     onStartBoxClick(index: number) {
@@ -169,12 +121,21 @@ export default Vue.extend({
       });
       this.selectedBoxIndex = startIndex;
     },
-    setAnchorsInFinalAndTransitionStack() {
+    setFinalAndTransitionStack() {
       this.winningStack.forEach((box, index) => {
         if (box.isAnchor) {
           const boxClone = cloneBox(box);
           this.finalStack[index] = boxClone;
           this.transitionStack[index] = boxClone;
+        } else {
+          const plainBox = {
+            index,
+            isAnchor: false,
+            active: false,
+            hsl: emptyColorString,
+          };
+          this.finalStack[index] = plainBox;
+          this.transitionStack[index] = cloneBox(plainBox);
         }
       });
     },
