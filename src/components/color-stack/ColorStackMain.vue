@@ -4,14 +4,16 @@
       <p class="round-message" v-show="showRoundMessage">{{ roundMessage }}</p>
     </transition>
 
-    <div class="box margin-right start-stack" :class="{ winStart: gameWon}">
+    <div class="box margin-right start-stack"
+      :class="{ winStart: gameWon}">
       <color-stack-box-vue v-for="(colorBox, i) in startStack" :key="colorBox.index"
         :index="i" :hsl="colorBox.hsl"
         :isAnchor="colorBox.isAnchor" :active="colorBox.active"
         :onBoxClick="onStartBoxClick" :emptyColorString="emptyColorString"
         :gameWon="gameWon" />
     </div>
-    <div class="box margin-left final-stack" :class="{ winFinal: gameWon}">
+    <div class="box margin-left final-stack"
+      :class="{ winFinal: gameWon, roundChange: roundChange}">
       <color-stack-box-vue v-for="(colorBox, i) in finalStack" :key="colorBox.index"
         :index="i" :hsl="colorBox.hsl"
         :isAnchor="colorBox.isAnchor" :active="colorBox.active"
@@ -80,6 +82,7 @@ export default Vue.extend({
       roundIndex: 0,
       showRoundMessage: true,
       gameWon: false, // used for animation
+      roundChange: false, // used for animation
     };
   },
   computed: {
@@ -176,13 +179,14 @@ export default Vue.extend({
 
       this.startStack = shuffledStack;
     },
-    advanceRound() {
+    async advanceRound() {
       if (this.checkGameWon()) {
         this.gameWon = true; // for animation
         setTimeout(() => {
           this.handleWin();
         }, 4000);
       } else {
+        await this.animateRoundChange();
         // need to move things over and keep playing
         this.startStack = this.finalStack.map((box) => {
           return cloneBox(box);
@@ -210,6 +214,15 @@ export default Vue.extend({
       setTimeout(() => {
         this.showRoundMessage = false;
       }, 2000);
+    },
+    animateRoundChange() {
+      this.roundChange = true;
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          this.roundChange = false;
+          resolve(true);
+        }, 800);
+      });
     },
   },
 });
@@ -243,8 +256,8 @@ export default Vue.extend({
 .final-stack {
   position: absolute;
   right: 0;
-  transition: all 2s ease-in-out;
-  }
+  transition: all 400ms ease-in-out;
+}
 .winFinal {
   animation: winFinal 4s;
   animation-fill-mode: forwards;
@@ -260,11 +273,13 @@ export default Vue.extend({
     transform: scaleX(300%);
   }
 }
+.roundChange {
+  right: calc(100% - 32vw);
+}
 
 .round-message {
   position: absolute;
   top: 40%;
-  // todo find a better way to set right #
   right: calc(50% - 4rem);
   width: 8rem;
 }

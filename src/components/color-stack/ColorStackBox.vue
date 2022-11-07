@@ -1,14 +1,14 @@
 <template>
   <div class="color-stack-box" :class="{ shake: shake, active: active, remind: remind }"
     :style="boxStyle" @click="handleBoxClick()">
-    <AnchorIcon :hidden="hideAnchor" />
+    <Lock :hidden="hideAnchor" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { CSSProperties } from 'vue/types/jsx.d';
-import AnchorIcon from 'vue-material-design-icons/Anchor.vue';
+import Lock from 'vue-material-design-icons/LockOutline.vue';
 
 export default Vue.extend({
   name: 'ColorStackBoxVue',
@@ -31,7 +31,7 @@ export default Vue.extend({
     emptyColorString: String,
   },
   components: {
-    AnchorIcon,
+    Lock,
   },
   data() {
     return {
