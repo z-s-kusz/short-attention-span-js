@@ -1,9 +1,14 @@
 <template>
-  <main>
+  <main class="overflow-hide">
     <color-stack-main-menu :onPlayClick="startGame" v-show="gameState === 'main-menu'" />
     <color-stack-main :winningStack="winningStack" :handleWin="handleWin"
-      v-if="gameState === 'playing'" />
+      v-if="gameState === 'playing' || gameState === 'win'" />
     <color-stack-win :handleRestart="handleRestart" v-show="gameState === 'win'" />
+    <div class="reset-container" v-if="gameState === 'resetting'">
+      <div class="spin">
+        <star-face :size="60" />
+      </div>
+    </div>
   </main>
 </template>
 
@@ -13,6 +18,7 @@ import ColorStackMain from '@/components/color-stack/ColorStackMain.vue';
 import ColorStackBoxModel from '@/models/ColorStackBoxModel';
 import ColorStackWin from '@/components/color-stack/ColorStackWin.vue';
 import ColorStackMainMenu from '@/components/color-stack/ColorStackMainMenu.vue';
+import StarFace from 'vue-material-design-icons/StarFace.vue';
 import pallettes from '@/services/color-box-helper';
 
 // returns one random item from an array of any type
@@ -26,17 +32,21 @@ export default Vue.extend({
     ColorStackWin,
     ColorStackMain,
     ColorStackMainMenu,
+    StarFace,
   },
   data() {
     return {
-      gameState: 'main-menu', // playing, win, main-menu
+      gameState: 'main-menu', // playing, win, main-menu, resetting
       winningStack: [] as ColorStackBoxModel[],
     };
   },
   methods: {
     handleRestart() {
       const options = {};
-      this.startGame(options);
+      this.gameState = 'resetting';
+      setTimeout(() => {
+        this.startGame(options);
+      }, 800);
     },
     handleWin() {
       this.gameState = 'win';
@@ -68,5 +78,27 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-
+.overflow-hide {
+  overflow: hidden;
+}
+.reset-container {
+  height: 21rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spin {
+  animation-name: spin;
+  animation-duration: 800ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
