@@ -1,5 +1,5 @@
 <template>
-  <section class="center-flex">
+  <section>
     <h1>You Win!</h1>
     <button @click="handleRestart()">Play Again?</button>
   </section>
@@ -16,10 +16,5 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-  .center-flex {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-  }
+
 </style>

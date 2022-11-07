@@ -1,9 +1,9 @@
 <template>
   <main>
-    <color-stack-main-menu :onPlayClick="startGame" v-show="gameState === 'settings'" />
-    <color-stack-win :handleRestart="handleRestart" v-show="gameState === 'win'" />
+    <color-stack-main-menu :onPlayClick="startGame" v-show="gameState === 'main-menu'" />
     <color-stack-main :winningStack="winningStack" :handleWin="handleWin"
       v-if="gameState === 'playing'" />
+    <color-stack-win :handleRestart="handleRestart" v-show="gameState === 'win'" />
   </main>
 </template>
 
@@ -29,7 +29,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      gameState: 'settings', // playing, win, settings
+      gameState: 'main-menu', // playing, win, main-menu
       winningStack: [] as ColorStackBoxModel[],
     };
   },

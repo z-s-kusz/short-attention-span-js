@@ -4,17 +4,19 @@
       <p class="round-message" v-show="showRoundMessage">{{ roundMessage }}</p>
     </transition>
 
-    <div class="box margin-right start-stack" :class="{ winStart: win}">
+    <div class="box margin-right start-stack" :class="{ winStart: gameWon}">
       <color-stack-box-vue v-for="(colorBox, i) in startStack" :key="colorBox.index"
         :index="i" :hsl="colorBox.hsl"
         :isAnchor="colorBox.isAnchor" :active="colorBox.active"
-        :onBoxClick="onStartBoxClick" :emptyColorString="emptyColorString" />
+        :onBoxClick="onStartBoxClick" :emptyColorString="emptyColorString"
+        :gameWon="gameWon" />
     </div>
-    <div class="box margin-left final-stack" :class="{ winFinal: win}">
+    <div class="box margin-left final-stack" :class="{ winFinal: gameWon}">
       <color-stack-box-vue v-for="(colorBox, i) in finalStack" :key="colorBox.index"
         :index="i" :hsl="colorBox.hsl"
         :isAnchor="colorBox.isAnchor" :active="colorBox.active"
-        :onBoxClick="onEndBoxClick" :emptyColorString="emptyColorString" />
+        :onBoxClick="onEndBoxClick" :emptyColorString="emptyColorString"
+        :gameWon="gameWon" />
     </div>
   </div>
 </template>
@@ -77,12 +79,11 @@ export default Vue.extend({
       selectedBoxIndex: 0,
       roundIndex: 0,
       showRoundMessage: true,
-      win: false, // used for animation
+      gameWon: false, // used for animation
     };
   },
   computed: {
     roundMessage(): string {
-      if (this.win) return 'You Win!';
       return `Stack #${this.roundIndex + 1}`;
     },
   },
@@ -176,9 +177,8 @@ export default Vue.extend({
       this.startStack = shuffledStack;
     },
     advanceRound() {
-      if (this.gameWon()) {
-        this.win = true; // for animation
-        this.showRoundMessage = true;
+      if (this.checkGameWon()) {
+        this.gameWon = true; // for animation
         setTimeout(() => {
           this.handleWin();
         }, 4000);
@@ -195,7 +195,7 @@ export default Vue.extend({
         this.fadeMessageInOut();
       }
     },
-    gameWon(): boolean {
+    checkGameWon(): boolean {
       let win = true;
       this.winningStack.forEach((winningBox, index) => {
         if (winningBox.hsl !== this.finalStack[index].hsl) {
@@ -217,8 +217,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .box-group-container {
-  display: flex;
-  justify-content: space-between;
+  height: 21rem;
   position: relative;
 }
 
@@ -233,16 +232,33 @@ export default Vue.extend({
 }
 
 .start-stack {
-  transition: opacity 1200ms ease-in;
+  position: absolute;
+  left: 0;
+  transition: opacity 800ms ease-in;
 }
 .winStart {
   opacity: 0;
 }
 
+.final-stack {
+  position: absolute;
+  right: 0;
+  transition: all 2s ease-in-out;
+  }
 .winFinal {
   animation: winFinal 4s;
+  animation-fill-mode: forwards;
+  margin: 0;
 }
 @keyframes winFinal {
+  33% {
+    right: calc(50% - 16vw); // boxes are 32vw wide
+    transform: scaleX(100%);
+  }
+  100% {
+    right: calc(50% - 16vw);
+    transform: scaleX(300%);
+  }
 }
 
 .round-message {

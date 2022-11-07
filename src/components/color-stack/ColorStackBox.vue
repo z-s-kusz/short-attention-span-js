@@ -1,7 +1,7 @@
 <template>
   <div class="color-stack-box" :class="{ shake: shake, active: active, remind: remind }"
     :style="boxStyle" @click="handleBoxClick()">
-    <AnchorIcon :hidden="!isAnchor" />
+    <AnchorIcon :hidden="hideAnchor" />
   </div>
 </template>
 
@@ -23,6 +23,10 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    gameWon: {
+      type: Boolean,
+      default: false,
+    },
     onBoxClick: Function,
     emptyColorString: String,
   },
@@ -40,6 +44,9 @@ export default Vue.extend({
       return {
         'background-color': this.hsl,
       };
+    },
+    hideAnchor(): boolean {
+      return !this.isAnchor || this.gameWon;
     },
   },
   methods: {
@@ -67,7 +74,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import '~@/styles/main.scss';
   .color-stack-box {
-    width: 20rem;
+    width: 32vw;
     height: 2rem;
     background-color: hsl(0, 0%, 100%);
     margin-top: 4px;
