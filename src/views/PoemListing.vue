@@ -11,9 +11,6 @@
       <transition name="fade" appear>
         <div v-show="loading" key="1">
           <p>Loading...</p>
-          <p>Initial loading may take longer becuase the free
-            server from Heroku needs to be woken up first!
-          </p>
         </div>
       </transition>
 
@@ -76,8 +73,6 @@ export default Vue.extend({
     },
   },
   created() {
-    if (!PoetryApi.store.serverIsWoke) this.wakeServer();
-
     if (this.$route.params.author) {
       this.author = this.$route.params.author;
       this.getPoemsByAuthor();
@@ -105,8 +100,6 @@ export default Vue.extend({
           };
         }
         axios.get(`${PoetryApi.baseUrl}/authors`).then((res: Response) => {
-          if (!PoetryApi.store.serverIsWoke) PoetryApi.store.setServerIsWoke(true);
-
           const storedAuthors = JSON.stringify(res.data.authors);
           localStorage.setItem('authors', storedAuthors);
 
@@ -117,7 +110,8 @@ export default Vue.extend({
             };
           });
           this.showError = true;
-        }).catch(() => {
+        }).catch((error) => {
+          console.error(error);
           this.showError = true;
         }).finally(() => {
           this.loading = false;
@@ -133,9 +127,7 @@ export default Vue.extend({
           author: string;
         }[];
       }
-      axios.get(`${PoetryApi.baseUrl}/author/${this.author}`).then((res: Response) => {
-        if (!PoetryApi.store.serverIsWoke) PoetryApi.store.setServerIsWoke(true);
-
+      axios.get(`${PoetryApi.baseUrl}/poems-by-author?name=${this.author}`).then((res: Response) => {
         this.items = res.data.map((item) => {
           const trimedTitle = PoetryApi.trimToCharLimit(item.title);
           return {
@@ -152,13 +144,6 @@ export default Vue.extend({
     },
     refresh(): void {
       this.$router.go(0);
-    },
-    wakeServer(): void {
-      axios.get('https://poetry-app-api.herokuapp.com').then(() => {
-        if (!PoetryApi.store.serverIsWoke) PoetryApi.store.setServerIsWoke(true);
-      }).catch((err) => {
-        console.error(err);
-      });
     },
   },
 });
