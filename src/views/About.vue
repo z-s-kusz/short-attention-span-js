@@ -38,14 +38,24 @@
       to write a web scraper or make a database. I found a pretty cool open source poetry
       api to use <a href="https://github.com/thundercomb/poetrydb" target="_blank">here</a>.
       I did have to set up a quick back end (using Heroku) to get around
-      CORS but it will be good to have, should any other projects here require back end code.
-      * Edit: Now that netlify functions have been improved I might migrate over to it in
-      a future update.
+      CORS but it will be good to have, should any other projects here require back end code. * **
     </p>
     <p>So, go read some poems! If you find depressing poetry, brighten it up with a lovely
       theme like
       <span class="folk-secondary">"</span>
       <span class="folk-primary">Royal Folk</span>.<span class="folk-secondary">"</span>
+    </p>
+    <p>
+      * Edit 1: Now that netlify functions have been improved I might migrate over to it in
+      a future update.
+    </p>
+    <p>
+      ** Edit 2: Migration successful! Not only was I able to convert my node/express api
+      to netlify functions in less than 2 hours, I was able to remove the heroku specific
+      "wakeup" server code. The netlify functions docs could use some work but I will definitely
+      be using them again.
+      Here's hoping netlify stays free (or at least cheap).
+
     </p>
     <div class="spacer"></div>
 
