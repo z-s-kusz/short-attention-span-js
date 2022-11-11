@@ -45,17 +45,14 @@
       <span class="folk-secondary">"</span>
       <span class="folk-primary">Royal Folk</span>.<span class="folk-secondary">"</span>
     </p>
-    <p>
-      * Edit 1: Now that netlify functions have been improved I might migrate over to it in
+    <p>* Edit 1: Now that netlify functions have been improved I might migrate over to it in
       a future update.
     </p>
-    <p>
-      ** Edit 2: Migration successful! Not only was I able to convert my node/express api
+    <p>** Edit 2: Migration successful! Not only was I able to convert my node/express api
       to netlify functions in less than 2 hours, I was able to remove the heroku specific
       "wakeup" server code. The netlify functions docs could use some work but I will definitely
       be using them again.
       Here's hoping netlify stays free (or at least cheap).
-
     </p>
     <div class="spacer"></div>
 
@@ -78,8 +75,23 @@
     <p>Give it a try and see how good you are at blending colors!</p>
     <div class="spacer"></div>
 
+    <h1 class="color-stack">Color Stack</h1>
+    <p>Yet another reddit inspired project.
+      "<a
+        href="https://www.reddit.com/r/oddlysatisfying/comments/wlkbpv/oc_ive_made_a_game_about_sorting_colors/"
+        target="_blank">Game about sorting colors</a>"
+      looked like a great front-end only project to recreate, with simple interactivity
+      and plentiful smooth animations.
+    </p>
+
+    <p>Creating the gradients was made easy with the help of
+      <a href="https://colordesigner.io/gradient-generator" target="_blank">colordesigner.io</a>.
+    </p>
+    <div class="spacer"></div>
+
     <h1 class="z468">&lt;&lt;The Z468&gt;&gt;</h1>
-    <p>An emulator for a non-existent chip. I enjoyed the fake assembly from TIS-100
+    <p>An emulator for a non-existent chip. I enjoyed the fake assembly from
+      <a href="https://www.zachtronics.com/tis-100" target="_blank">TIS-100</a>
       and wanted to try to make my own assembly and style up a classic terminal interface.
     </p>
     <div class="spacer"></div>
@@ -178,5 +190,17 @@ h3, h4 {
 .z468 {
   background-color: black;
   color: #4DB7C2;
+}
+
+.color-stack {
+  background: linear-gradient(
+    25deg,
+    hsl(70.74, 100%, 62.75%) 25%,
+    hsl(2.9, 62.77%, 54.71%) 60%
+    );
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 </style>
