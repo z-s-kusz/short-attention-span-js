@@ -28,6 +28,11 @@ $inner-radius: 10px;
   }
 }
 
+p {
+  margin: 0;
+  padding: 0 0.75rem 1rem 0.75rem;
+}
+
 .poem-container {
   min-height: calc(100vh - 99px);
   border-radius: $inner-radius;

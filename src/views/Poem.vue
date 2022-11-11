@@ -82,12 +82,13 @@ export default Vue.extend({
           lines: string[];
         }[];
       }
-      const url = `${PoetryApi.baseUrl}/title/${this.title}/author/${this.author}`;
+      const url = `${PoetryApi.baseUrl}/get-poem?title=${this.title}&author=${this.author}`;
       axios.get(url).then((res: Response) => {
         this.title = res.data[0].title;
         this.lines = res.data[0].lines;
         this.showError = false;
-      }).catch(() => {
+      }).catch((error) => {
+        console.error(error);
         this.showError = true;
       }).finally(() => {
         this.loading = false;
