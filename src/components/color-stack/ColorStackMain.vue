@@ -1,5 +1,5 @@
 <template>
-  <div class="box-group-container">
+  <div class="box-group-container" :style="boxHeight">
     <transition name="fade" active>
       <p class="round-message" v-show="showRoundMessage">{{ roundMessage }}</p>
     </transition>
@@ -88,6 +88,13 @@ export default Vue.extend({
   computed: {
     roundMessage(): string {
       return `Stack #${this.roundIndex + 1}`;
+    },
+    boxHeight() {
+      // oof i hate this... consequence of all children being position:absolute (for animations)
+      // each box height is 2rem with 4px of margin (+3 covers margins but not perfectly)
+      return {
+        height: `${this.winningStack.length * 2 + 3}rem`,
+      };
     },
   },
   mounted() {
@@ -230,7 +237,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .box-group-container {
-  height: 21rem;
   position: relative;
 }
 

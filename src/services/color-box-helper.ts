@@ -1,6 +1,6 @@
 // special thanks to https://colordesigner.io/gradient-generator for making
 // generating and copy pasting these a dream :)
-const pallettes = [
+const standardPalettes = [
   [
     'hsl(60, 93.33%, 70.59%)', // yellow
     'hsl(80, 75.95%, 69.02%)',
@@ -58,4 +58,49 @@ const pallettes = [
   ],
 ];
 
-export default pallettes;
+const largePalettes = [
+  [
+    'hsl(357.22, 60.64%, 48.82%)', // red
+    'hsl(332.34, 63.8%, 56.67%)',
+    'hsl(287.05, 49.44%, 65.1%)',
+    'hsl(225.66, 94.96%, 76.67%)',
+    'hsl(199.88, 100%, 68.04%)',
+    'hsl(189, 93.33%, 70.59%)', // sky blue
+    'hsl(180, 88.33%, 52.94%)',
+    'hsl(170.68, 100%, 49.22%)',
+    'hsl(151.44, 100%, 63.33%)',
+    'hsl(106.62, 100%, 70.98%)',
+    'hsl(71.95, 100%, 51.76%)', // dirty highlighter yellow
+  ],
+  [
+    'hsl(305.14, 93.33%, 70.59%)', // purp
+    'hsl(325.61, 100%, 69.22%)',
+    'hsl(356.03, 100%, 73.33%)',
+    'hsl(31.28, 100%, 63.14%)',
+    'hsl(50.12, 100%, 50%)',
+    'hsl(67.8, 100%, 51.76%)', // yellow
+    'hsl(84.27, 100%, 65.1%)',
+    'hsl(108.61, 100%, 73.14%)',
+    'hsl(139.2, 100%, 70.59%)',
+    'hsl(158.24, 100%, 62.16%)',
+    'hsl(169.51, 100%, 51.76%)', // sky blue
+  ],
+  [
+    'hsl(117, 76.92%, 15.29%)', // dark green
+    'hsl(82.31, 100%, 15.29%)',
+    'hsl(60.71, 100%, 16.47%)',
+    'hsl(43.87, 100%, 23.33%)',
+    'hsl(32.28, 100%, 30.98%)',
+    'hsl(19.55, 82.41%, 42.35%)', // orange
+    'hsl(8.41, 65.15%, 52.75%)',
+    'hsl(358.31, 70.3%, 60.39%)',
+    'hsl(350.07, 75.14%, 63.73%)',
+    'hsl(341.86, 75.44%, 66.47%)',
+    'hsl(333.21, 70.89%, 69.02%)', // pink
+  ],
+];
+
+export default {
+  standardPalettes,
+  largePalettes,
+};

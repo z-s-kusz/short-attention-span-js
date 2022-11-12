@@ -19,7 +19,7 @@ import ColorStackBoxModel from '@/models/ColorStackBoxModel';
 import ColorStackWin from '@/components/color-stack/ColorStackWin.vue';
 import ColorStackMainMenu from '@/components/color-stack/ColorStackMainMenu.vue';
 import StarFace from 'vue-material-design-icons/StarFace.vue';
-import pallettes from '@/services/color-box-helper';
+import palettes from '@/services/color-box-helper';
 
 // returns one random item from an array of any type
 function getRandomPallette<T>(array: T[]): T {
@@ -58,9 +58,10 @@ export default Vue.extend({
       this.gameState = 'playing';
     },
     setUpRandomGame() {
-      const pallette = getRandomPallette(pallettes);
-      const anchorIndexes = [2, 8];
-      this.winningStack = this.buildWinningStack(pallette, anchorIndexes);
+      const flatPalettes = [...palettes.standardPalettes, ...palettes.largePalettes];
+      const palette = getRandomPallette(flatPalettes);
+      const anchorIndexes = this.getAnchorIndexes(palette.length);
+      this.winningStack = this.buildWinningStack(palette, anchorIndexes);
     },
     buildWinningStack(pallette: string[], anchorIndexes: number[]): ColorStackBoxModel[] {
       return pallette.map((color, index) => {
@@ -73,13 +74,23 @@ export default Vue.extend({
         };
       });
     },
+    getAnchorIndexes(length: number): number[] {
+      switch (length) {
+        case 9:
+          return [2, 8];
+        case 11:
+          return [0, 4, 10];
+        default:
+          return [0];
+      }
+    },
   },
 });
 </script>
 
 <style lang="scss" scoped>
 .overflow-hide {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .reset-container {
   height: 21rem;
