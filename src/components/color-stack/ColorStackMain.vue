@@ -292,11 +292,11 @@ export default Vue.extend({
 
 // hooks into built in vue styles
 .fade-leave-active {
-  transition: opacity .5s ease-in-out;
+  transition: opacity 600ms ease-in-out;
 }
 
 .fade-enter-active {
-  transition: opacity 350ms;
+  transition: opacity 1300ms ease-in;
 }
 
 .fade-enter,
