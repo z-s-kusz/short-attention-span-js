@@ -19,11 +19,35 @@ import ColorStackBoxModel from '@/models/ColorStackBoxModel';
 import ColorStackWin from '@/components/color-stack/ColorStackWin.vue';
 import ColorStackMainMenu from '@/components/color-stack/ColorStackMainMenu.vue';
 import StarFace from 'vue-material-design-icons/StarFace.vue';
-import palettes from '@/services/color-box-helper';
+import helperPalettes from '@/services/color-box-helper';
+import ColorStackPaletteModel from '@/models/ColorStackPaletteModel';
 
 // returns one random item from an array of any type
 function getRandomPallette<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];
+}
+
+interface paletteInput {
+  standardPalettes: string[][];
+  largePalettes: string[][];
+}
+function mapPalettes(palettes: paletteInput): ColorStackPaletteModel[] {
+  const flatPalettes = [...palettes.standardPalettes, ...palettes.largePalettes];
+  return flatPalettes.map((palette, index) => {
+    let size = 'standard';
+    if (palette.length === 11) {
+      size = 'large';
+    }
+    return {
+      id: index,
+      size,
+      colors: palette,
+    };
+  });
+}
+
+interface optionsType {
+  removePlayedPalettes: boolean;
 }
 
 export default Vue.extend({
@@ -38,11 +62,15 @@ export default Vue.extend({
     return {
       gameState: 'main-menu', // playing, win, main-menu, resetting
       winningStack: [] as ColorStackBoxModel[],
+      allPalettes: mapPalettes(helperPalettes),
+      palettesPlayedIds: [] as number[],
     };
   },
   methods: {
     handleRestart() {
-      const options = {};
+      const options = {
+        removePlayedPalettes: true,
+      } as optionsType;
       this.gameState = 'resetting';
       setTimeout(() => {
         this.startGame(options);
@@ -51,17 +79,19 @@ export default Vue.extend({
     handleWin() {
       this.gameState = 'win';
     },
-    // use options and strongly type it
-    // eslint-disable-next-line
-    startGame(_options: object) {
-      this.setUpRandomGame();
+    startGame(options: optionsType) {
+      let palettes = this.allPalettes;
+      if (options.removePlayedPalettes) {
+        palettes = this.getUnplayedPalettes();
+      }
+      this.setUpRandomGame(palettes);
       this.gameState = 'playing';
     },
-    setUpRandomGame() {
-      const flatPalettes = [...palettes.standardPalettes, ...palettes.largePalettes];
-      const palette = getRandomPallette(flatPalettes);
-      const anchorIndexes = this.getAnchorIndexes(palette.length);
-      this.winningStack = this.buildWinningStack(palette, anchorIndexes);
+    setUpRandomGame(paletteObjects: ColorStackPaletteModel[]) {
+      const palette = getRandomPallette(paletteObjects);
+      this.palettesPlayedIds.push(palette.id);
+      const anchorIndexes = this.getAnchorIndexes(palette.colors.length);
+      this.winningStack = this.buildWinningStack(palette.colors, anchorIndexes);
     },
     buildWinningStack(pallette: string[], anchorIndexes: number[]): ColorStackBoxModel[] {
       return pallette.map((color, index) => {
@@ -83,6 +113,17 @@ export default Vue.extend({
         default:
           return [0];
       }
+    },
+    getUnplayedPalettes(): ColorStackPaletteModel[] {
+      // if all have been played reset and allow all
+      if (this.palettesPlayedIds.length === this.allPalettes.length) {
+        this.palettesPlayedIds = [];
+        return this.allPalettes;
+      }
+
+      return this.allPalettes.filter((palette) => {
+        return !this.palettesPlayedIds.includes(palette.id);
+      });
     },
   },
 });
