@@ -33,6 +33,7 @@ module.exports = {
     'no-multiple-empty-lines': [1],
     'comma-spacing': [1],
     'vue/multi-word-component-names': [0],
+    'comma-dangle': [1],
     // TODO reenable for accessibility
     'vuejs-accessibility/click-events-have-key-events': [0],
     'vuejs-accessibility/form-control-has-label': [0],
