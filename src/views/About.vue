@@ -96,6 +96,40 @@
     </p>
     <div class="spacer"></div>
 
+    <div class="tng-component-root">
+      <tng-button class="trek-button" color="orange" roundSides="all" textPosition="tl" >
+        TNG Panel
+      </tng-button>
+      <tng-border-wrap-around class="trek-main" :accentX="true">
+      <p>The TNG Panel is my first attempt at making a styled components library.
+        The design is based on the computer interfaces from Star Trek: The Next Generation.
+      </p>
+      <p>There are 3 components. The first is the "tng-button" that has a prop for positioning
+        text and a prop for rounded or straight edges, allowing composable design where
+        lots of buttons together can make entire UI layouts similar to those seen on the show.
+        A  tng-button is used as the header above.
+      </p>
+      <p>The second component is a huge "tng-banner" intended to go across the top of a page.
+        It doesn't fit for this small section so it's only demoed on the TNG page.
+      </p>
+      <p>And finally there is my favorite, the "tng-border-wrapper" which surrounds this
+        section! It takes props allowing you to place the borders on any side
+        and add "accent" pieces with carved out sections. This panel uses an accent on the bottom.
+      </p>
+      <p>All components can use 8 trek-panel colors and you can use a free
+        <a href="https://www.st-minutiae.com/resources/fonts/index.html" target="_blank" class="trek-link">trek font</a>
+        I found online. I'm not using it here because it's actually pretty rough on the eyes.
+      </p>
+      <p>I spent a lot more time than I should have working on the component api, making it
+        composable and adjustable, since it will likely <i>never</i> be used outside of this writeup
+        and the main page. And yes, I know the title is off center. My research showed that in the
+        future we will not have centered buttons, text will always be left or right justified.
+      </p>
+      </tng-border-wrap-around>
+    </div>
+
+    <div class="spacer"></div>
+
     <h1 class="fail">Failed Projects</h1>
     <h3 class="hades-button">Hades Buttons</h3>
     <p>My attempt to make animated SVG button borders that support any sized content.
@@ -146,11 +180,15 @@
 import Vue from 'vue';
 import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
 import PaletteHelper from '@/services/palette-helper';
+import TngButton from '@/components/tng-panel/TngButton.vue';
+import TngBorderWrapAround from '@/components/tng-panel/TngBorderWrapAround.vue';
 
 export default Vue.extend({
   name: 'About',
   components: {
     ColorGolfTitle,
+    TngButton,
+    TngBorderWrapAround,
   },
   computed: {
     poetryStyle() {
@@ -239,6 +277,29 @@ h3, h4 {
   text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+.trek-main {
+  height: 22rem;
+
+  @media only screen and (max-width: 899px) {
+    height: 30rem;
+  }
+
+  margin-top: 0.5rem;
+
+  p {
+    padding: 0 1rem;
+  }
+}
+.trek-button {
+  height: 3rem;
+  width: 18rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+.trek-link {
+  color: rgb(232, 141, 52)
 }
 
 .fail {
