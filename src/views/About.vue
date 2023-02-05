@@ -4,7 +4,7 @@
     <h1 class="main-theme">The Site</h1>
     <p>I love coding but I hate setting up projects. Even with cli tools allowing you to
       `creat-react-app newApp` there is still a lot that goes into starting up a web project.
-      "How do I want to host it? Do I want to do the styles or just use a framework library?
+      "How do I want to host it? Do I want to do the styles or just use a component library?
       Should I set up a CMS for the writing work? Should I fight the node_modules size
       or just accept the bloat and get to MVP faster?"
     </p>
@@ -18,7 +18,7 @@
       you will have seen that I called this project short attention span JS. It's home
       for any small idea I want to implement without thinking about set up.
       To that end, it could also be called "decision fatigue
-      remover JS." So here it is, a random mish mash of javascript ideas to
+      remover JS." So here it is, a random mish mash of web projects to
       browse through quickly. Thanks for viewing and I hope you find
       some of my small distraction pages entertaining!
     </p>
@@ -26,14 +26,12 @@
 
     <h1 class="poetry" :style="poetryStyle">Poetry</h1>
     <p><em :style="poetryEm">DISCLAIMER:</em>&nbsp;
-      The available poems and poets were NOT selected by me.
+      The available poems and poets were not selected by me.
       I have not reviewed all available poems.
     </p>
     <p>The 'poetry' page started with 2 ideas:</p>
     <p>1. Create a quick way to access lots of poems.</p>
-    <p>2. Create pill-like color palettes that
-      I had seen on reddit.
-    </p>
+    <p>2. Create pill-like color palettes that I had seen on reddit.</p>
     <p>Because this site is set up to do quick front end experiments, I didn't want
       to write a web scraper or make a database. I found a pretty cool open source poetry
       api to use <a href="https://github.com/thundercomb/poetrydb" target="_blank">here</a>.
@@ -51,7 +49,7 @@
     <p>** Edit 2: Migration successful! Not only was I able to convert my node/express api
       to netlify functions in less than 2 hours, I was able to remove the heroku specific
       "wakeup" server code. The netlify functions docs could use some work but I will definitely
-      be using them again.
+      be using netlify functions again.
       Here's hoping netlify stays free (or at least cheap).
     </p>
     <div class="spacer"></div>
@@ -106,8 +104,8 @@
       </p>
       <p>There are 3 components. The first is the "tng-button" that has a prop for positioning
         text and a prop for rounded or straight edges, allowing composable design where
-        lots of buttons together can make entire UI layouts similar to those seen on the show.
-        A  tng-button is used as the header above.
+        lots of buttons together can make entire UI layouts like those seen on the show.
+        A tng-button is used as the header above.
       </p>
       <p>The second component is a huge "tng-banner" intended to go across the top of a page.
         It doesn't fit for this small section so it's only demoed on the TNG page.
