@@ -4,7 +4,9 @@
   <p>Based off of the colorful borders with shimmering flairs found in the
     boon selection screen of Hades.
   </p>
-  <!-- grid used becuase the buttons don't seem to like flex ??? -->
+  <!--
+    grid used becuase the buttons don't seem to like flex ???
+    which is a very clear sign that this is bad -->
   <div class="grid-container">
     <colorful-button :buttonId="'defaultButton'" class="btn1">
       Default Button

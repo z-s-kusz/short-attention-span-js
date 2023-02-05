@@ -96,6 +96,43 @@
     </p>
     <div class="spacer"></div>
 
+    <h1 class="fail">Failed Projects</h1>
+    <h3 class="hades-button">Hades Buttons</h3>
+    <p>My attempt to make animated SVG button borders that support any sized content.
+      I consider it a failure since (as far as I know) you MUST use javascript to find the
+      element's size for setting the size and shape of the border. None of the CSS and SVG
+      percentage based calculations I tried were able to support large, small, and oblong shapes.
+      I was so disappointed that after I had an MVP I moved on without styling more or making
+      all button behavior work.
+    </p>
+    <p>Quite a while later I found a few
+      <a href="https://web.dev/css-border-animations/" target="_blank">blogs</a>
+      showing animated borders demos with only CSS. Not 100% what I wanted but close enough!
+      I tried to get it working but, again, could not get one-size-fits-all figured out. The demos
+      I followed relied on having known dimensions. Testing with various sizes, the borders moved
+      around the wrong axis or left gaps or were so big only one color would appear. Even with the
+      tutorial's techniques I would need to use javascript to make it work for all sizes.
+      If I needed to do something like this for work I would probably make a gif of the
+      border so I could just wrap that around an element and have it stretch to any size needed.
+    </p>
+
+    <h3 class="sandboxes">Sandboxes</h3>
+    <p>With the Hades Button I forced myself to get something resembling my intended result on
+      screen. Sandboxes - not at all. I found a blog demonstrating how to make a sand physics toy
+      with js that looked fun. I made a page for it here with the intent to get coding on it the
+      next day. The author made the tutorial agnostic of any graphics library, which seemed like
+      a plus at first. But when I went to try to implement it from the walk through it turned
+      out to be a 'rest of the f---ing owl' situation. "Make the sand by making sand. Add
+      physics with the physics and make sand fall on click." I abandoned the project and decided
+      to remove the page later.
+    </p>
+    <p>'Sandboxes' remains as a published example of one of the many, many projects I left
+      incomplete or never started. It wasn't all a loss, one thing I learned was a
+      way to quickly access points on a 2D graph by flattening them into a single array.
+      That will come in handy next time I use the unicorn hat on my Raspberry Pi.
+    </p>
+
+    <div class="spacer"></div>
     <h3>Zach Kusz</h3>
     <h4><a href="https://github.com/z-s-kusz" target="_blank">github.com/z-s-kusz</a></h4>
     <h4>
@@ -198,6 +235,65 @@ h3, h4 {
     hsl(70.74, 100%, 62.75%) 25%,
     hsl(2.9, 62.77%, 54.71%) 60%
     );
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.fail {
+  color: #cd2525;
+}
+.hades-button {
+  position: relative;
+  z-index: 0;
+  width: 175px;
+  height: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -2;
+    left: -6%;
+    top: -145%;
+    width: 120%;
+    height: 430%;
+    background-color: #aeaa7d;
+    background-repeat: no-repeat;
+    background-size: 50% 50%, 50% 50%;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    background-image:
+      linear-gradient(#a7dc66, #a7dc66),
+      linear-gradient(#f1f3b2, #f1f3b2),
+      linear-gradient(#e0c1e1, #e0c1e1),
+      linear-gradient(#5dd9cf, #5dd9cf);
+    animation: rotate 4s linear infinite;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 6px;
+    top: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    background: rgb(0, 0, 0);
+    border-radius: 5px;
+  }
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.sandboxes {
+  background-image: linear-gradient(#645e08, #f1ad1a);
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
   -webkit-background-clip: text;
