@@ -2,7 +2,7 @@
 <div>
   <menu-settings v-show="gameState === 'menu'"
     v-on:start-click="startClick" />
-  <color-golf v-show="gameState === 'playing'"
+  <color-golf v-if="gameState === 'playing'"
     v-bind="menuData" v-on:game-completed="gameCompleted" />
   <game-over v-if="gameState === 'completed'"
     v-bind:score-cards="scoreCards" v-bind:playerNames="menuData.playerNames"
@@ -16,6 +16,7 @@ import ColorGolf from '@/components/color-golf/ColorGolf.vue';
 import GameOver from '@/components/color-golf/GameOver.vue';
 import MenuSettings from '@/components/color-golf/MenuSettings.vue';
 import ScoreCardItem from '@/models/ScoreCard';
+import ColorGolfRange from '@/models/ColorGolfRange';
 
 interface MenuData {
   distance: number;
@@ -23,6 +24,7 @@ interface MenuData {
   numberOfHoles: number;
   playerCount: number;
   playerNames: string[];
+  ranges: ColorGolfRange[];
 }
 
 export default Vue.extend({
@@ -43,6 +45,7 @@ export default Vue.extend({
         playerNames: [
           'Player 1', 'Player 2', 'Player 3', 'Player 4',
         ],
+        ranges: [] as ColorGolfRange[],
       },
       scoreCards: [] as ScoreCardItem[][],
     };

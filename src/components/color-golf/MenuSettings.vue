@@ -52,6 +52,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
+import colorGolfRanges from '@/services/color-golf-ranges';
 
 export default Vue.extend({
   name: 'MenuSettings',
@@ -84,6 +85,7 @@ export default Vue.extend({
         numberOfHoles: this.numberOfHoles,
         playerCount: this.playerCount,
         playerNames: this.playerNames,
+        ranges: colorGolfRanges.generateRanges(this.numberOfHoles),
       };
       this.$emit('start-click', data);
     },

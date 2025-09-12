@@ -85,6 +85,7 @@ import {
 } from 'vue-property-decorator';
 import ColorGolfTitle from '@/components/color-golf/ColorGolfTitle.vue';
 import ScoreCardItem from '@/models/ScoreCard';
+import ColorGolfRange from '@/models/ColorGolfRange';
 
 interface ColorGolfColor {
   r: number;
@@ -131,6 +132,7 @@ export default class ColorGolf extends Vue {
   @Prop({ default: 3 }) numberOfHoles!: number;
   @Prop({ default: 1 }) playerCount!: number;
   @Prop() playerNames!: string[];
+  @Prop() ranges!: ColorGolfRange[];
 
   // Computed
   get courseClass() {
@@ -151,7 +153,7 @@ export default class ColorGolf extends Vue {
 
   // lifecycle
   created() {
-    const color = ColorGolf.getRandomColor();
+    const color = ColorGolf.getRandomColor(this.ranges[0]);
     color.css = ColorGolf.setColorCSS(color);
     this.currentColor = color;
     this.setScoreCards();
@@ -229,22 +231,21 @@ export default class ColorGolf extends Vue {
 
   gameOver(): void {
     this.$emit('game-completed', this.scoreCards);
-    this.reset(true);
   }
 
-  static getRandomColor() {
+  static getRandomColor(range: ColorGolfRange) {
     const color = {
-      r: ColorGolf.getRandomInt(255),
-      g: ColorGolf.getRandomInt(255),
-      b: ColorGolf.getRandomInt(255),
+      r: ColorGolf.getRandomInt(range.rMin, range.rMax),
+      g: ColorGolf.getRandomInt(range.gMin, range.gMax),
+      b: ColorGolf.getRandomInt(range.bMin, range.bMax),
       css: '',
     };
     color.css = ColorGolf.setColorCSS(color);
     return color;
   }
 
-  static getRandomInt(maxNum: number): number { // return int from 0 through maxNum
-    return Math.floor(Math.random() * Math.floor(maxNum + 1));
+  static getRandomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   goToNextPlayer(): void {
@@ -268,19 +269,13 @@ export default class ColorGolf extends Vue {
       && this.activePlayerIndex + 1 === this.playerCount) {
       this.gameOver();
     } else {
-      this.reset(false);
+      this.reset();
     }
   }
 
-  reset(newGame?: boolean): void {
-    if (newGame) {
-      this.holeNumber = 1;
-      this.activePlayerIndex = 0;
-      this.setScoreCards();
-    } else {
-      if (this.activePlayerIndex + 1 === this.playerCount) this.holeNumber++;
-      if (this.playerCount > 1) this.goToNextPlayer();
-    }
+  reset(): void {
+    if (this.activePlayerIndex + 1 === this.playerCount) this.holeNumber++;
+    if (this.playerCount > 1) this.goToNextPlayer();
     this.showResults = false;
     this.showContinueButton = false;
     this.usersGuess = {
@@ -295,7 +290,8 @@ export default class ColorGolf extends Vue {
       shots: '',
     };
     this.shotCount = 0;
-    this.currentColor = ColorGolf.getRandomColor();
+    const nextRange = this.ranges[this.holeNumber - 1];
+    this.currentColor = ColorGolf.getRandomColor(nextRange);
   }
 
   static setColorCSS(color: ColorGolfColor): string {
