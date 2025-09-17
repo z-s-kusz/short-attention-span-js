@@ -11,6 +11,18 @@
       </transition>
     </div>
 
+    <div class="position-help">
+      <transition name="down">
+        <span :key="shotCount">Target Color{{ shotCount > 0 ? ' (left)' : '' }}&nbsp;</span>
+      </transition>
+      <transition name="down">
+        <div :key="shotCount" v-if="shotCount > 0">
+          <span class="lg-screen-spacer">/</span>
+          <span>&nbsp;Your Guess (right)</span>
+        </div>
+      </transition>
+    </div>
+
     <div class="course" v-bind:class="courseClass" v-bind:style="courseStyle">
       <div class="course-inner">
         <transition name="left">
@@ -21,7 +33,7 @@
           </div>
         </transition>
           <button v-show="showContinueButton"
-            class="course-button" v-on:click="next()">continue</button>
+            class="course-button" v-on:click="next()">Continue</button>
       </div>
     </div>
 
@@ -378,9 +390,28 @@ input {
   align-content: space-between;
   align-items: center;
   overflow-y: hidden;
+
+  span {
+    margin: 8px;
+  }
 }
-.info-panel span {
-  margin: 8px;
+
+.position-help {
+  display: flex;
+  align-content: space-between;
+  align-items: center;
+  overflow-y: hidden;
+
+  div, span {
+    margin: 8px 0px;
+  }
+}
+
+// exempt from project wide breakpoint of 900px
+@media only screen and (max-width: 400px) {
+  .lg-screen-spacer {
+    display: none;
+  }
 }
 .course {
   border: 8px solid white;
@@ -410,14 +441,18 @@ label {
   flex-direction: column;
   justify-content: flex-start;
   align-content: flex-start;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 8px 36px;
+  border-radius: 6px;
 
-  & p {
-    border-radius: 6px;
-    background-color: rgba(0, 0, 0, 0.2);
+  p {
     margin: 0;
     padding: 4px;
-    margin: 8px 36px;
     text-align: start;
+    border-bottom: 1px solid white;
+  }
+  p:last-child {
+    border-bottom: none;
   }
 }
 
